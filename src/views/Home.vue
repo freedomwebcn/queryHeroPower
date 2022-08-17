@@ -2,7 +2,7 @@
   <div class="home-wrapper">
     <!-- 搜索框 -->
     <div class="search-wrapper">
-      <h2 class="search-title">搜索</h2>
+      <h2 class="search-title">搜索测试</h2>
       <van-search v-model="keyworld" disabled placeholder="搜索功能暂不可用" />
     </div>
     <!-- 英雄职业列表 -->
