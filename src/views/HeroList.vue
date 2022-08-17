@@ -290,7 +290,7 @@ export default {
     .hero-list-content {
       position: relative;
       z-index: 2;
-      padding-top: 72px;
+      padding: 72px 10px 0 10px;
       .type-name {
         padding: 22px 22px 2px 22px;
         font-size: 28px;
