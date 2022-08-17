@@ -35,9 +35,7 @@
 
 .app-container {
   height: 100%;
-  // padding: 0 10px;
   background-color: rgb(18, 18, 18);
-
   overflow: hidden;
 }
 </style>>

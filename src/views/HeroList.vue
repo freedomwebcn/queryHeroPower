@@ -6,7 +6,7 @@
         <span class="header-text animate__animated animate__fadeIn" v-if="showHeaderBgc">{{typeName}}</span>
       </header>
       <!-- 请求英雄列表数据 显示 loading  -->
-      <div class="heroListLoading" v-if="!filterHeroData.length && heroListLoadingErrStatus==null">
+      <div class="hero-list-loading" v-if="!filterHeroData.length && heroListLoadingErrStatus==null">
         <van-loading type="spinner" color="255, 255, 255" />
       </div>
       <div class="scroll-content">
@@ -261,11 +261,11 @@ export default {
     width: 100%;
     position: fixed;
     z-index: 66;
-    padding: 16px 10px 16px 10px;
+    padding: 16px 10px;
     display: flex;
     align-items: center;
     &.header-bgc {
-      background-image: linear-gradient(rgba(83, 83, 83) 0%, black 150px);
+      background-color: #181818;
     }
 
     .header-text {
@@ -274,9 +274,6 @@ export default {
       color: white;
     }
 
-    // &.header-bgc {
-    //   backdrop-filter: brightness(100%) blur(3px);
-    // }
     .ico {
       color: white;
       font-size: 25px;
@@ -325,18 +322,25 @@ export default {
     }
   }
 
+  .hero-list-loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
   .hero-list-err-wrapper {
     position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
-  .heroListLoading {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
+
   .popup-content {
     width: 280px;
     height: 280px;
