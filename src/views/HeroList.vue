@@ -97,6 +97,7 @@ export default {
     let heroData = ref(
       JSON.parse(window.sessionStorage.getItem('allHeroData')) || []
     );
+
     let heroListLoadingErrStatus = ref(null); //英雄列表数据请求状态
     const show = ref(false); //是否要展示查询英雄战力弹出层
     // 请求参数 查询英雄战力
@@ -132,7 +133,7 @@ export default {
 
     // 请求英雄列表数据
     const getHeroData = () => {
-      // 数据保存在sessionStorage中，如果再次请求 本地存储存在英雄列表数据，就return
+      // 如果sessionStorage 已经保存过英雄列表数据，就return
       if (heroData.value.length) return;
 
       reqHeroData().then(
@@ -201,7 +202,7 @@ export default {
     function toNotify() {
       Notify({
         type: 'danger',
-        message: '数据请求失败,请重新重试 !'
+        message: '数据请求失败,请重新尝试 !'
       });
     }
 

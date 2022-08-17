@@ -18,12 +18,18 @@ const routes = [{
   {
     path: '/home',
     name: 'Home',
-    component: Home
+    component: Home,
+    meta: {
+      transition: 'home'
+    },
   },
   {
     path: '/hero-list/:typeId/:typeName',
     name: 'heroList',
     component: heroList,
+    meta: {
+      transition: 'homeList'
+    },
 
   },
 

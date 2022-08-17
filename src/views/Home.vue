@@ -4,21 +4,6 @@
     <div class="search-wrapper">
       <h2 class="search-title">搜索</h2>
       <van-search v-model="keyworld" placeholder="请输入搜索关键词" />
-      <!-- <div class="search-content">
-          <div class="search">
-            <div class="search-cell">
-              <div class="search-cell-left-icon">
-                <i class="van-badge__wrapper van-icon van-icon-search"></i>
-              </div>
-
-              <div class="search-cell-value">
-                <div class="search-cell-value-body">
-                  <input type="search" id="van-search-1-input" class="search-value-input" placeholder="请输入英雄名称">
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> -->
     </div>
     <!-- 英雄职业列表 -->
     <div class="hero-type-content">
@@ -26,7 +11,7 @@
       <div class="hero-type-list">
         <div :style="{backgroundColor: heroTypeItem.bgcolor}" class="hero-type-item"
           v-for="(heroTypeItem,index) in heroTypeList" :key="heroTypeItem.type"
-          @click='queryHeroList({typeId:index+1,typeName:heroTypeItem.type})'>
+          @click='getHeroList({typeId:index+1,typeName:heroTypeItem.type})'>
           <img :src="heroTypeItem.ico" class="ico" alt="">
           <span class="type-name">{{heroTypeItem.type}}</span>
         </div>
@@ -76,13 +61,13 @@ export default {
         bgcolor: 'rgb(235, 30, 50)'
       }
     ];
-    function queryHeroList(heroTypeObJ) {
+    function getHeroList(heroTypeObJ) {
       router.push({ name: 'heroList', params: { ...heroTypeObJ } });
     }
 
     return {
       heroTypeList,
-      queryHeroList,
+      getHeroList,
       keyworld
     };
   }
@@ -103,73 +88,6 @@ export default {
       font-size: 18px;
       color: white;
       margin-top: 0;
-    }
-    .search-content {
-      //   padding: 0 12px;
-      //   background-color: red;
-
-      height: 39px;
-
-      .search {
-        display: flex;
-        height: 100%;
-        padding-left: 12px;
-        background: rgb(247, 248, 250);
-        border-radius: 2px;
-        .search-cell {
-          flex: 1;
-          display: flex;
-          padding: 5px 5px 5px 0;
-
-          background-color: transparent;
-          .search-cell-left-icon {
-            font-size: 16px;
-            margin-right: 4px;
-            display: flex;
-            align-items: center;
-            color: rgb(150, 151, 153);
-            .van-icon-search {
-              display: block;
-
-              line-height: inherit;
-              font-size: 16px;
-            }
-          }
-          .search-cell-value {
-            color: rgb(50, 50, 51);
-            text-align: left;
-            flex: 1;
-            display: flex;
-            // align-items: center;
-            .search-cell-value-body {
-              display: flex;
-              //   align-items: center;
-              width: 100%;
-              height: 100%;
-              .search-value-input {
-                display: block;
-                box-sizing: border-box;
-                width: 100%;
-                height: 100%;
-                min-width: 0;
-                margin: 0;
-                padding: 0;
-                color: rgb(50, 50, 51);
-                text-align: left;
-                background-color: transparent;
-                border: 0;
-                resize: none;
-                user-select: auto;
-                // font: -webkit-control;
-                font-size: 14px;
-                &::-webkit-search-cancel-button {
-                  display: none;
-                }
-              }
-            }
-          }
-        }
-      }
     }
   }
   .hero-type-content {
