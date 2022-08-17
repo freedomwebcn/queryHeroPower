@@ -1,5 +1,41 @@
-import { createApp } from 'vue'
+import {
+    createApp
+} from 'vue'
 import App from './App.vue'
 import router from './router'
 
-createApp(App).use(router).mount('#app')
+import 'lib-flexible/flexible'
+import 'animate.css';
+import {
+    Lazyload,
+    Loading,
+    Button,
+    Search,
+    Popup,
+    Card,
+    ConfigProvider,
+    Empty
+} from 'vant';
+const app = createApp(App)
+
+// const loadimage = require('@/views/loading.png')
+app.use(router)
+app.use(Lazyload, {
+    // loading: loadimage,
+})
+
+app.use(Button)
+app.use(Loading)
+app.use(Search)
+app.use(ConfigProvider)
+app.use(Popup)
+app.use(Card)
+app.use(Empty)
+
+
+
+
+
+
+
+app.mount('#app')
