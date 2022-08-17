@@ -5,7 +5,10 @@
         <van-icon name="arrow-left" class="ico" @click="goback" />
         <span class="header-text animate__animated animate__fadeIn" v-if="showHeaderBgc">{{typeName}}</span>
       </header>
-
+      <!-- 请求英雄列表数据 显示 loading  -->
+      <div class="heroListLoading" v-if="!filterHeroData.length && heroListLoadingErrStatus==null">
+        <van-loading type="spinner" color="255, 255, 255" />
+      </div>
       <div class="scroll-content">
         <div class="hero-list-content">
           <h2 class="type-name">{{typeName}}</h2>
@@ -19,11 +22,12 @@
         </div>
 
       </div>
-
-      <div class="hero-list-err-wrapper" v-if="heroListLoaddingErrStatus" @click="tryGetHeroData">
+      <!-- 请求英雄列表数据失败 显示错误提示 -->
+      <div class="hero-list-err-wrapper" v-if="heroListLoadingErrStatus" @click="tryGetHeroData">
         <van-empty image="error" image-size="100" description="数据加载失败, 点击重新尝试 !" />
       </div>
 
+      <!-- 弹出层 -->
       <van-popup v-model:show="show" round @closed=popupClosed>
         <div class="popup-content">
           <h5 class="popup-hero-name  ">
@@ -60,9 +64,10 @@
               <div class="hero-power-content-loading" v-else-if="isShowLoading && heroPowerStatus === null ">
                 <van-loading size="24px" vertical>加载中...</van-loading>
               </div>
-              <div class="err-wrapper" v-if="heroPowerStatus" @click="getHeroPowerData(null)">
-                <van-empty image="error" image-size="100" description="数据加载失败, 点击重新尝试 !" />
-              </div>
+
+              <van-empty image="error" image-size="100" description="数据加载失败, 点击重新尝试 !" v-if="heroPowerStatus"
+                @click="getHeroPowerData(null)" />
+
             </div>
             <div class="update-time-wrapper" v-if="heroPowerData">
               <span class="update-time">数据更新时间:{{ heroPowerData.updatetime}}</span>
@@ -70,9 +75,7 @@
           </div>
         </div>
       </van-popup>
-      <div class="loading" v-if="!filterHeroData.length && heroListLoaddingErrStatus==null">
-        <van-loading type="spinner" color="255, 255, 255" />
-      </div>
+
     </div>
 
   </van-config-provider>
@@ -81,7 +84,6 @@
 <script >
 import { useRouter, useRoute } from 'vue-router';
 import { ref, computed, watchEffect } from 'vue';
-
 import { reqHeroData, reqHeroPower } from '@/api';
 import { Notify } from 'vant';
 import 'vant/es/notify/style';
@@ -95,9 +97,8 @@ export default {
     let heroData = ref(
       JSON.parse(window.sessionStorage.getItem('allHeroData')) || []
     );
-    let heroListLoaddingErrStatus = ref(null); //英雄列表数据请求状态
-
-    const show = ref(false); //是否要展示英雄战力弹出层
+    let heroListLoadingErrStatus = ref(null); //英雄列表数据请求状态
+    const show = ref(false); //是否要展示查询英雄战力弹出层
     // 请求参数 查询英雄战力
     const queryInfo = ref({
       heroName: '',
@@ -106,14 +107,10 @@ export default {
     // 英雄战力数据
     let heroPowerData = ref(null);
     let heroIcoUrl = ref('');
-
-    // const activeSystemType = ref('aqq');
     const isFadein = ref(false);
-    const isShowLoading = ref(false);
-
-    const heroPowerStatus = ref(null);
-
-    const showHeaderBgc = ref(false);
+    const isShowLoading = ref(false); //查询英雄战力 显示loading
+    const heroPowerStatus = ref(null); //请求英雄战力数据的状态
+    const showHeaderBgc = ref(false); // 滑动英雄列表显示头部背景色和内容
     const tabList = [
       {
         systemType: 'aqq',
@@ -135,38 +132,47 @@ export default {
 
     // 请求英雄列表数据
     const getHeroData = () => {
-      if (heroData.value.length) {
-        return;
-      }
+      // 数据保存在sessionStorage中，如果再次请求 本地存储存在英雄列表数据，就return
+      if (heroData.value.length) return;
+
       reqHeroData().then(
         allHeroData => {
+          // 本地存储数据
           window.sessionStorage.setItem(
             'allHeroData',
             JSON.stringify(allHeroData)
           );
+
           heroData.value = allHeroData;
         },
         err => {
+          // 数据请求失败
           if (err) {
             console.log(err);
+            // 显示错误提示
             toNotify();
           }
-          heroListLoaddingErrStatus.value = err;
+
+          heroListLoadingErrStatus.value = err;
         }
       );
     };
-
+    // 因为没有英雄职业对应的接口，现在用计算属性从所有英雄数据中过滤出来英雄职业对应的数据
+    const filterHeroData = computed(() => {
+      return heroData.value.filter(heroObj => {
+        return heroObj.hero_type === typeId.value * 1;
+      });
+    });
     getHeroData();
-    // 数据加载失败 尝试重新获取数据
+    // 英雄列表数据加载失败 尝试重新获取数据
     const tryGetHeroData = () => {
-      heroListLoaddingErrStatus.value = null;
+      heroListLoadingErrStatus.value = null;
       getHeroData();
     };
     // 获取英雄战力数据
     const getHeroPowerData = async type => {
       queryInfo.value.type = type || queryInfo.value.type;
       heroPowerData.value = null;
-      // activeSystemType.value = type;
       isShowLoading.value = true;
       heroPowerStatus.value = null;
       try {
@@ -178,13 +184,6 @@ export default {
       }
     };
 
-    // 因为没有英雄职业对应的接口，现在用计算属性从所有英雄数据中过滤出来英雄职业对应的数据
-    const filterHeroData = computed(() => {
-      return heroData.value.filter(heroObj => {
-        return heroObj.hero_type === typeId.value * 1;
-      });
-    });
-
     const scrollRef = ref(null);
     let scrollTop;
     watchEffect(() => {
@@ -193,14 +192,10 @@ export default {
           scrollTop = e.target.scrollTop;
           if (scrollTop >= 58) {
             showHeaderBgc.value = true;
-            console.log(66);
           } else {
             showHeaderBgc.value = false;
           }
-          console.log(e.target.scrollTop);
         });
-      } else {
-        // 此时还未挂载，或此元素已经被卸载（例如通过 v-if 控制）
       }
     });
     function toNotify() {
@@ -215,7 +210,6 @@ export default {
     }
     //展示弹出层事件
     const showPopup = (heroName, url) => {
-      console.log(url);
       show.value = true;
       queryInfo.value.heroName = heroName;
       heroIcoUrl.value = url;
@@ -231,7 +225,7 @@ export default {
     };
 
     return {
-      heroListLoaddingErrStatus,
+      heroListLoadingErrStatus,
       filterHeroData,
       typeName,
       goback,
@@ -248,7 +242,6 @@ export default {
       heroPowerStatus,
       tryGetHeroData,
       popupClosed,
-
       scrollRef,
       showHeaderBgc
     };
@@ -337,7 +330,7 @@ export default {
     top: 50%;
     transform: translate(-50%, -50%);
   }
-  .loading {
+  .heroListLoading {
     position: absolute;
     top: 50%;
     left: 50%;

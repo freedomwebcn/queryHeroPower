@@ -9,10 +9,8 @@ import 'animate.css';
 import {
     Lazyload,
     Loading,
-    Button,
     Search,
     Popup,
-    Card,
     ConfigProvider,
     Empty
 } from 'vant';
@@ -24,12 +22,10 @@ app.use(Lazyload, {
     // loading: loadimage,
 })
 
-app.use(Button)
 app.use(Loading)
 app.use(Search)
 app.use(ConfigProvider)
 app.use(Popup)
-app.use(Card)
 app.use(Empty)
 
 
