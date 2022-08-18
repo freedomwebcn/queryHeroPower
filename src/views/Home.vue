@@ -95,10 +95,10 @@ export default {
       color: white;
       margin-top: 0;
     }
-    .van-search {
+    /deep/ .van-search {
       border-radius: 3px;
       padding: 0;
-      /deep/ .van-search__content {
+      .van-search__content {
         .van-search__field {
           height: 38px;
           align-items: center;
@@ -106,11 +106,14 @@ export default {
             .van-icon-search {
               color: #000;
               font-size: 18px;
+              font-weight: 700;
             }
           }
           .van-cell__value {
             .van-field__body {
-              input::-webkit-input-placeholder {
+           
+              input::placeholder {
+                font-weight: 700;
                 color: rgb(83, 83, 83);
               }
             }
