@@ -2,7 +2,7 @@
   <van-config-provider :theme-vars="themeVars" style="height:100%">
     <div class="hero-list-wrapper scroll-wrapper" ref="scrollRef">
       <header :class="{'header-bgc':showHeaderBgc}">
-        <van-icon name="arrow-left" class="ico" @click="goback" />
+        <van-icon name="arrow-left" class="ico" @click="$router.back()" />
         <span class="header-text animate__animated animate__fadeIn" v-if="showHeaderBgc">{{typeName}}</span>
       </header>
       <!-- 请求英雄列表数据 显示 loading  -->
@@ -28,7 +28,7 @@
       </div>
 
       <!-- 弹出层 -->
-      <van-popup v-model:show="show" round @closed=popupClosed>
+      <van-popup v-model:show="isShowPopup" round @closed=popupClosed>
         <div class="popup-content">
           <h5 class="popup-hero-name  ">
             <img :src="heroIcoUrl" alt="" class="animate__animated animate__headShake ">
@@ -82,155 +82,86 @@
 
 </template>
 <script >
-import { useRouter, useRoute } from 'vue-router';
-import { ref, computed, watchEffect } from 'vue';
-import { reqHeroData, reqHeroPower } from '@/api';
-import { Notify } from 'vant';
+import { useRoute } from 'vue-router';
+import { ref, onMounted } from 'vue';
 import 'vant/es/notify/style';
+
+import { tabList } from './tabList';
+import { useReqHeroListData } from './getHeroList';
+import { useReqHeroPowerData } from './getHeroPower';
 
 export default {
   setup() {
     const route = useRoute();
-    const router = useRouter();
     const typeId = ref(route.params.typeId); //英雄职业对应ID
-    const typeName = ref(route.params.typeName);
-    let heroData = ref(
-      JSON.parse(window.sessionStorage.getItem('allHeroData')) || []
-    );
+    const typeName = ref(route.params.typeName); //英雄职业名字
+    const isShowPopup = ref(false); //是否要展示查询英雄战力弹出层
+    let heroIcoUrl = ref('');
+    const showHeaderBgc = ref(false); // 滑动英雄列表显示头部背景色和内容
+    const scrollRef = ref(null);
+    let scrollTop;
+    // 从请求英雄列表数据模块中提取出来需要的数据
+    let {
+      getHeroData,
+      filterHeroData,
+      heroListLoadingErrStatus
+    } = useReqHeroListData(typeId);
+    //获取英雄列表数据
+    getHeroData();
+    // 英雄列表数据失败 尝试重新获取数据
+    const tryGetHeroData = () => {
+      heroListLoadingErrStatus.value = null;
+      getHeroData();
+    };
 
-    let heroListLoadingErrStatus = ref(null); //英雄列表数据请求状态
-    const show = ref(false); //是否要展示查询英雄战力弹出层
     // 请求参数 查询英雄战力
     const queryInfo = ref({
       heroName: '',
       type: ref('aqq')
     });
-    // 英雄战力数据
-    let heroPowerData = ref(null);
-    let heroIcoUrl = ref('');
-    const isFadein = ref(false);
-    const isShowLoading = ref(false); //查询英雄战力 显示loading
-    const heroPowerStatus = ref(null); //请求英雄战力数据的状态
-    const showHeaderBgc = ref(false); // 滑动英雄列表显示头部背景色和内容
-    const tabList = [
-      {
-        systemType: 'aqq',
-        systemName: '安卓QQ区'
-      },
-      {
-        systemType: 'awx',
-        systemName: '安卓VX区'
-      },
-      {
-        systemType: 'iqq',
-        systemName: '苹果QQ区'
-      },
-      {
-        systemType: 'iwx',
-        systemName: '苹果VX区'
-      }
-    ];
 
-    // 请求英雄列表数据
-    const getHeroData = () => {
-      // 如果sessionStorage 已经保存过英雄列表数据，就return
-      if (heroData.value.length) return;
+    // 从请求英雄战力模块中提取出来需要的数据
+    const {
+      heroPowerData,
+      isShowLoading,
+      heroPowerStatus,
+      isFadein,
+      getHeroPowerData
+    } = useReqHeroPowerData(queryInfo);
 
-      reqHeroData().then(
-        allHeroData => {
-          // 本地存储数据
-          window.sessionStorage.setItem(
-            'allHeroData',
-            JSON.stringify(allHeroData)
-          );
-
-          heroData.value = allHeroData;
-        },
-        err => {
-          // 数据请求失败
-          if (err) {
-            console.log(err);
-            // 显示错误提示
-            toNotify();
-          }
-
-          heroListLoadingErrStatus.value = err;
-        }
-      );
-    };
-    // 因为没有英雄职业对应的接口，现在用计算属性从所有英雄数据中过滤出来英雄职业对应的数据
-    const filterHeroData = computed(() => {
-      return heroData.value.filter(heroObj => {
-        return heroObj.hero_type === typeId.value * 1;
-      });
-    });
-    getHeroData();
-    // 英雄列表数据加载失败 尝试重新获取数据
-    const tryGetHeroData = () => {
-      heroListLoadingErrStatus.value = null;
-      getHeroData();
-    };
-    // 获取英雄战力数据
-    const getHeroPowerData = async type => {
-      queryInfo.value.type = type || queryInfo.value.type;
-      heroPowerData.value = null;
-      isShowLoading.value = true;
-      heroPowerStatus.value = null;
-      try {
-        heroPowerData.value = await reqHeroPower(queryInfo.value);
-        isFadein.value = true;
-      } catch (error) {
-        heroPowerStatus.value = error;
-        console.log(error);
-      }
-    };
-
-    const scrollRef = ref(null);
-    let scrollTop;
-    watchEffect(() => {
-      if (scrollRef.value) {
-        scrollRef.value.addEventListener('scroll', function(e) {
-          scrollTop = e.target.scrollTop;
-          if (scrollTop >= 58) {
-            showHeaderBgc.value = true;
-          } else {
-            showHeaderBgc.value = false;
-          }
-        });
-      }
-    });
-    function toNotify() {
-      Notify({
-        type: 'danger',
-        message: '数据请求失败,请重新尝试 !'
-      });
-    }
-
-    function goback() {
-      router.back();
-    }
     //展示弹出层事件
     const showPopup = (heroName, url) => {
-      show.value = true;
+      isShowPopup.value = true;
       queryInfo.value.heroName = heroName;
       heroIcoUrl.value = url;
       getHeroPowerData();
     };
+    // 弹出层关闭触发
     const popupClosed = () => {
       queryInfo.value.type = 'aqq';
     };
+
+    onMounted(() => {
+      scrollRef.value.addEventListener('scroll', function(e) {
+        scrollTop = e.target.scrollTop;
+        if (scrollTop >= 58) {
+          showHeaderBgc.value = true;
+        } else {
+          showHeaderBgc.value = false;
+        }
+      });
+    });
+    // ui框架样式配置
     const themeVars = {
       popupRoundBorderRadius: '6px',
       emptyPadding: '0px',
       emptyDescriptionPadding: '0px'
     };
-
     return {
       heroListLoadingErrStatus,
       filterHeroData,
       typeName,
-      goback,
-      show,
+      isShowPopup,
       showPopup,
       themeVars,
       getHeroPowerData,
