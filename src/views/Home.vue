@@ -1,23 +1,27 @@
 <template>
-  <div class="home-wrapper">
-    <!-- 搜索框 -->
-    <div class="search-wrapper">
-      <h2 class="search-title">搜索</h2>
-      <van-search v-model="keyworld" disabled placeholder="搜索功能暂不可用" />
-    </div>
-    <!-- 英雄职业列表 -->
-    <div class="hero-type-content">
-      <h3 class="title">英雄职业</h3>
-      <div class="hero-type-list">
-        <div :style="{backgroundColor: heroTypeItem.bgcolor}" class="hero-type-item"
-          v-for="(heroTypeItem,index) in heroTypeList" :key="heroTypeItem.type"
-          @click='getHeroList({typeId:index+1,typeName:heroTypeItem.type})'>
-          <img :src="heroTypeItem.ico" class="ico" alt="">
-          <span class="type-name">{{heroTypeItem.type}}</span>
+  <van-config-provider :theme-vars="themeVars" style="height:100%">
+
+    <div class="home-wrapper">
+      <!-- 搜索框 -->
+      <div class="search-wrapper">
+        <h2 class="search-title">搜索</h2>
+        <!--  -->
+        <van-search v-model="keyworld" placeholder="搜索功能暂不可用" />
+      </div>
+      <!-- 英雄职业列表 -->
+      <div class="hero-type-content">
+        <h3 class="title">英雄职业</h3>
+        <div class="hero-type-list">
+          <div :style="{backgroundColor: heroTypeItem.bgcolor}" class="hero-type-item"
+            v-for="(heroTypeItem,index) in heroTypeList" :key="heroTypeItem.type"
+            @click='getHeroList({typeId:index+1,typeName:heroTypeItem.type})'>
+            <img :src="heroTypeItem.ico" class="ico" alt="">
+            <span class="type-name">{{heroTypeItem.type}}</span>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </van-config-provider>
 
 </template>
 <script >
@@ -64,11 +68,13 @@ export default {
     function getHeroList(heroTypeObJ) {
       router.push({ name: 'heroList', params: { ...heroTypeObJ } });
     }
-
+    // ui框架样式配置
+    const themeVars = {};
     return {
       heroTypeList,
       getHeroList,
-      keyworld
+      keyworld,
+      themeVars
     };
   }
 };
@@ -89,9 +95,28 @@ export default {
       color: white;
       margin-top: 0;
     }
-    .van-search{
+    .van-search {
       border-radius: 3px;
       padding: 0;
+      /deep/ .van-search__content {
+        .van-search__field {
+          height: 38px;
+          align-items: center;
+          .van-field__left-icon {
+            .van-icon-search {
+              color: #000;
+              font-size: 18px;
+            }
+          }
+          .van-cell__value {
+            .van-field__body {
+              input::-webkit-input-placeholder {
+                color: rgb(83, 83, 83);
+              }
+            }
+          }
+        }
+      }
     }
   }
   .hero-type-content {
