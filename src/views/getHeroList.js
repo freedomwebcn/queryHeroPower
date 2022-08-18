@@ -14,6 +14,7 @@ export function useReqHeroListData(typeId) {
     let heroData = ref(JSON.parse(window.sessionStorage.getItem('allHeroData')) || []);
     let heroListLoadingErrStatus = ref(null); //英雄列表数据请求状态
 
+    
     function toNotify() {
         Notify({
             type: 'danger',

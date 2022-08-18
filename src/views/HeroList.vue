@@ -43,35 +43,37 @@
           <div class="hero-power-wrapper">
             <div class="hero-power-content">
               <template v-if="heroPowerData">
-                <div class="administrative-region-wrapper  animate__animated " :class="{animate__fadeIn:isFadein}">
-                  <div class="administrative-region-content">
+                <div class="district-wrapper  animate__animated " :class="{animate__fadeIn:isFadein}">
+                  <div class="district-content">
                     <span class="reward">省级</span>
-                    <span class="administrative-region">{{heroPowerData.province}}</span>
+                    <span class="district">{{heroPowerData.province}}</span>
                     <span class="score">{{heroPowerData.provincePower+'分'}}</span>
                   </div>
-                  <div class="administrative-region-content">
+                  <div class="district-content">
                     <span class="reward">市级</span>
-                    <span class="administrative-region">{{heroPowerData.city}}</span>
+                    <span class="district">{{heroPowerData.city}}</span>
                     <span class="score">{{heroPowerData.cityPower+'分'}}</span>
                   </div>
-                  <div class="administrative-region-content">
+                  <div class="district-content">
                     <span class="reward">区级</span>
-                    <span class="administrative-region">{{heroPowerData.area}}</span>
+                    <span class="district">{{heroPowerData.area}}</span>
                     <span class="score">{{heroPowerData.areaPower+'分'}}</span>
                   </div>
                 </div>
+
+                <div class="update-time-wrapper" v-if="heroPowerData">
+                  <span class="update-time">数据更新时间:{{ heroPowerData.updatetime}}</span>
+                </div>
+
               </template>
               <div class="hero-power-content-loading" v-else-if="isShowLoading && heroPowerStatus === null ">
                 <van-loading size="24px" vertical>加载中...</van-loading>
               </div>
-
               <van-empty image="error" image-size="100" description="数据加载失败, 点击重新尝试 !" v-if="heroPowerStatus"
                 @click="getHeroPowerData(null)" />
 
             </div>
-            <div class="update-time-wrapper" v-if="heroPowerData">
-              <span class="update-time">数据更新时间:{{ heroPowerData.updatetime}}</span>
-            </div>
+
           </div>
         </div>
       </van-popup>
@@ -108,7 +110,7 @@ export default {
     } = useReqHeroListData(typeId);
     //获取英雄列表数据
     getHeroData();
-    // 英雄列表数据失败 尝试重新获取数据
+    // 如果英雄列表数据获取失败 点击尝试重新获取数据
     const tryGetHeroData = () => {
       heroListLoadingErrStatus.value = null;
       getHeroData();
@@ -311,32 +313,27 @@ export default {
           align-items: center;
         }
 
-        .administrative-region-wrapper {
+        .district-wrapper {
           padding: 15px 3px 12px 3px;
           display: grid;
           grid-row-gap: 20px;
           font-size: 13px;
 
-          .administrative-region-content {
+          .district-content {
             display: grid;
             grid-template-columns: 1fr 2fr 1fr;
-
-            .reward {
-            }
-            .administrative-region {
-            }
             .score {
               justify-self: end;
             }
           }
         }
+        .update-time-wrapper {
+          display: grid;
+          justify-items: end;
+          padding: 5px 3px 0px 3px;
+          color: rgb(200, 201, 204);
+        }
       }
-    }
-    .update-time-wrapper {
-      display: grid;
-      justify-items: end;
-      padding: 5px 3px 0px 3px;
-      color: rgb(200, 201, 204);
     }
   }
 }

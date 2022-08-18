@@ -10,8 +10,7 @@ instance.interceptors.request.use(function (config) {
 
 // 添加响应拦截器
 instance.interceptors.response.use(function (response) {
-    // console.log(response.data.data);
-    console.log(response)
+   
     return response.data.data
 }, function (error) {
     console.log(error);
