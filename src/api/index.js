@@ -1,6 +1,8 @@
 import ajax from './ajax'
+import service from './service'
 
-export const reqHeroData = () => ajax('hero/getHeroList.php')
+
+export const reqHeroData = () => service('/herolist.json')
 export const reqHeroPower = ({
     heroName,
     type

@@ -9,6 +9,7 @@
   <title><%= htmlWebpackPlugin.options.title %></title>
   <!-- <link rel="stylesheet" href="./reset.css"> -->
   <script src="https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+  <script src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"></script>
 
 </head>
 
@@ -17,10 +18,10 @@
   * {
     touch-action: pan-y;
     box-sizing: border-box;
-  
+
 
   }
-   
+
   html,
   body {
     height: 100%;
@@ -49,6 +50,10 @@
         FastClick.attach(document.body);
       }, false);
     }
+
+
+    // VConsole 默认会挂载到 `window.VConsole` 上
+    var vConsole = new window.VConsole();
   </script>
 </body>
 
