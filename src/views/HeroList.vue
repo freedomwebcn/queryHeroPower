@@ -140,7 +140,7 @@ export default {
     };
     // 弹出层关闭触发
     const popupClosed = () => {
-      queryInfo.value.type = 'qq';
+      queryInfo.value.type = 'aqq';
     };
 
     onMounted(() => {
