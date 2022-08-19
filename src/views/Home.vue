@@ -1,27 +1,25 @@
 <template>
-  <van-config-provider :theme-vars="themeVars" style="height:100%">
 
-    <div class="home-wrapper">
-      <!-- 搜索框 -->
-      <div class="search-wrapper">
-        <h2 class="search-title">搜索</h2>
-        <!--  -->
-        <van-search v-model="keyworld" placeholder="搜索功能暂不可用" />
-      </div>
-      <!-- 英雄职业列表 -->
-      <div class="hero-type-content">
-        <h3 class="title">英雄职业</h3>
-        <div class="hero-type-list">
-          <div :style="{backgroundColor: heroTypeItem.bgcolor}" class="hero-type-item"
-            v-for="(heroTypeItem,index) in heroTypeList" :key="heroTypeItem.type"
-            @click='getHeroList({typeId:index+1,typeName:heroTypeItem.type})'>
-            <img :src="heroTypeItem.ico" class="ico" alt="">
-            <span class="type-name">{{heroTypeItem.type}}</span>
-          </div>
+  <div class="home-wrapper">
+    <!-- 搜索框 -->
+    <div class="search-wrapper">
+      <h2 class="search-title">搜索</h2>
+      <!--  -->
+      <van-search v-model="keyworld" placeholder="搜索功能暂不可用" />
+    </div>
+    <!-- 英雄职业列表 -->
+    <div class="hero-type-content">
+      <h3 class="title">英雄职业</h3>
+      <div class="hero-type-list">
+        <div :style="{backgroundColor: heroTypeItem.bgcolor}" class="hero-type-item"
+          v-for="(heroTypeItem,index) in heroTypeList" :key="heroTypeItem.type"
+          @click='getHeroList({typeId:index+1,typeName:heroTypeItem.type})'>
+          <img :src="heroTypeItem.ico" class="ico" alt="">
+          <span class="type-name">{{heroTypeItem.type}}</span>
         </div>
       </div>
     </div>
-  </van-config-provider>
+  </div>
 
 </template>
 <script >
@@ -68,13 +66,11 @@ export default {
     function getHeroList(heroTypeObJ) {
       router.push({ name: 'heroList', params: { ...heroTypeObJ } });
     }
-    // ui框架样式配置
-    const themeVars = {};
+
     return {
       heroTypeList,
       getHeroList,
-      keyworld,
-      themeVars
+      keyworld
     };
   }
 };
@@ -95,7 +91,7 @@ export default {
       color: white;
       margin-top: 0;
     }
-    /deep/ .van-search {
+    :deep(.van-search) {
       border-radius: 3px;
       padding: 0;
       .van-search__content {
@@ -111,7 +107,6 @@ export default {
           }
           .van-cell__value {
             .van-field__body {
-           
               input::placeholder {
                 font-weight: 700;
                 color: rgb(83, 83, 83);

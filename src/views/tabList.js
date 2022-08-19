@@ -1,17 +1,17 @@
 export const tabList = [{
-        systemType: 'qq',
+        systemType: 'aqq',
         systemName: '安卓QQ区'
     },
     {
-        systemType: 'wx',
+        systemType: 'awx',
         systemName: '安卓VX区'
     },
     {
-        systemType: 'ios_qq',
+        systemType: 'iqq',
         systemName: '苹果QQ区'
     },
     {
-        systemType: 'ios_wx',
+        systemType: 'iwx',
         systemName: '苹果VX区'
     }
 ];

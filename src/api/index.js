@@ -3,9 +3,11 @@ import service from './service'
 
 
 export const reqHeroData = () => service('/herolist.json')
-// qq,wx,ios_qq,ios_wx
+
+
+
 export const reqHeroPower = ({
     heroName,
     
     type
-    }) => ajax(`select?name=${heroName}&type=${type}`)
+    }) => ajax(`/hero/select.php?hero=${heroName}&type=${type}`)
