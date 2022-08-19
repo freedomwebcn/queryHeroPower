@@ -119,7 +119,7 @@ export default {
     // 请求参数 查询英雄战力
     const queryInfo = ref({
       heroName: '',
-      type: ref('aqq')
+      type: ref('qq')
     });
 
     // 从请求英雄战力模块中提取出来需要的数据
@@ -140,7 +140,7 @@ export default {
     };
     // 弹出层关闭触发
     const popupClosed = () => {
-      queryInfo.value.type = 'aqq';
+      queryInfo.value.type = 'qq';
     };
 
     onMounted(() => {
