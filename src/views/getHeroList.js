@@ -27,16 +27,11 @@ export function useReqHeroListData(typeId) {
 
         reqHeroData().then(
             allHeroData => {
-
-
-
-                console.log(allHeroData)
                 // 本地存储数据
                 window.sessionStorage.setItem(
                     'allHeroData',
                     JSON.stringify(allHeroData)
                 );
-
                 heroData.value = allHeroData;
             },
             err => {

@@ -19,15 +19,11 @@ export function useReqHeroPowerData(queryInfo) {
         heroPowerStatus.value = null;
         try {
             heroPowerData.value = await reqHeroPower(queryInfo.value);
-            if (heroPowerData.value.code === 200) {
-                heroPowerData.value = heroPowerData.value.data[0]
-                isFadein.value = true;
-            } else {
-                heroPowerStatus.value = heroPowerData.value.msg;
-            }
+            isFadein.value = true;
+
         } catch (error) {
             heroPowerStatus.value = error;
-            console.log(error);
+            console.log(error, 'err');
         }
     };
 
