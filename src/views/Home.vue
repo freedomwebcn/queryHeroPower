@@ -49,8 +49,6 @@ export default {
   background-image: linear-gradient(150deg,
       rgba(83, 83, 83, 0.8) 20px,
       transparent 220px);
-
-  // overflow: hidden;
   .search-wrapper {
     .search-title {
       font-size: 18px;
@@ -66,7 +64,6 @@ export default {
         .van-search__field {
           height: 38px;
           align-items: center;
-
           .van-field__left-icon {
             .van-icon-search {
               color: #000;

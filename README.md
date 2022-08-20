@@ -1,24 +1,22 @@
-# hero
+# 查询王者荣耀英雄战力
 
-## Project setup
+### 进入项目根目录 下载项目依赖环境  
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### 运行项目
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
+### 项目截图
+![主页](./screenshot/home.png)
 
-### Lints and fixes files
-```
-npm run lint
-```
+![英雄职业对应列表](./screenshot/heroList.png)
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+![英雄战力查询](./screenshot/heroPower.png)
+
+
+
+

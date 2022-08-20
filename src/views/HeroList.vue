@@ -33,7 +33,6 @@
       <!-- 英雄战力弹出层 -->
       <van-popup v-model:show="isShowPopup" round @closed=popupClosed>
         <div class="popup-content">
-       
           <h5 class="popup-hero-ico  ">
             <img :src="heroIcoUrl" alt="" class="animate__animated animate__headShake ">
           </h5>
@@ -144,6 +143,7 @@ export default {
     };
     // 弹出层关闭触发
     const popupClosed = () => {
+      // 设置为默认值 如果不设置 下次打开模态框时 tab active类 会停留在之前关闭时点击的那个tab-item身上
       queryInfo.value.type = 'aqq';
     };
 
