@@ -1,16 +1,19 @@
 <template>
   <van-config-provider :theme-vars="themeVars" style="height:100%">
     <div class="hero-list-wrapper scroll-wrapper" ref="scrollRef">
+
       <header :class="{'header-bgc':showHeaderBgc}">
         <van-icon name="arrow-left" class="ico" @click="$router.back()" />
         <span class="header-text animate__animated animate__fadeIn" v-if="showHeaderBgc">{{typeName}}</span>
       </header>
+
       <!-- 请求英雄列表数据 显示 loading  -->
       <div class="hero-list-loading" v-if="!filterHeroData.length && heroListLoadingErrStatus==null">
         <van-loading type="spinner" color="255, 255, 255" />
       </div>
       <div class="scroll-content">
         <div class="hero-list-content">
+          <!-- <img src="./img/tiger.png" alt="" class="png"> -->
           <h2 class="type-name">{{typeName}}</h2>
           <ul class="hero-list">
             <li class="hero-list-item" v-for="heroItem in filterHeroData" :key="heroItem.cname"
@@ -27,10 +30,11 @@
         <van-empty image="error" image-size="100" description="数据加载失败, 点击重新尝试 !" />
       </div>
 
-      <!-- 弹出层 -->
+      <!-- 英雄战力弹出层 -->
       <van-popup v-model:show="isShowPopup" round @closed=popupClosed>
         <div class="popup-content">
-          <h5 class="popup-hero-name  ">
+       
+          <h5 class="popup-hero-ico  ">
             <img :src="heroIcoUrl" alt="" class="animate__animated animate__headShake ">
           </h5>
           <div class="tab-wrapper">
@@ -186,17 +190,19 @@ export default {
 @import '@/Mixins/dScrollBar';
 .hero-list-wrapper {
   height: 100%;
+  width: 100%;
   overflow: hidden;
   overflow-y: scroll;
   .delete-scroll-bar();
 
   header {
-    width: 100%;
+    width: 375px;
+    display: flex;
     position: fixed;
+    align-items: center;
     z-index: 66;
     padding: 16px 10px;
-    display: flex;
-    align-items: center;
+
     &.header-bgc {
       background-color: #181818;
     }
@@ -224,6 +230,12 @@ export default {
       position: relative;
       z-index: 2;
       padding: 72px 10px 0 10px;
+      .png {
+        width: 100px;
+        height: 100px;
+        position: absolute;
+        left: -15px;
+      }
       .type-name {
         padding: 22px 22px 2px 22px;
         font-size: 28px;
@@ -278,12 +290,12 @@ export default {
     width: 280px;
     height: 280px;
     padding: 12px;
-
-    .popup-hero-name {
+    
+    .popup-hero-ico {
       display: flex;
       justify-content: center;
       font-size: 16px;
-      margin: 5px 0 5px 0;
+      margin: 5px 0;
 
       img {
         width: 50px;
