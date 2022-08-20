@@ -24,9 +24,8 @@
 <script >
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { heroTypeList } from '@/views/heroTypeList'
+import { heroTypeList } from './heroTypeList'
 export default {
-  components: {},
   setup() {
     const router = useRouter();
     const keyworld = ref('');
@@ -49,6 +48,7 @@ export default {
   background-image: linear-gradient(150deg,
       rgba(83, 83, 83, 0.8) 20px,
       transparent 220px);
+
   .search-wrapper {
     .search-title {
       font-size: 18px;
@@ -59,7 +59,6 @@ export default {
     :deep(.van-search) {
       border-radius: 3px;
       padding: 0;
-
       .van-search__content {
         .van-search__field {
           height: 38px;
@@ -71,7 +70,6 @@ export default {
               font-weight: 700;
             }
           }
-
           .van-cell__value {
             .van-field__body {
               input::placeholder {

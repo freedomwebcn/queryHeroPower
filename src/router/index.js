@@ -5,8 +5,8 @@ import {
 // import Home from '../views/Home.vue'
 // import heroList from '../views/HeroList.vue'
 
-const Home = () => import('../views/Home.vue')
-const heroList = () => import('../views/HeroList.vue')
+const Home = () => import('../views/Home')
+const heroList = () => import('../views/HeroList')
 
 const routes = [{
     path: '/',

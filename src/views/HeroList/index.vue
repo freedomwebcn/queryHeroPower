@@ -13,7 +13,6 @@
       </div>
       <div class="scroll-content">
         <div class="hero-list-content">
-          <!-- <img src="./img/tiger.png" alt="" class="png"> -->
           <h2 class="type-name">{{typeName}}</h2>
           <ul class="hero-list">
             <li class="hero-list-item" v-for="heroItem in filterHeroData" :key="heroItem.cname"
@@ -47,6 +46,7 @@
             <div class="hero-power-content">
               <template v-if="heroPowerData">
                 <div class="district-wrapper  animate__animated " :class="{animate__fadeIn:isFadein}">
+
                   <div class="district-content">
                     <span class="reward">省级</span>
                     <span class="district">{{heroPowerData.province}}</span>
