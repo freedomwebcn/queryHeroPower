@@ -22,10 +22,12 @@ export function useReqHeroPowerData(queryInfo) {
         try {
             heroPowerData.value = await reqHeroPower(queryInfo.value);
             isFadein.value = true;
-
         } catch (error) {
             heroPowerStatus.value = error;
-            Notify('这可能是因为您网络开启了代理,请先关闭代理 !')
+            Notify({
+                message: '这可能是因为您网络开启了代理,请先关闭代理 !',
+                duration: 5000,
+            });
             console.log(error, 'err');
         }
     };
@@ -33,7 +35,7 @@ export function useReqHeroPowerData(queryInfo) {
 
     return {
         heroPowerData,
-        isShowLoading, 
+        isShowLoading,
         heroPowerStatus,
         isFadein,
         getHeroPowerData
