@@ -10,11 +10,7 @@ instance.interceptors.request.use(function (config) {
 
 // 添加响应拦截器
 instance.interceptors.response.use(function (response) {
-    if (response.data.code === 200) {
-        return response.data.data
-    } else {
-        return Promise.reject(response.data.code)
-    }
+    return response.data.data
 
 }, function (error) {
     console.log(error);
