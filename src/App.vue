@@ -2,11 +2,12 @@
   <div class="app-container">
 
     <!-- <router-view /> -->
-    <router-view v-slot="{ Component,route  }">
+    <router-view v-slot="{ Component, route }">
       <transition :name="route.meta.transition">
         <component :is="Component" />
       </transition>
     </router-view>
+   
 
   </div>
 
@@ -16,9 +17,11 @@
 .home-enter-from {
   transform: translateX(-100%);
 }
+
 .home-enter-to {
   transform: translateX(0);
 }
+
 .home-enter-active {
   transition: 0.5s ease;
 }
@@ -26,9 +29,11 @@
 .homeList-enter-from {
   transform: translateX(100%);
 }
+
 .homeList-enter-to {
   transform: translateX(0);
 }
+
 .homeList-enter-active {
   transition: 0.5s ease;
 }

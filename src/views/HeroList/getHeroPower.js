@@ -4,15 +4,17 @@ import {
 import {
     reqHeroPower
 } from '@/api';
-
+import {
+    Notify
+} from 'vant';
 
 export function useReqHeroPowerData(queryInfo) {
     let heroPowerData = ref(null); //英雄战力数据
-    const isShowLoading = ref(false); //查询英雄战力期间 显示loading
-    const heroPowerStatus = ref(null); //请求英雄战力数据的状态
-    const isFadein = ref(false);
+    let isShowLoading = ref(false); //查询英雄战力期间 显示loading
+    let heroPowerStatus = ref(null); //请求英雄战力数据的状态
+    let isFadein = ref(false);
 
-    const getHeroPowerData = async (type) => {
+    let getHeroPowerData = async (type) => {
         queryInfo.value.type = type || queryInfo.value.type;
         heroPowerData.value = null;
         isShowLoading.value = true;
@@ -23,6 +25,7 @@ export function useReqHeroPowerData(queryInfo) {
 
         } catch (error) {
             heroPowerStatus.value = error;
+            Notify('这可能是因为您网络开启了代理,请先关闭代理 !')
             console.log(error, 'err');
         }
     };
@@ -30,7 +33,7 @@ export function useReqHeroPowerData(queryInfo) {
 
     return {
         heroPowerData,
-        isShowLoading,
+        isShowLoading, 
         heroPowerStatus,
         isFadein,
         getHeroPowerData

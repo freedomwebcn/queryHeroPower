@@ -1,6 +1,10 @@
 <template>
 
   <div class="home-wrapper">
+
+ 
+
+    
     <!-- 搜索框 -->
     <div class="search-wrapper">
       <h2 class="search-title">搜索</h2>

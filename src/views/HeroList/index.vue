@@ -2,23 +2,23 @@
   <van-config-provider :theme-vars="themeVars" style="height:100%">
     <div class="hero-list-wrapper scroll-wrapper" ref="scrollRef">
 
-      <header :class="{'header-bgc':showHeaderBgc}">
+      <header :class="{ 'header-bgc': showHeaderBgc }">
         <van-icon name="arrow-left" class="ico" @click="$router.back()" />
-        <span class="header-text animate__animated animate__fadeIn" v-if="showHeaderBgc">{{typeName}}</span>
+        <span class="header-text animate__animated animate__fadeIn" v-if="showHeaderBgc">{{ typeName }}</span>
       </header>
 
       <!-- 请求英雄列表数据 显示 loading  -->
-      <div class="hero-list-loading" v-if="!filterHeroData.length && heroListLoadingErrStatus==null">
+      <div class="hero-list-loading" v-if="!filterHeroData.length && heroListLoadingErrStatus == null">
         <van-loading type="spinner" color="255, 255, 255" />
       </div>
       <div class="scroll-content">
         <div class="hero-list-content">
-          <h2 class="type-name">{{typeName}}</h2>
+          <h2 class="type-name">{{ typeName }}</h2>
           <ul class="hero-list">
             <li class="hero-list-item" v-for="heroItem in filterHeroData" :key="heroItem.cname"
-              @click="showPopup(heroItem.cname,heroItem.iconUrl)">
+              @click="showPopup(heroItem.cname, heroItem.iconUrl)">
               <img v-lazy="heroItem.iconUrl" class="ico" alt="">
-              <span class="hero-name">{{heroItem.cname}}</span>
+              <span class="hero-name">{{ heroItem.cname }}</span>
             </li>
           </ul>
         </div>
@@ -38,42 +38,43 @@
           <div class="tab-wrapper">
             <span style="display:inline-block" @click="getHeroPowerData(tabItem.systemType)" v-for="tabItem in tabList"
               :key="tabItem" :class="{ active: tabItem.systemType === queryInfo.type }">
-              {{tabItem.systemName}}
+              {{ tabItem.systemName }}
             </span>
           </div>
           <div class="van-hairline--top hairline"></div>
           <div class="hero-power-wrapper">
             <div class="hero-power-content">
               <template v-if="heroPowerData">
-                <div class="district-wrapper  animate__animated " :class="{animate__fadeIn:isFadein}">
+                <div class="district-wrapper  animate__animated " :class="{ animate__fadeIn: isFadein }">
 
                   <div class="district-content">
                     <span class="reward">省级</span>
-                    <span class="district">{{heroPowerData.province}}</span>
-                    <span class="score">{{heroPowerData.provincePower+'分'}}</span>
+                    <span class="district">{{ heroPowerData.province }}</span>
+                    <span class="score">{{ heroPowerData.provincePower + '分' }}</span>
                   </div>
                   <div class="district-content">
                     <span class="reward">市级</span>
-                    <span class="district">{{heroPowerData.city}}</span>
-                    <span class="score">{{heroPowerData.cityPower+'分'}}</span>
+                    <span class="district">{{ heroPowerData.city }}</span>
+                    <span class="score">{{ heroPowerData.cityPower + '分' }}</span>
                   </div>
                   <div class="district-content">
                     <span class="reward">区级</span>
-                    <span class="district">{{heroPowerData.area}}</span>
-                    <span class="score">{{heroPowerData.areaPower+'分'}}</span>
+                    <span class="district">{{ heroPowerData.area }}</span>
+                    <span class="score">{{ heroPowerData.areaPower + '分' }}</span>
                   </div>
                 </div>
 
                 <div class="update-time-wrapper" v-if="heroPowerData">
-                  <span class="update-time">数据更新时间:{{ heroPowerData.updatetime}}</span>
+                  <span class="update-time">数据更新时间:{{ heroPowerData.updatetime }}</span>
                 </div>
 
               </template>
-              <div class="hero-power-content-loading" v-else-if="isShowLoading && heroPowerStatus === null ">
+              <div class="hero-power-content-loading" v-else-if="isShowLoading && heroPowerStatus === null">
                 <van-loading size="24px" vertical>加载中...</van-loading>
               </div>
               <van-empty image="error" image-size="100" description="数据加载失败, 点击重新尝试 !" v-if="heroPowerStatus"
                 @click="getHeroPowerData(null)" />
+                
 
             </div>
 
@@ -82,7 +83,7 @@
       </van-popup>
 
     </div>
-
+   
   </van-config-provider>
 
 </template>
@@ -148,7 +149,7 @@ export default {
     };
 
     onMounted(() => {
-      scrollRef.value.addEventListener('scroll', function(e) {
+      scrollRef.value.addEventListener('scroll', function (e) {
         scrollTop = e.target.scrollTop;
         if (scrollTop >= 58) {
           showHeaderBgc.value = true;
@@ -161,7 +162,7 @@ export default {
     const themeVars = {
       popupRoundBorderRadius: '6px',
       emptyPadding: '0px',
-      emptyDescriptionPadding: '0px'
+      emptyDescriptionPadding: '0px',
     };
     return {
       heroListLoadingErrStatus,
@@ -188,6 +189,7 @@ export default {
 </script>
 <style lang="less" scoped>
 @import '@/Mixins/dScrollBar';
+
 .hero-list-wrapper {
   height: 100%;
   width: 100%;
@@ -221,21 +223,21 @@ export default {
 
   .scroll-content {
     position: relative;
-    background-image: linear-gradient(
-      rgba(83, 83, 83, 0.8) 0%,
-      transparent 165px
-    );
+    background-image: linear-gradient(rgba(83, 83, 83, 0.8) 0%,
+        transparent 165px);
 
     .hero-list-content {
       position: relative;
       z-index: 2;
       padding: 72px 10px 0 10px;
+
       .png {
         width: 100px;
         height: 100px;
         position: absolute;
         left: -15px;
       }
+
       .type-name {
         padding: 22px 22px 2px 22px;
         font-size: 28px;
@@ -243,11 +245,13 @@ export default {
         color: white;
         margin-top: 0;
       }
+
       .hero-list {
         display: grid;
         grid-template-columns: repeat(4, 1fr [col-start]);
         grid-column-gap: 10px;
         grid-row-gap: 10px;
+
         .hero-list-item {
           display: grid;
           justify-items: center;
@@ -255,10 +259,12 @@ export default {
           padding: 10px;
           background: #181818;
           border-radius: 4px;
+
           .ico {
             height: 56px;
             border-radius: 4px;
           }
+
           .hero-name {
             color: white;
           }
@@ -290,7 +296,7 @@ export default {
     width: 280px;
     height: 280px;
     padding: 12px;
-    
+
     .popup-hero-ico {
       display: flex;
       justify-content: center;
@@ -303,19 +309,23 @@ export default {
         border-radius: 50%;
       }
     }
+
     .tab-wrapper {
       display: grid;
       justify-items: center;
       grid-template-columns: 1fr 1fr 1fr 1fr;
       padding: 15px 0;
       font-size: 13px;
+
       span {
         font-weight: 600;
+
         &.active {
           color: #db9e3f;
         }
       }
     }
+
     .hero-power-wrapper {
       .hero-power-content {
         .hero-power-content-loading {
@@ -334,11 +344,13 @@ export default {
           .district-content {
             display: grid;
             grid-template-columns: 1fr 2fr 1fr;
+
             .score {
               justify-self: end;
             }
           }
         }
+
         .update-time-wrapper {
           display: grid;
           justify-items: end;
