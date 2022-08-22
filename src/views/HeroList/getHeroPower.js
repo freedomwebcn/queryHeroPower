@@ -12,7 +12,6 @@ export function useReqHeroPowerData(queryInfo) {
     let heroPowerData = ref(null); //英雄战力数据
     let isShowLoading = ref(false); //查询英雄战力期间 显示loading
     let heroPowerStatus = ref(null); //请求英雄战力数据的状态
-    let isFadein = ref(false);
 
     let getHeroPowerData = async (type) => {
         console.log(type,"22222");
@@ -22,7 +21,6 @@ export function useReqHeroPowerData(queryInfo) {
         heroPowerStatus.value = null;
         try {
             heroPowerData.value = await reqHeroPower(queryInfo.value);
-            isFadein.value = true;
         } catch (error) {
             heroPowerStatus.value = error;
             Notify({
@@ -38,7 +36,6 @@ export function useReqHeroPowerData(queryInfo) {
         heroPowerData,
         isShowLoading,
         heroPowerStatus,
-        isFadein,
         getHeroPowerData
     }
 }

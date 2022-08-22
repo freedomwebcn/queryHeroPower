@@ -2,6 +2,7 @@
 
   <van-config-provider :theme-vars="themeVars" style="height:100%">
 
+    <!-- 英雄列表容器 -->
     <div class="hero-list-wrapper scroll-wrapper" ref="scrollRef">
       <header :class="{ 'header-bgc': showHeaderBgc }">
         <van-icon name="arrow-left" class="ico" @click="$router.back()" />
@@ -28,7 +29,7 @@
         <van-empty image="error" image-size="100" description="数据加载失败, 点击重新尝试 !" />
       </div>
 
-      <!-- 英雄战力弹出层 -->
+      <!-- 查询英雄战力弹出层 -->
       <van-popup v-model:show="isShowPopup" round @closed=popupClosed>
         <PopupContent v-bind="popupContentProps" @getPopupContentData="getPopupContentData" />
       </van-popup>

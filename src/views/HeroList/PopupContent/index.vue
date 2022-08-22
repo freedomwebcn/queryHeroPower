@@ -14,7 +14,7 @@
         <div class="hero-power-wrapper">
             <div class="hero-power-content">
                 <template v-if="heroPowerData">
-                    <div class="district-wrapper  animate__animated " :class="{ animate__fadeIn: isFadein }">
+                    <div class="district-wrapper  animate__animated animate__fadeIn">
                         <div class="district-content">
                             <span class="reward">省级</span>
                             <span class="district">{{ heroPowerData.province }}</span>
@@ -55,7 +55,6 @@ export default {
         heroPowerData: Object,
         isShowLoading: Boolean,
         heroPowerStatus: [Object, String],
-        isFadein: Boolean,
         queryInfo: Object
     },
     setup() {
