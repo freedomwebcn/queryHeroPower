@@ -15,6 +15,7 @@ export function useReqHeroPowerData(queryInfo) {
     let isFadein = ref(false);
 
     let getHeroPowerData = async (type) => {
+        console.log(type,"22222");
         queryInfo.value.type = type || queryInfo.value.type;
         heroPowerData.value = null;
         isShowLoading.value = true;
@@ -25,7 +26,7 @@ export function useReqHeroPowerData(queryInfo) {
         } catch (error) {
             heroPowerStatus.value = error;
             Notify({
-                message: '这可能是因为您网络开启了代理,请先关闭代理 !',
+                message: '这可能是因为你的网络开启了代理,请先关闭代理 !',
                 duration: 5000,
             });
             console.log(error, 'err');
