@@ -45,24 +45,16 @@
     </div>
 </template>
 
-<script>
-
+<script setup>
 import { tabList } from '../tabList';
 
-export default {
-    props: {
-        heroImgUrl: String,
-        heroPowerData: Object,
-        isShowLoading: Boolean,
-        heroPowerStatus: [Object, String],
-        queryInfo: Object
-    },
-    setup() {
-        return {
-            tabList
-        }
-    }
-}
+defineProps({
+    heroImgUrl: String,
+    heroPowerData: Object,
+    isShowLoading: Boolean,
+    heroPowerStatus: [Object, String],
+    queryInfo: Object
+})
 </script>
 
 <style lang="less" scoped>

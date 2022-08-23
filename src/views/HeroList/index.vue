@@ -1,7 +1,5 @@
 <template>
-
   <van-config-provider :theme-vars="themeVars" style="height:100%">
-
     <!-- 英雄列表容器 -->
     <div class="hero-list-wrapper scroll-wrapper" ref="scrollRef">
       <header :class="{ 'header-bgc': showHeaderBgc }">
@@ -28,17 +26,14 @@
       <div class="hero-list-err-wrapper" v-if="heroListLoadingErrStatus" @click="tryGetHeroData">
         <van-empty image="error" image-size="100" description="数据加载失败, 点击重新尝试 !" />
       </div>
-
       <!-- 查询英雄战力弹出层 -->
       <van-popup v-model:show="isShowPopup" round @closed=popupClosed>
         <PopupContent v-bind="popupContentProps" @getPopupContentData="getPopupContentData" />
       </van-popup>
-
     </div>
   </van-config-provider>
-
 </template>
-<script >
+<script setup>
 import { useRoute } from 'vue-router';
 import { ref, onMounted } from 'vue';
 import 'vant/es/notify/style';
@@ -46,109 +41,71 @@ import PopupContent from './PopupContent'
 import { useReqHeroListData } from './getHeroList';
 import { useReqHeroPowerData } from './getHeroPower';
 
-
-export default {
-  components: {
-    PopupContent
-  },
-  setup() {
-    const route = useRoute();
-    const typeId = ref(route.params.typeId); //英雄职业对应ID
-    const typeName = ref(route.params.typeName); //英雄职业名字
-    const showHeaderBgc = ref(false); // 滑动英雄列表显示头部背景色和内容
-    const scrollRef = ref(null);
-    let scrollTop;
-    let isShowPopup = ref(false)
-    // 从请求英雄列表数据模块中提取出来需要的数据
-    let {
-      getHeroData,
-      filterHeroData,
-      heroListLoadingErrStatus
-    } = useReqHeroListData(typeId);
-    //获取英雄列表数据
-    getHeroData();
-    // 如果英雄列表数据获取失败 点击尝试重新获取数据
-    const tryGetHeroData = () => {
-      heroListLoadingErrStatus.value = null;
-      getHeroData();
-    };
-
-    // 请求英雄战力数据参数
-    let queryInfo = ref(
-      {
-        heroName: '',
-        type: 'aqq'
-      }
-    )
-    let heroImgUrl = ref('')
-    // 打开弹出层触发
-    const openPopup = (heroName, ico) => {
-      isShowPopup.value = true
-      queryInfo.value.heroName = heroName
-      heroImgUrl.value = ico
-      getHeroPowerData();
-    }
-
-    const {
-      getHeroPowerData,
-      heroPowerData,
-      isShowLoading,
-      heroPowerStatus,
-      isFadein,
-    } = useReqHeroPowerData(queryInfo);
-
-
-    const popupContentProps = ref({
-      heroPowerData,
-      isShowLoading,
-      heroPowerStatus,
-      isFadein,
-      queryInfo,
-      heroImgUrl
-    })
-    // 弹出层关闭触发
-    const popupClosed = () => {
-      // 弹出层tab active类 关闭时设置默认值
-      queryInfo.value.type = 'aqq'
-      heroPowerData.value = null
-    };
-
-    const getPopupContentData = (value) => {
-      getHeroPowerData(value)
-    }
-
-    onMounted(() => {
-      scrollRef.value.addEventListener('scroll', function (e) {
-        scrollTop = e.target.scrollTop;
-        if (scrollTop >= 58) {
-          showHeaderBgc.value = true;
-        } else {
-          showHeaderBgc.value = false;
-        }
-      });
-    });
-    // ui框架样式配置
-    const themeVars = {
-      popupRoundBorderRadius: '6px',
-      emptyPadding: '0px',
-      emptyDescriptionPadding: '0px',
-    };
-    return {
-      heroListLoadingErrStatus,
-      filterHeroData,
-      typeName,
-      tryGetHeroData,
-      scrollRef,
-      showHeaderBgc,
-      openPopup,
-      isShowPopup,
-      themeVars,
-      popupClosed,
-      popupContentProps,
-      getPopupContentData,
-    };
-  }
+const route = useRoute();
+const typeId = ref(route.params.typeId); //英雄职业对应ID
+const typeName = ref(route.params.typeName); //英雄职业名字
+const showHeaderBgc = ref(false); // 滑动英雄列表显示头部背景色和内容
+const scrollRef = ref(null);
+let scrollTop;
+let isShowPopup = ref(false)
+// 从请求英雄列表数据模块中提取出来需要的数据
+let { getHeroData, filterHeroData, heroListLoadingErrStatus } = useReqHeroListData(typeId);
+//获取英雄列表数据
+getHeroData();
+// 如果英雄列表数据获取失败 点击尝试重新获取数据
+const tryGetHeroData = () => {
+  heroListLoadingErrStatus.value = null;
+  getHeroData();
 };
+
+// 请求英雄战力数据参数
+let queryInfo = ref({ heroName: '', type: 'aqq' })
+let heroImgUrl = ref('')
+// 打开弹出层触发
+const openPopup = (heroName, ico) => {
+  isShowPopup.value = true
+  queryInfo.value.heroName = heroName
+  heroImgUrl.value = ico
+  getHeroPowerData();
+}
+
+const { getHeroPowerData, heroPowerData, isShowLoading, heroPowerStatus } = useReqHeroPowerData(queryInfo);
+
+// popupcontent 组件需要的props
+const popupContentProps = ref({
+  heroPowerData,
+  isShowLoading,
+  heroPowerStatus,
+  queryInfo,
+  heroImgUrl
+})
+// 弹出层关闭触发
+const popupClosed = () => {
+  // 弹出层tab active类 关闭时设置默认值
+  queryInfo.value.type = 'aqq'
+  heroPowerData.value = null
+};
+
+const getPopupContentData = (value) => { getHeroPowerData(value) }
+
+// 监听滚动
+onMounted(() => {
+  scrollRef.value.addEventListener('scroll', function (e) {
+    scrollTop = e.target.scrollTop;
+    if (scrollTop >= 58) {
+      showHeaderBgc.value = true;
+    } else {
+      showHeaderBgc.value = false;
+    }
+  });
+});
+// ui框架样式配置
+const themeVars = {
+  popupRoundBorderRadius: '6px',
+  emptyPadding: '0px',
+  emptyDescriptionPadding: '0px',
+};
+
 </script>
 <style lang="less" scoped>
 @import '@/Mixins/dScrollBar';

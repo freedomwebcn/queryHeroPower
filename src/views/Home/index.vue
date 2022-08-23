@@ -1,10 +1,6 @@
 <template>
 
   <div class="home-wrapper">
-
- 
-
-    
     <!-- 搜索框 -->
     <div class="search-wrapper">
       <h2 class="search-title">搜索</h2>
@@ -25,25 +21,18 @@
   </div>
 
 </template>
-<script >
+
+<script setup>
+
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { heroTypeList } from './heroTypeList'
-export default {
-  setup() {
-    const router = useRouter();
-    const keyworld = ref('');
-    function getHeroList(heroTypeObJ) {
-      router.push({ name: 'heroList', params: { ...heroTypeObJ } });
-    }
+const router = useRouter();
+const keyworld = ref('');
+const getHeroList = (heroTypeObJ) => {
+  router.push({ name: 'heroList', params: { ...heroTypeObJ } });
+}
 
-    return {
-      heroTypeList,
-      getHeroList,
-      keyworld
-    };
-  }
-};
 </script>
 <style lang="less" scoped>
 .home-wrapper {
@@ -63,10 +52,12 @@ export default {
     :deep(.van-search) {
       border-radius: 3px;
       padding: 0;
+
       .van-search__content {
         .van-search__field {
           height: 38px;
           align-items: center;
+
           .van-field__left-icon {
             .van-icon-search {
               color: #000;
@@ -74,6 +65,7 @@ export default {
               font-weight: 700;
             }
           }
+
           .van-cell__value {
             .van-field__body {
               input::placeholder {
