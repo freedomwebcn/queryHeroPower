@@ -45,12 +45,13 @@
       "parser": "babel-eslint"
     },
     "rules": {},
-    "globals": {
-      "defineProps": "readonly",
-      "defineEmits": "readonly",
-      "defineExpose": "readonly",
-      "withDefaults": "readonly"
-    }
+   "globals": {
+     "defineProps": "readonly",
+     "defineEmits": "readonly",
+     "defineExpose": "readonly",
+     "withDefaults": "readonly"
+   }
+   
   },
   "browserslist": [
     "> 1%",

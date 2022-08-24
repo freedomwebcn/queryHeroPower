@@ -1,11 +1,10 @@
 <template>
-
     <div class="popup-content">
         <h5 class="popup-hero-ico  ">
             <img :src="heroImgUrl" alt="" class="animate__animated animate__headShake ">
         </h5>
         <div class="tab-wrapper">
-            <span style="display:inline-block" @click="$emit('getPopupContentData', tabItem.systemType)"
+            <span style="display:inline-block" @click="$emit('getPopupData', tabItem.systemType)"
                 v-for="tabItem in tabList" :key="tabItem" :class="{ active: tabItem.systemType === queryInfo.type }">
                 {{ tabItem.systemName }}
             </span>
@@ -39,7 +38,7 @@
                     <van-loading size="24px" vertical>加载中...</van-loading>
                 </div>
                 <van-empty image="error" image-size="100" description="数据加载失败, 点击重新尝试 !" v-if="heroPowerStatus"
-                    @click="$emit('getPopupContentData', null)" />
+                    @click="$emit('getPopupData', null)" />
             </div>
         </div>
     </div>
@@ -55,6 +54,7 @@ defineProps({
     heroPowerStatus: [Object, String],
     queryInfo: Object
 })
+
 </script>
 
 <style lang="less" scoped>

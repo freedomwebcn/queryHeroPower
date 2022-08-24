@@ -28,7 +28,7 @@
       </div>
       <!-- 查询英雄战力弹出层 -->
       <van-popup v-model:show="isShowPopup" round @closed=popupClosed>
-        <PopupContent v-bind="popupContentProps" @getPopupContentData="getPopupContentData" />
+        <PopupContent v-bind="popupContentProps" @getPopupData="(value) => getHeroPowerData(value)" />
       </van-popup>
     </div>
   </van-config-provider>
@@ -40,18 +40,16 @@ import 'vant/es/notify/style';
 import PopupContent from './PopupContent'
 import { useReqHeroListData } from './getHeroList';
 import { useReqHeroPowerData } from './getHeroPower';
+import { themeVars } from './ui_option'
 
 const route = useRoute();
 const typeId = ref(route.params.typeId); //英雄职业对应ID
 const typeName = ref(route.params.typeName); //英雄职业名字
 const showHeaderBgc = ref(false); // 滑动英雄列表显示头部背景色和内容
 const scrollRef = ref(null);
-let scrollTop;
 let isShowPopup = ref(false)
 // 从请求英雄列表数据模块中提取出来需要的数据
 let { getHeroData, filterHeroData, heroListLoadingErrStatus } = useReqHeroListData(typeId);
-//获取英雄列表数据
-getHeroData();
 // 如果英雄列表数据获取失败 点击尝试重新获取数据
 const tryGetHeroData = () => {
   heroListLoadingErrStatus.value = null;
@@ -68,9 +66,7 @@ const openPopup = (heroName, ico) => {
   heroImgUrl.value = ico
   getHeroPowerData();
 }
-
 const { getHeroPowerData, heroPowerData, isShowLoading, heroPowerStatus } = useReqHeroPowerData(queryInfo);
-
 // popupcontent 组件需要的props
 const popupContentProps = ref({
   heroPowerData,
@@ -85,26 +81,12 @@ const popupClosed = () => {
   queryInfo.value.type = 'aqq'
   heroPowerData.value = null
 };
-
-const getPopupContentData = (value) => { getHeroPowerData(value) }
-
 // 监听滚动
 onMounted(() => {
   scrollRef.value.addEventListener('scroll', function (e) {
-    scrollTop = e.target.scrollTop;
-    if (scrollTop >= 58) {
-      showHeaderBgc.value = true;
-    } else {
-      showHeaderBgc.value = false;
-    }
+    e.target.scrollTop >= 58 ? showHeaderBgc.value = true : showHeaderBgc.value = false;
   });
 });
-// ui框架样式配置
-const themeVars = {
-  popupRoundBorderRadius: '6px',
-  emptyPadding: '0px',
-  emptyDescriptionPadding: '0px',
-};
 
 </script>
 <style lang="less" scoped>

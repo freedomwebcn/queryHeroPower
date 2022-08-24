@@ -23,7 +23,6 @@ export function useReqHeroListData(typeId) {
     const getHeroData = () => {
         // 如果sessionStorage 已经保存过英雄列表数据，就return
         if (heroData.value.length) return;
-
         reqHeroData().then(
             allHeroData => {
                 // 本地存储数据
@@ -48,7 +47,7 @@ export function useReqHeroListData(typeId) {
             return heroObj.hero_type === typeId.value * 1;
         });
     });
-
+    getHeroData()
 
     return {
         getHeroData,

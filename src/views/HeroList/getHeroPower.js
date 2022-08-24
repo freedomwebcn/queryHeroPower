@@ -24,7 +24,7 @@ export function useReqHeroPowerData(queryInfo) {
         } catch (error) {
             heroPowerStatus.value = error;
             Notify({
-                message: '这可能是因为你的网络开启了代理,请先关闭代理 !',
+                message: '如果你的网络开启了代理,请先关闭代理 !',
                 duration: 5000,
             });
             console.log(error, 'err');
