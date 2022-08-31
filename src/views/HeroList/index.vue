@@ -59,6 +59,7 @@ const tryGetHeroData = () => {
 // 请求英雄战力数据参数
 let queryInfo = ref({ heroName: '', type: 'aqq' })
 let heroImgUrl = ref('')
+const { getHeroPowerData, heroPowerData, isShowLoading, heroPowerStatus } = useReqHeroPowerData(queryInfo);
 // 打开弹出层触发
 const openPopup = (heroName, ico) => {
   isShowPopup.value = true
@@ -66,7 +67,6 @@ const openPopup = (heroName, ico) => {
   heroImgUrl.value = ico
   getHeroPowerData();
 }
-const { getHeroPowerData, heroPowerData, isShowLoading, heroPowerStatus } = useReqHeroPowerData(queryInfo);
 // popupcontent 组件需要的props
 const popupContentProps = ref({
   heroPowerData,
@@ -150,7 +150,7 @@ onMounted(() => {
 
       .hero-list {
         display: grid;
-        grid-template-columns: repeat(4, 1fr [col-start]);
+        grid-template-columns: repeat(4, 1fr);
         gap: 10px;
 
         .hero-list-item {

@@ -1,5 +1,4 @@
 <template>
-
   <div class="home-wrapper">
     <!-- 搜索框 -->
     <div class="search-wrapper">
@@ -88,7 +87,7 @@ const getHeroList = (heroTypeObJ) => {
     .hero-type-list {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      grid-template-rows: repeat(3, 92px [row-start]);
+      grid-template-rows: repeat(3, 92px);
       gap: 16px;
 
       .hero-type-item {
