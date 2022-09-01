@@ -4,22 +4,20 @@
     <div class="search-wrapper">
       <h2 class="search-title">搜索</h2>
       <van-search v-model="keyworld" placeholder="搜索功能暂不可用" @update:model-value="filterData" />
-      <div class="search-result-wrapper" v-if="searchResult && searchResult.length">
+      <div class="search-result-wrapper" v-if="filterSearchData && filterSearchData.length">
         <ul class="search-result-list">
-          <li class="search-result-item " v-for="(item, index) in searchResult" :key="item.cname">
+          <li class="search-result-item " v-for="(item, index) in filterSearchData" :key="item.cname">
             <img :src="item.iconUrl" alt="" class="hero-img">
             <div class="hero-name-wrapper">
               <span class="hero-name ">{{ item.cname }}</span>
-              <div :class="{ 'van-hairline--bottom': searchResult.length > 1 && index != searchResult.length - 1 }">
+              <div
+                :class="{ 'van-hairline--bottom': filterSearchData.length > 1 && index != filterSearchData.length - 1 }">
               </div>
             </div>
           </li>
         </ul>
       </div>
-
-
-      <div class="not-found-data" v-if="queryStatus">暂无搜索结果</div>
-
+      <div class="not-found-data" v-if="!filterSearchData.length && queryStatus">暂无搜索结果</div>
     </div>
     <!-- 英雄职业列表 -->
     <div class="hero-type-content">
@@ -46,17 +44,21 @@ import { useReqHeroListData } from '@/views/HeroList/getHeroList';
 
 const router = useRouter();
 const keyworld = ref('');
-const searchResult = ref();
 const queryStatus = ref(false);
+
+
+const updateSearchWorld = ref('')
+const { filterSearchData, getHeroData } = useReqHeroListData('', updateSearchWorld)
 
 const filterData = (newKeyworld) => {
   if (newKeyworld.replace(/\s*/g, "")) {
-    const { filterSearchData } = useReqHeroListData("", newKeyworld)
-    searchResult.value = filterSearchData.value
-    searchResult.value.length > 0 ? queryStatus.value = false : queryStatus.value = true
+    updateSearchWorld.value = newKeyworld
+    getHeroData()
+    filterSearchData.value.length > 0 ? queryStatus.value = false : queryStatus.value = true
     return
   }
-  searchResult.value = []
+
+  updateSearchWorld.value = ""
   queryStatus.value = false
 }
 

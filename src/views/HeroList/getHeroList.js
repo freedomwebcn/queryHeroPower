@@ -20,25 +20,20 @@ export function useReqHeroListData(typeId, heroName) {
             message: '数据请求失败,请重新尝试 !'
         });
     }
-    const getHeroData = () => {
+    const getHeroData = async () => {
         // 如果sessionStorage 已经保存过英雄列表数据，就return
         if (heroData.value.length) return;
-        reqHeroData().then(
-            allHeroData => {
-                // 本地存储数据
-                window.sessionStorage.setItem(
-                    'allHeroData',
-                    JSON.stringify(allHeroData)
-                );
-                heroData.value = allHeroData;
-            },
-            err => {
-                // 数据请求失败 显示错误提示
-                console.log(err);
-                toNotify();
-                heroListLoadingErrStatus.value = err;
-            }
-        );
+
+        try {
+            heroData.value = await reqHeroData()
+            window.sessionStorage.setItem('allHeroData', JSON.stringify(heroData.value));
+        } catch (err) {
+            // 数据请求失败 显示错误提示
+            console.log(err);
+            toNotify();
+            heroListLoadingErrStatus.value = err;
+        }
+
     };
 
     // 因为没有英雄职业对应的接口，现在用计算属性从所有英雄数据中过滤出来英雄职业对应的数据
@@ -50,19 +45,18 @@ export function useReqHeroListData(typeId, heroName) {
 
     const filterSearchData = computed(() => {
         return heroData.value.filter(heroObj => {
-            console.log(heroName);
-            return heroObj.cname.indexOf(heroName) != -1;
+            console.log(heroName.value);
+            return heroName.value && heroObj.cname.indexOf(heroName.value) != -1;
         });
     });
 
 
-    getHeroData()
 
     return {
         getHeroData,
         heroListLoadingErrStatus,
         filterHeroData,
         filterSearchData,
-   
+
     }
 }
