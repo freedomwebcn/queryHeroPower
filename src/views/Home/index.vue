@@ -51,7 +51,6 @@ const updateSearchWorld = ref('')
 const { filterSearchData, getHeroData } = useReqHeroListData('', updateSearchWorld)
 
 getHeroData()
-
 const filterData = (newKeyworld) => {
   if (newKeyworld.replace(/\s*/g, "")) {
     updateSearchWorld.value = newKeyworld
