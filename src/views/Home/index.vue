@@ -43,9 +43,9 @@ import { heroTypeList } from './heroTypeList'
 import { useReqHeroListData } from '@/views/HeroList/getHeroList';
 
 const router = useRouter();
-const keyworld = ref('')
+const keyworld = ref('') //搜索关键字
 const { filterSearchData, getHeroData } = useReqHeroListData('', keyworld)
-getHeroData()
+getHeroData() 
 // 格式化搜索框输入的值 去除空白
 const formatter = (value) => value.replace(/\s*/g, "")
 const getHeroList = (heroTypeObJ) => {
