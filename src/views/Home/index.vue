@@ -4,20 +4,22 @@
     <div class="search-wrapper">
       <h2 class="search-title">搜索</h2>
       <van-search v-model="keyworld" placeholder="搜索功能暂不可用" @update:model-value="filterData" />
-      <div class="search-result-wrapper">
+      <div class="search-result-wrapper" v-if="searchResult && searchResult.length">
         <ul class="search-result-list">
           <li class="search-result-item " v-for="(item, index) in searchResult" :key="item.cname">
             <img :src="item.iconUrl" alt="" class="hero-img">
             <div class="hero-name-wrapper">
               <span class="hero-name ">{{ item.cname }}</span>
-              <div
-                :class="{ 'van-hairline--bottom': searchResult.length > 1 && index != searchResult.length - 1 }">
+              <div :class="{ 'van-hairline--bottom': searchResult.length > 1 && index != searchResult.length - 1 }">
               </div>
             </div>
           </li>
         </ul>
-        <div class="not-found-data" v-if="queryStatus">暂无搜索结果</div>
       </div>
+
+
+      <div class="not-found-data" v-if="queryStatus">暂无搜索结果</div>
+
     </div>
     <!-- 英雄职业列表 -->
     <div class="hero-type-content">
@@ -143,11 +145,12 @@ const getHeroList = (heroTypeObJ) => {
         }
       }
 
-      .not-found-data {
-        text-align: center;
 
+    }
 
-      }
+    .not-found-data {
+      .search-result-wrapper();
+      text-align: center;
     }
   }
 
