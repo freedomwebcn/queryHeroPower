@@ -3,7 +3,7 @@
     <!-- 搜索框 -->
     <div class="search-wrapper">
       <h2 class="search-title">搜索</h2>
-      <van-search v-model="keyworld" placeholder="搜索功能暂不可用" @update:model-value="filterData" />
+      <van-search v-model="keyworld" placeholder="搜索功能暂不可用" :formatter="formatter" />
       <div class="search-result-wrapper" v-if="filterSearchData && filterSearchData.length">
         <ul class="search-result-list">
           <li class="search-result-item " v-for="(item, index) in filterSearchData" :key="item.cname">
@@ -17,7 +17,7 @@
           </li>
         </ul>
       </div>
-      <div class="not-found-data" v-if="!filterSearchData.length && queryStatus">暂无搜索结果</div>
+      <div class="not-found-data" v-if="!filterSearchData.length && keyworld">暂无搜索结果</div>
     </div>
     <!-- 英雄职业列表 -->
     <div class="hero-type-content">
@@ -43,25 +43,10 @@ import { heroTypeList } from './heroTypeList'
 import { useReqHeroListData } from '@/views/HeroList/getHeroList';
 
 const router = useRouter();
-const keyworld = ref('');
-const queryStatus = ref(false);
-
-
-const updateSearchWorld = ref('')
-const { filterSearchData, getHeroData } = useReqHeroListData('', updateSearchWorld)
-
+const keyworld = ref('')
+const { filterSearchData, getHeroData } = useReqHeroListData('', keyworld)
 getHeroData()
-const filterData = (newKeyworld) => {
-  if (newKeyworld.replace(/\s*/g, "")) {
-    updateSearchWorld.value = newKeyworld
-    filterSearchData.value.length > 0 ? queryStatus.value = false : queryStatus.value = true
-    return
-  }
-
-  updateSearchWorld.value = ""
-  queryStatus.value = false
-}
-
+const formatter = (value) => value.replace(/\s*/g, "")
 const getHeroList = (heroTypeObJ) => {
   router.push({ name: 'heroList', params: { ...heroTypeObJ } });
 }
