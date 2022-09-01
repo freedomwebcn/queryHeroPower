@@ -50,10 +50,11 @@ const queryStatus = ref(false);
 const updateSearchWorld = ref('')
 const { filterSearchData, getHeroData } = useReqHeroListData('', updateSearchWorld)
 
+getHeroData()
+
 const filterData = (newKeyworld) => {
   if (newKeyworld.replace(/\s*/g, "")) {
     updateSearchWorld.value = newKeyworld
-    getHeroData()
     filterSearchData.value.length > 0 ? queryStatus.value = false : queryStatus.value = true
     return
   }
