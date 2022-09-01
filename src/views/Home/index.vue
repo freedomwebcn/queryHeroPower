@@ -46,6 +46,7 @@ const router = useRouter();
 const keyworld = ref('')
 const { filterSearchData, getHeroData } = useReqHeroListData('', keyworld)
 getHeroData()
+// 格式化搜索框输入的值 去除空白
 const formatter = (value) => value.replace(/\s*/g, "")
 const getHeroList = (heroTypeObJ) => {
   router.push({ name: 'heroList', params: { ...heroTypeObJ } });
