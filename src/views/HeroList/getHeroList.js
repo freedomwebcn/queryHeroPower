@@ -9,7 +9,7 @@ import {
     Notify
 } from 'vant';
 
-export function useReqHeroListData(typeId) {
+export function useReqHeroListData(typeId, heroName) {
     // 从本地存储读取数据
     let heroData = ref(JSON.parse(window.sessionStorage.getItem('allHeroData')) || []);
     let heroListLoadingErrStatus = ref(null); //英雄列表数据请求状态
@@ -47,11 +47,22 @@ export function useReqHeroListData(typeId) {
             return heroObj.hero_type === typeId.value * 1;
         });
     });
+
+    const filterSearchData = computed(() => {
+        return heroData.value.filter(heroObj => {
+            console.log(heroName);
+            return heroObj.cname.indexOf(heroName) != -1;
+        });
+    });
+
+
     getHeroData()
 
     return {
         getHeroData,
         heroListLoadingErrStatus,
-        filterHeroData
+        filterHeroData,
+        filterSearchData,
+   
     }
 }

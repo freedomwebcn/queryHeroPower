@@ -29,11 +29,12 @@ module.exports = {
             }
         },
         plugins: [
-            // ...
+            // ui 框架按需引入配置
             ComponentsPlugin({
                 resolvers: [VantResolver()],
             })
-        ]
+        ],
+
     },
     devServer: {
         disableHostCheck: true //解决内网穿透后无法访问项目的问题

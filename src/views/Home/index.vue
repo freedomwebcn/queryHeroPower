@@ -3,7 +3,21 @@
     <!-- 搜索框 -->
     <div class="search-wrapper">
       <h2 class="search-title">搜索</h2>
-      <van-search v-model="keyworld" placeholder="搜索功能暂不可用" />
+      <van-search v-model="keyworld" placeholder="搜索功能暂不可用" @update:model-value="filterData" />
+      <div class="search-result-wrapper">
+        <ul class="search-result-list">
+          <li class="search-result-item " v-for="(item, index) in searchResult" :key="item.cname">
+            <img :src="item.iconUrl" alt="" class="hero-img">
+            <div class="hero-name-wrapper">
+              <span class="hero-name ">{{ item.cname }}</span>
+              <div
+                :class="{ 'van-hairline--bottom': searchResult.length > 1 && index != searchResult.length - 1 }">
+              </div>
+            </div>
+          </li>
+        </ul>
+        <div class="not-found-data" v-if="queryStatus">暂无搜索结果</div>
+      </div>
     </div>
     <!-- 英雄职业列表 -->
     <div class="hero-type-content">
@@ -26,8 +40,24 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { heroTypeList } from './heroTypeList'
+import { useReqHeroListData } from '@/views/HeroList/getHeroList';
+
 const router = useRouter();
 const keyworld = ref('');
+const searchResult = ref();
+const queryStatus = ref(false);
+
+const filterData = (newKeyworld) => {
+  if (newKeyworld.replace(/\s*/g, "")) {
+    const { filterSearchData } = useReqHeroListData("", newKeyworld)
+    searchResult.value = filterSearchData.value
+    searchResult.value.length > 0 ? queryStatus.value = false : queryStatus.value = true
+    return
+  }
+  searchResult.value = []
+  queryStatus.value = false
+}
+
 const getHeroList = (heroTypeObJ) => {
   router.push({ name: 'heroList', params: { ...heroTypeObJ } });
 }
@@ -42,6 +72,8 @@ const getHeroList = (heroTypeObJ) => {
       transparent 220px);
 
   .search-wrapper {
+    position: relative;
+
     .search-title {
       font-size: 18px;
       color: white;
@@ -74,6 +106,47 @@ const getHeroList = (heroTypeObJ) => {
             }
           }
         }
+      }
+    }
+
+    .search-result-wrapper {
+      position: absolute;
+      background-color: #f7f8fa;
+      width: 100%;
+      top: 76px;
+      padding: 0px 12px 6px 12px;
+      z-index: 88;
+      border-bottom-left-radius: 3px;
+      border-bottom-right-radius: 3px;
+
+      .search-result-list {
+        display: grid;
+        gap: 6px;
+
+        .search-result-item {
+          display: grid;
+          grid-template-columns: 32px 1fr;
+          align-items: center;
+          column-gap: 5px;
+
+          .hero-img {
+            height: 32px;
+            border-radius: 3px;
+          }
+
+          .hero-name-wrapper {
+            height: 32px;
+            display: grid;
+            align-items: end;
+          }
+
+        }
+      }
+
+      .not-found-data {
+        text-align: center;
+
+
       }
     }
   }

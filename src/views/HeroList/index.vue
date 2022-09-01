@@ -40,7 +40,7 @@ import 'vant/es/notify/style';
 import PopupContent from './PopupContent'
 import { useReqHeroListData } from './getHeroList';
 import { useReqHeroPowerData } from './getHeroPower';
-import { themeVars } from './ui_option'
+import { themeVars } from '@/ui_option'
 
 const route = useRoute();
 const typeId = ref(route.params.typeId); //英雄职业对应ID
