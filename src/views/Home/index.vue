@@ -92,16 +92,17 @@ const focus = () => {
 
 const close = () => {
   isShowSearchHistory.value = false
+  keyworld.value = '' //输入英雄名称后没有点击查询英雄战力，而是点击弹出层，则清空搜索框。
+
 }
 // 清空搜索记录
 const clearLocalStorage = () => {
+
   isShowSearchHistory.value = true
   window.localStorage.removeItem("serchHistory");
   searchHistory.value = []
   isShowSearchHistory.value = false
   show.value = false
-
-
 }
 
 
