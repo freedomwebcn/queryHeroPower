@@ -1,9 +1,10 @@
 <template>
-  <div class="home-wrapper">
+  <div class="home-wrapper" id="test">
     <!-- 搜索框 -->
+
     <div class="search-wrapper">
       <h2 class="search-title">搜索</h2>
-      <van-search v-model="keyworld" placeholder="搜索功能暂不可用" :formatter="formatter" @focus="focus" @blur="blur" />
+      <van-search v-model="keyworld" placeholder="搜索功能暂不可用" :formatter="formatter" @focus="focus" />
       <div class="search-result-wrapper" v-if="filterSearchData && filterSearchData.length">
         <ul class="search-result-list">
           <li class="search-result-item " v-for="(item, index) in filterSearchData" :key="item.cname"
@@ -19,6 +20,8 @@
         </ul>
       </div>
 
+
+      <van-popup v-model:show="show" teleport="body" @close="close" />
       <div class="search-history-wrapper" v-if="isShowSearchHistory && !keyworld">
         <h5 class="title">最近的搜索记录</h5>
         <template v-for="(item, index) in searchHistory" :key="item.cname">
@@ -36,7 +39,10 @@
         <div class="footer-wrapper">
           <span class="footer" @click="clearLocalStorage">清空最近的搜索记录</span>
         </div>
+
+
       </div>
+
       <div class="not-found-data" v-if="!filterSearchData.length && keyworld">暂无搜索结果</div>
     </div>
     <!-- 英雄职业列表 -->
@@ -63,6 +69,7 @@ import { heroTypeList } from './heroTypeList'
 import { useReqHeroListData } from '@/views/HeroList/getHeroList';
 
 const router = useRouter();
+const show = ref(false)
 const keyworld = ref('') //搜索关键字
 const isShowSearchHistory = ref(false) //是否显示搜索历史记录
 const { filterSearchData, getHeroData } = useReqHeroListData('', keyworld)
@@ -81,21 +88,29 @@ const queryHeroPower = (heroInfo) => {
   // 存储到本地
   window.localStorage.setItem("serchHistory", JSON.stringify(searchHistory.value))
 }
+
+
 // 搜索框获取焦点时触发
 const focus = () => {
+  show.value = true
   searchHistory.value.length > 0 ? isShowSearchHistory.value = true : isShowSearchHistory.value = false
 }
-// 失活焦点时触发
-const blur = () => {
+
+const close = () => {
   isShowSearchHistory.value = false
 }
-
 // 清空搜索记录
 const clearLocalStorage = () => {
-  window.localStorage.clear();
+  isShowSearchHistory.value = true
+  window.localStorage.removeItem("serchHistory");
   searchHistory.value = []
   isShowSearchHistory.value = false
+  show.value = false
+
+
 }
+
+
 const getHeroList = (heroTypeObJ) => {
   router.push({ name: 'heroList', params: { ...heroTypeObJ } });
 }
@@ -111,6 +126,7 @@ const getHeroList = (heroTypeObJ) => {
 
   .search-wrapper {
     position: relative;
+    z-index: 2008;
 
     .search-title {
       font-size: 18px;
