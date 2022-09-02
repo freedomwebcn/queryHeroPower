@@ -12,7 +12,9 @@ import {
     Search,
     Popup,
     ConfigProvider,
-    Empty
+    Empty,
+    SwipeCell,
+    Tag
 } from 'vant';
 const app = createApp(App)
 
@@ -27,6 +29,10 @@ app.use(Search)
 app.use(ConfigProvider)
 app.use(Popup)
 app.use(Empty)
+app.use(SwipeCell)
+app.use(Tag)
+
+
 
 
 

@@ -3,10 +3,11 @@
     <!-- 搜索框 -->
     <div class="search-wrapper">
       <h2 class="search-title">搜索</h2>
-      <van-search v-model="keyworld" placeholder="搜索功能暂不可用" :formatter="formatter" />
+      <van-search v-model="keyworld" placeholder="搜索功能暂不可用" :formatter="formatter" @focus="focus" @blur="blur" />
       <div class="search-result-wrapper" v-if="filterSearchData && filterSearchData.length">
         <ul class="search-result-list">
-          <li class="search-result-item " v-for="(item, index) in filterSearchData" :key="item.cname">
+          <li class="search-result-item " v-for="(item, index) in filterSearchData" :key="item.cname"
+            @click="queryHeroPower(item)">
             <img :src="item.iconUrl" alt="" class="hero-img">
             <div class="hero-name-wrapper">
               <span class="hero-name ">{{ item.cname }}</span>
@@ -16,6 +17,25 @@
             </div>
           </li>
         </ul>
+      </div>
+
+      <div class="search-history-wrapper" v-if="isShowSearchHistory && !keyworld">
+        <h5 class="title">最近的搜索记录</h5>
+        <template v-for="(item, index) in searchHistory" :key="item.cname">
+          <van-swipe-cell>
+            <img :src="item.iconUrl" alt="">
+            <span>{{ item.cname }}</span>
+            <template #right>
+              <van-button square type="danger" text="删除" />
+            </template>
+          </van-swipe-cell>
+          <div class="van-hairline--bottom search-History-line"
+            v-if="searchHistory.length > 1 && index != searchHistory.length - 1">
+          </div>
+        </template>
+        <div class="footer-wrapper">
+          <span class="footer" @click="clearLocalStorage">清空最近的搜索记录</span>
+        </div>
       </div>
       <div class="not-found-data" v-if="!filterSearchData.length && keyworld">暂无搜索结果</div>
     </div>
@@ -44,10 +64,38 @@ import { useReqHeroListData } from '@/views/HeroList/getHeroList';
 
 const router = useRouter();
 const keyworld = ref('') //搜索关键字
+const isShowSearchHistory = ref(false) //是否显示搜索历史记录
 const { filterSearchData, getHeroData } = useReqHeroListData('', keyworld)
-getHeroData() 
+getHeroData()
 // 格式化搜索框输入的值 去除空白
 const formatter = (value) => value.replace(/\s*/g, "")
+const searchHistory = ref(JSON.parse(window.localStorage.getItem("serchHistory")) || [])
+const queryHeroPower = (heroInfo) => {
+  // 如果该条搜索记录已存在，则不添加
+  const even = (item) => item.cname === heroInfo.cname
+  if (searchHistory.value.some(even)) {
+    return
+  }
+  // 保存搜索记录到数组中
+  searchHistory.value.push(heroInfo)
+  // 存储到本地
+  window.localStorage.setItem("serchHistory", JSON.stringify(searchHistory.value))
+}
+// 搜索框获取焦点时触发
+const focus = () => {
+  searchHistory.value.length > 0 ? isShowSearchHistory.value = true : isShowSearchHistory.value = false
+}
+// 失活焦点时触发
+const blur = () => {
+  isShowSearchHistory.value = false
+}
+
+// 清空搜索记录
+const clearLocalStorage = () => {
+  window.localStorage.clear();
+  searchHistory.value = []
+  isShowSearchHistory.value = false
+}
 const getHeroList = (heroTypeObJ) => {
   router.push({ name: 'heroList', params: { ...heroTypeObJ } });
 }
@@ -111,21 +159,22 @@ const getHeroList = (heroTypeObJ) => {
 
       .search-result-list {
         display: grid;
-        gap: 6px;
+        gap: 8px;
 
         .search-result-item {
           display: grid;
-          grid-template-columns: 32px 1fr;
+          grid-template-columns: 38px 1fr;
+          grid-auto-rows: 38px;
           align-items: center;
           column-gap: 5px;
 
           .hero-img {
-            height: 32px;
+            height: 100%;
             border-radius: 3px;
           }
 
           .hero-name-wrapper {
-            height: 32px;
+            height: 100%;
             display: grid;
             align-items: end;
           }
@@ -133,6 +182,52 @@ const getHeroList = (heroTypeObJ) => {
         }
       }
 
+
+    }
+
+    .search-history-wrapper {
+      .search-result-wrapper();
+      display: grid;
+      row-gap: 8px;
+
+      :deep(.van-swipe-cell) {
+        .van-swipe-cell__wrapper {
+          display: grid;
+          grid-template-columns: 38px 1fr;
+          grid-auto-rows: 38px;
+          align-items: center;
+          column-gap: 8px;
+
+          img {
+            height: 100%;
+            border-radius: 3px;
+          }
+
+          .van-swipe-cell__right {
+            button {
+              height: 100%;
+            }
+          }
+        }
+
+      }
+
+      .title {
+        font-size: 13px;
+        color: rgb(83, 83, 83);
+        margin: 10px 0;
+      }
+
+      .search-History-line {
+        width: 274px;
+        justify-self: end;
+      }
+
+      .footer-wrapper {
+        padding: 5px 0;
+        color: rgb(185, 185, 185);
+        font-size: 13px;
+      }
 
     }
 
