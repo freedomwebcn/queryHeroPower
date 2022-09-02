@@ -14,7 +14,8 @@ import {
     ConfigProvider,
     Empty,
     SwipeCell,
-    Tag
+    Tag,
+    Overlay
 } from 'vant';
 const app = createApp(App)
 
@@ -31,6 +32,8 @@ app.use(Popup)
 app.use(Empty)
 app.use(SwipeCell)
 app.use(Tag)
+app.use(Overlay)
+
 
 
 

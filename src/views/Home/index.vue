@@ -18,7 +18,8 @@
           </li>
         </ul>
       </div>
-      <van-popup v-model:show="show" teleport="body" @close="close" />
+      <!-- <van-popup v-model:show="show" teleport="body" @close="close" /> -->
+
       <div class="search-history-wrapper" v-if="isShowSearchHistory && !keyworld">
         <h5 class="title">最近的搜索记录</h5>
         <template v-for="(item, index) in searchHistory" :key="item.cname">
@@ -39,6 +40,8 @@
       </div>
       <div class="not-found-data" v-if="!filterSearchData.length && keyworld">暂无搜索结果</div>
     </div>
+    <van-overlay :show="isShowOverlay" @click="overlayClose" />
+
     <!-- 英雄职业列表 -->
     <div class="hero-type-content">
       <h3 class="title">英雄职业</h3>
@@ -63,7 +66,7 @@ import { heroTypeList } from './heroTypeList'
 import { useReqHeroListData } from '@/views/HeroList/getHeroList';
 
 const router = useRouter();
-const show = ref(false)
+const isShowOverlay = ref(false)
 const keyworld = ref('') //搜索关键字
 const isShowSearchHistory = ref(false) //是否显示搜索历史记录
 const { filterSearchData, getHeroData } = useReqHeroListData('', keyworld)
@@ -83,28 +86,24 @@ const queryHeroPower = (heroInfo) => {
   window.localStorage.setItem("serchHistory", JSON.stringify(searchHistory.value))
 }
 
-
 // 搜索框获取焦点时触发
 const focus = () => {
-  show.value = true
+  isShowOverlay.value = true
   searchHistory.value.length > 0 ? isShowSearchHistory.value = true : isShowSearchHistory.value = false
 }
 
-const close = () => {
+const overlayClose = () => {
+  isShowOverlay.value = false
   isShowSearchHistory.value = false
   keyworld.value = '' //输入英雄名称后没有点击查询英雄战力，而是点击弹出层，则清空搜索框。
-
 }
 // 清空搜索记录
 const clearLocalStorage = () => {
-
-  isShowSearchHistory.value = true
   window.localStorage.removeItem("serchHistory");
   searchHistory.value = []
   isShowSearchHistory.value = false
-  show.value = false
+  isShowOverlay.value = false
 }
-
 
 const getHeroList = (heroTypeObJ) => {
   router.push({ name: 'heroList', params: { ...heroTypeObJ } });
@@ -164,7 +163,7 @@ const getHeroList = (heroTypeObJ) => {
       width: 100%;
       top: 76px;
       padding: 0px 12px 6px 12px;
-      z-index: 88;
+      // z-index: 88;
       border-bottom-left-radius: 3px;
       border-bottom-right-radius: 3px;
 
