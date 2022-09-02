@@ -1,7 +1,6 @@
 <template>
   <div class="home-wrapper" id="test">
     <!-- 搜索框 -->
-
     <div class="search-wrapper">
       <h2 class="search-title">搜索</h2>
       <van-search v-model="keyworld" placeholder="搜索功能暂不可用" :formatter="formatter" @focus="focus" />
@@ -19,8 +18,6 @@
           </li>
         </ul>
       </div>
-
-
       <van-popup v-model:show="show" teleport="body" @close="close" />
       <div class="search-history-wrapper" v-if="isShowSearchHistory && !keyworld">
         <h5 class="title">最近的搜索记录</h5>
@@ -39,10 +36,7 @@
         <div class="footer-wrapper">
           <span class="footer" @click="clearLocalStorage">清空最近的搜索记录</span>
         </div>
-
-
       </div>
-
       <div class="not-found-data" v-if="!filterSearchData.length && keyworld">暂无搜索结果</div>
     </div>
     <!-- 英雄职业列表 -->
