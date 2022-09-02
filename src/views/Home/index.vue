@@ -18,8 +18,6 @@
           </li>
         </ul>
       </div>
-      <!-- <van-popup v-model:show="show" teleport="body" @close="close" /> -->
-
       <div class="search-history-wrapper" v-if="isShowSearchHistory && !keyworld">
         <h5 class="title">最近的搜索记录</h5>
         <template v-for="(item, index) in searchHistory" :key="item.cname">
