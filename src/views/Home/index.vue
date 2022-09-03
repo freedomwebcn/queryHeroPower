@@ -98,7 +98,7 @@ const overlayClose = () => {
   isShowSearchHistory.value = false
   keyworld.value = '' //输入英雄名称后没有点击查询英雄战力，而是点击遮盖层，则清空搜索框。
 }
-
+ 
 // 删除搜索历史记录的某一项
 const deleteSearchHistoryItem = (index) => {
   searchHistory.value.splice(index, 1)
