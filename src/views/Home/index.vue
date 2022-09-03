@@ -2,7 +2,7 @@
   <div class="home-wrapper" id="test">
     <!-- 搜索框 -->
     <div class="search-wrapper">
-      <h2 class="search-title">搜索</h2>
+      <h2 class="search-title">晚上好</h2>
       <van-search v-model="keyworld" placeholder="搜索功能暂不可用" :formatter="formatter" @focus="focus" />
       <div class="search-result-wrapper" v-if="filterSearchData && filterSearchData.length">
         <ul class="search-result-list">
@@ -57,7 +57,6 @@
 </template>
 
 <script setup>
-
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { heroTypeList } from './heroTypeList'
@@ -123,6 +122,7 @@ const getHeroList = (heroTypeObJ) => {
 }
 
 </script>
+
 <style lang="less" scoped>
 .home-wrapper {
   height: 100%;
