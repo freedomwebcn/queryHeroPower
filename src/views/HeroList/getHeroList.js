@@ -44,7 +44,6 @@ export function useReqHeroListData(typeId, heroName) {
 
     const filterSearchData = computed(() => {
         return heroData.value.filter(heroObj => {
-            console.log(heroName.value);
             return heroName.value && heroObj.cname.indexOf(heroName.value) != -1;
         });
     });
