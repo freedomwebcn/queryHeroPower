@@ -2,7 +2,7 @@
   <div class="home-wrapper" id="test">
     <!-- 搜索框 -->
     <div class="search-wrapper">
-      <h2 class="search-title">晚上好</h2>
+      <h2 class="search-title">{{ getGreetingMsg }}</h2>
       <van-search v-model="keyworld" placeholder="搜索功能暂不可用" :formatter="formatter" @focus="focus" />
       <div class="search-result-wrapper" v-if="filterSearchData && filterSearchData.length">
         <ul class="search-result-list">
@@ -57,7 +57,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { heroTypeList } from './heroTypeList'
 import { useReqHeroListData } from '@/views/HeroList/getHeroList';
@@ -97,7 +97,7 @@ const overlayClose = () => {
   isShowSearchHistory.value = false
   keyworld.value = '' //输入英雄名称后没有点击查询英雄战力，而是点击遮盖层，则清空搜索框。
 }
- 
+
 // 删除搜索历史记录的某一项
 const deleteSearchHistoryItem = (index) => {
   searchHistory.value.splice(index, 1)
@@ -115,6 +115,30 @@ const clearAllSearchHistory = () => {
   isShowOverlay.value = false
   Toast.success('清空成功');
 }
+
+
+const getGreetingMsg = computed(() => {
+  const timeData = new Date()
+  const hours = timeData.getHours()
+  let greetingMsg = ''
+
+  if (hours >= 0 && hours <= 5) {
+    greetingMsg = "夜深了"
+  } else if (hours > 5 && hours <= 10) {
+    greetingMsg = "早上好"
+  }else if (hours > 10 && hours <= 11) {
+    greetingMsg = "上午好"
+  } else if (hours > 11 && hours <= 13) {
+    greetingMsg = "中午好"
+  } else if (hours > 13 && hours <= 18) {
+    greetingMsg = "下午好"
+  } else if (hours > 18 && hours <= 24) {
+    greetingMsg = "晚上好"
+  }
+  return greetingMsg
+})
+
+
 
 // 跳转到英雄职业所属的英雄列表页面
 const getHeroList = (heroTypeObJ) => {
