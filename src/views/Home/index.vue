@@ -25,7 +25,7 @@
             <img :src="item.iconUrl" alt="">
             <span>{{ item.cname }}</span>
             <template #right>
-              <van-button square type="danger" text="删除" />
+              <van-button square type="danger" text="删除" @click="deleteHistoryItem(index)" />
             </template>
           </van-swipe-cell>
           <div class="van-hairline--bottom search-History-line"
@@ -62,6 +62,8 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { heroTypeList } from './heroTypeList'
 import { useReqHeroListData } from '@/views/HeroList/getHeroList';
+import { Toast } from 'vant';
+import 'vant/es/toast/style';
 
 const router = useRouter();
 const isShowOverlay = ref(false)
@@ -90,10 +92,20 @@ const focus = () => {
   searchHistory.value.length > 0 ? isShowSearchHistory.value = true : isShowSearchHistory.value = false
 }
 
+// 点击遮盖层时触发
 const overlayClose = () => {
   isShowOverlay.value = false
   isShowSearchHistory.value = false
-  keyworld.value = '' //输入英雄名称后没有点击查询英雄战力，而是点击弹出层，则清空搜索框。
+  keyworld.value = '' //输入英雄名称后没有点击查询英雄战力，而是点击遮盖层，则清空搜索框。
+}
+
+const deleteHistoryItem = (index) => {
+  searchHistory.value.splice(index, 1)
+  if (searchHistory.value.length <= 0) {
+    isShowSearchHistory.value = false
+    isShowOverlay.value = false
+  }
+  window.localStorage.setItem("serchHistory", JSON.stringify(searchHistory.value))
 }
 // 清空搜索记录
 const clearLocalStorage = () => {
@@ -101,6 +113,7 @@ const clearLocalStorage = () => {
   searchHistory.value = []
   isShowSearchHistory.value = false
   isShowOverlay.value = false
+  Toast.success('清空成功');
 }
 
 const getHeroList = (heroTypeObJ) => {

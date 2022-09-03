@@ -15,7 +15,7 @@ import {
     Empty,
     SwipeCell,
     Tag,
-    Overlay
+    Overlay,
 } from 'vant';
 const app = createApp(App)
 
@@ -33,6 +33,7 @@ app.use(Empty)
 app.use(SwipeCell)
 app.use(Tag)
 app.use(Overlay)
+
 
 
 
