@@ -5,6 +5,7 @@ import App from './App.vue'
 import router from './router'
 
 import 'lib-flexible/flexible'
+// import 'balloon-css';
 import 'animate.css';
 import {
     Lazyload,
@@ -15,6 +16,8 @@ import {
     Empty,
     SwipeCell,
     Overlay,
+    Icon,
+    // Card
 } from 'vant';
 const app = createApp(App)
 
@@ -31,6 +34,11 @@ app.use(Popup)
 app.use(Empty)
 app.use(SwipeCell)
 app.use(Overlay)
+app.use(Icon)
+// app.use(Card)
+
+
+
 
 
 

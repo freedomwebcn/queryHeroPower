@@ -1,8 +1,9 @@
 <template>
   <div class="home-wrapper" id="test">
     <!-- 搜索框 -->
+
     <div class="search-wrapper">
-      <h2 class="search-title">{{ getGreetingMsg }}</h2>
+      <h2 class="search-title">{{ getGreetingMsg() }}</h2>
       <van-search v-model="keyworld" placeholder="搜索功能暂不可用" :formatter="formatter" @focus="focus" />
       <div class="search-result-wrapper" v-if="filterSearchData && filterSearchData.length">
         <ul class="search-result-list">
@@ -32,8 +33,16 @@
             v-if="searchHistory.length > 1 && index != searchHistory.length - 1">
           </div>
         </template>
+
         <div class="footer-wrapper">
-          <span class="footer" @click="clearAllSearchHistory">清空最近的搜索记录</span>
+          <span class="left-footer" @click="clearAllSearchHistory">清空最近的搜索记录</span>
+
+          <div class="right-footer">
+            <span aria-label="左滑删除单条搜索记录" data-balloon-pos="up-right">
+              <van-icon name="question-o" class="right-ico" @click="showPopover = true" />
+            </span>
+
+          </div>
         </div>
       </div>
       <div class="not-found-data" v-if="!filterSearchData.length && keyworld">暂无搜索结果</div>
@@ -43,6 +52,7 @@
     <!-- 英雄职业列表 -->
     <div class="hero-type-content">
       <h3 class="title">英雄职业</h3>
+
       <div class="hero-type-list">
         <div :style="{ backgroundColor: heroTypeItem.bgcolor }" class="hero-type-item"
           v-for="(heroTypeItem, index) in heroTypeList" :key="heroTypeItem.type"
@@ -52,12 +62,12 @@
         </div>
       </div>
     </div>
-  </div>
 
+  </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { heroTypeList } from './heroTypeList'
 import { useReqHeroListData } from '@/views/HeroList/getHeroList';
@@ -69,6 +79,7 @@ const isShowOverlay = ref(false)
 const keyworld = ref('') //搜索关键字
 const isShowSearchHistory = ref(false) //是否显示搜索历史记录
 const { filterSearchData, getHeroData } = useReqHeroListData('', keyworld)
+const showPopover = ref(false)
 getHeroData()
 // 格式化搜索框输入的值 去除空白
 const formatter = (value) => value.replace(/\s*/g, "")
@@ -117,7 +128,7 @@ const clearAllSearchHistory = () => {
 }
 
 
-const getGreetingMsg = computed(() => {
+const getGreetingMsg = () => {
   const timeData = new Date()
   const hours = timeData.getHours()
   let greetingMsg = ''
@@ -126,7 +137,7 @@ const getGreetingMsg = computed(() => {
     greetingMsg = "夜深了"
   } else if (hours > 5 && hours <= 10) {
     greetingMsg = "早上好"
-  }else if (hours > 10 && hours <= 11) {
+  } else if (hours > 10 && hours <= 11) {
     greetingMsg = "上午好"
   } else if (hours > 11 && hours <= 13) {
     greetingMsg = "中午好"
@@ -136,7 +147,7 @@ const getGreetingMsg = computed(() => {
     greetingMsg = "晚上好"
   }
   return greetingMsg
-})
+}
 
 
 
@@ -198,7 +209,7 @@ const getHeroList = (heroTypeObJ) => {
       position: absolute;
       background-color: #f7f8fa;
       width: 100%;
-      top: 76px;
+      top: 72px;
       padding: 0px 12px 6px 12px;
       // z-index: 88;
       border-bottom-left-radius: 3px;
@@ -207,6 +218,8 @@ const getHeroList = (heroTypeObJ) => {
       .search-result-list {
         display: grid;
         gap: 8px;
+        padding-top: 10px;
+        padding-bottom: 5px;
 
         .search-result-item {
           display: grid;
@@ -253,6 +266,7 @@ const getHeroList = (heroTypeObJ) => {
           .van-swipe-cell__right {
             button {
               height: 100%;
+
             }
           }
         }
@@ -274,6 +288,14 @@ const getHeroList = (heroTypeObJ) => {
         padding: 5px 0;
         color: rgb(185, 185, 185);
         font-size: 13px;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+
+        .right-ico {
+          transform: translate(-3px,0);
+        }
+
       }
 
     }

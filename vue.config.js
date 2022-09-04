@@ -1,9 +1,5 @@
 const path = require('path')
-const px2rem = require('postcss-px2rem')
-// 配置postcs-px2rem
-const postcss = px2rem({
-    remUnit: 37.5 // 设计稿10等分之后的值 （假设是375的设计稿）
-})
+
 const {
     VantResolver
 } = require('unplugin-vue-components/resolvers')
@@ -14,7 +10,11 @@ module.exports = {
         loaderOptions: {
             postcss: {
                 plugins: [
-                    postcss
+                    require('postcss-pxtorem')({
+                        rootValue: 37.5,
+                        propList: ['*'],
+                        exclude: /node_modules/i
+                    }),
                 ]
             }
         }
