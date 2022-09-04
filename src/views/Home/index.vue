@@ -23,8 +23,6 @@
       </div>
       <div class="search-history-wrapper" v-if="isShowSearchHistory && !keyworld">
         <h5 class="title">最近的搜索记录</h5>
-
-
         <div class="search-history-list">
           <template v-for="(item, index) in searchHistory" :key="item.cname">
             <div @click="queryHeroPower(item)">
@@ -41,9 +39,6 @@
             </div>
           </template>
         </div>
-
-
-
         <div class="footer-wrapper">
           <span class="left-footer" @click="clearAllSearchHistory">清空最近的搜索记录</span>
           <span aria-label="左滑可删除单条搜索记录" data-balloon-pos="up-right">
@@ -266,7 +261,7 @@ const getHeroList = (heroTypeObJ) => {
       .search-result-wrapper();
 
       .search-history-list {
-        max-height: 322px;
+        max-height: 314px;
         overflow: hidden;
         overflow-y: scroll;
         .delete-scroll-bar();
