@@ -8,6 +8,8 @@ import {
 
 const Home = () => import('../views/Home')
 const heroList = () => import('../views/HeroList')
+const search = () => import('../views/search')
+
 
 const routes = [{
     path: '/',
@@ -33,6 +35,14 @@ const routes = [{
     },
 
   },
+
+  {
+    path: '/search',
+    name: 'search',
+    component: search,
+
+
+  }
 
 ]
 

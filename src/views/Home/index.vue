@@ -25,13 +25,15 @@
       <div class="search-history-wrapper" v-if="isShowSearchHistory && !keyworld">
         <h5 class="title">最近的搜索记录</h5>
         <template v-for="(item, index) in searchHistory" :key="item.cname">
-          <van-swipe-cell>
-            <img :src="item.iconUrl" alt="">
-            <span>{{ item.cname }}</span>
-            <template #right>
-              <van-button square type="danger" text="删除" @click="deleteSearchHistoryItem(index)" />
-            </template>
-          </van-swipe-cell>
+          <div @click="queryHeroPower(item)">
+            <van-swipe-cell>
+              <img :src="item.iconUrl" alt="">
+              <span>{{ item && item.cname }}</span>
+              <template #right>
+                <van-button square type="danger" text="删除" @click="deleteSearchHistoryItem(index)" />
+              </template>
+            </van-swipe-cell>
+          </div>
           <div class="van-hairline--bottom search-History-line"
             v-if="searchHistory.length > 1 && index != searchHistory.length - 1">
           </div>
@@ -79,15 +81,18 @@ getHeroData()
 const formatter = (value) => value.replace(/\s*/g, "")
 const searchHistory = ref(JSON.parse(window.localStorage.getItem("serchHistory")) || [])
 const queryHeroPower = (heroInfo) => {
+  console.log(heroInfo);
   // 如果该条搜索记录已存在，则不添加
   const even = (item) => item.cname === heroInfo.cname
   if (searchHistory.value.some(even)) {
+    router.push({ path: '/search', query: { heroName: heroInfo.cname } })
     return
   }
   // 保存搜索记录到数组中
   searchHistory.value.push(heroInfo)
   // 存储到本地
   window.localStorage.setItem("serchHistory", JSON.stringify(searchHistory.value))
+  router.push({ path: '/search', query: { heroName: heroInfo.cname } })
 }
 
 // 搜索框获取焦点时触发

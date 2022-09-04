@@ -5,7 +5,7 @@ const {
 } = require('unplugin-vue-components/resolvers')
 const ComponentsPlugin = require('unplugin-vue-components/webpack')
 module.exports = {
-    productionSourceMap: false, // 生产环境 sourceMap  
+    // productionSourceMap: false, // 生产环境 sourceMap  
     css: { // 添加postcss配置
         loaderOptions: {
             postcss: {
