@@ -6,6 +6,7 @@
       <van-search v-model="keyworld" placeholder="搜索功能暂不可用" :formatter="formatter" @focus="focus" />
       <div class="search-result-wrapper" v-if="filterSearchData && filterSearchData.length">
         <h5 class="result-title">搜索结果</h5>
+
         <div class="search-result-list">
           <template v-for="(item, index) in filterSearchData" :key="item.cname">
             <div class="search-result-item " @click="queryHeroPower(item)">
@@ -18,26 +19,31 @@
               v-if="filterSearchData.length > 1 && index != filterSearchData.length - 1">
             </div>
           </template>
-
         </div>
-
       </div>
       <div class="search-history-wrapper" v-if="isShowSearchHistory && !keyworld">
         <h5 class="title">最近的搜索记录</h5>
-        <template v-for="(item, index) in searchHistory" :key="item.cname">
-          <div @click="queryHeroPower(item)">
-            <van-swipe-cell>
-              <img :src="item.iconUrl" alt="">
-              <span>{{ item && item.cname }}</span>
-              <template #right>
-                <van-button square type="danger" text="删除" @click="deleteSearchHistoryItem(index)" />
-              </template>
-            </van-swipe-cell>
-          </div>
-          <div class="van-hairline--bottom search-History-line"
-            v-if="searchHistory.length > 1 && index != searchHistory.length - 1">
-          </div>
-        </template>
+
+
+        <div class="search-history-list">
+          <template v-for="(item, index) in searchHistory" :key="item.cname">
+            <div @click="queryHeroPower(item)">
+              <van-swipe-cell>
+                <img :src="item.iconUrl" alt="">
+                <span>{{ item && item.cname }}</span>
+                <template #right>
+                  <van-button square type="danger" text="删除" @click="deleteSearchHistoryItem(index)" />
+                </template>
+              </van-swipe-cell>
+            </div>
+            <div class="van-hairline--bottom search-History-line"
+              v-if="searchHistory.length > 1 && index != searchHistory.length - 1">
+            </div>
+          </template>
+        </div>
+
+
+
         <div class="footer-wrapper">
           <span class="left-footer" @click="clearAllSearchHistory">清空最近的搜索记录</span>
           <span aria-label="左滑可删除单条搜索记录" data-balloon-pos="up-right">
@@ -70,6 +76,7 @@ import { heroTypeList } from './heroTypeList'
 import { useReqHeroListData } from '@/views/HeroList/getHeroList';
 import { Toast } from 'vant';
 import 'vant/es/toast/style';
+
 
 const router = useRouter();
 const isShowOverlay = ref(false)
@@ -157,6 +164,8 @@ const getHeroList = (heroTypeObJ) => {
 </script>
 
 <style lang="less" scoped>
+@import '@/Mixins/dScrollBar';
+
 .home-wrapper {
   height: 100%;
   padding: 16px 16px 0 16px;
@@ -256,6 +265,15 @@ const getHeroList = (heroTypeObJ) => {
     .search-history-wrapper {
       .search-result-wrapper();
 
+      .search-history-list {
+        max-height: 322px;
+        overflow: hidden;
+        overflow-y: scroll;
+        .delete-scroll-bar();
+        display: grid;
+        row-gap: 8px;
+      }
+
       :deep(.van-swipe-cell) {
         .van-swipe-cell__wrapper {
           display: grid;
@@ -286,7 +304,10 @@ const getHeroList = (heroTypeObJ) => {
       .title {
         font-size: 13px;
         color: rgb(83, 83, 83);
-        margin: 10px 0;
+        margin: 0;
+        padding: 10px 0;
+
+
       }
 
       .search-History-line {
