@@ -218,13 +218,14 @@ const getHeroList = (heroTypeObJ) => {
       .search-result-list {
         display: grid;
         row-gap: 8px;
+        padding-bottom: 5px;
 
         .search-result-item {
           display: grid;
           grid-template-columns: 38px 1fr;
           grid-auto-rows: 38px;
           align-items: center;
-          column-gap: 5px;
+          column-gap: 8px;
 
           .hero-img {
             height: 100%;
@@ -234,6 +235,7 @@ const getHeroList = (heroTypeObJ) => {
           .hero-name-wrapper {
             height: 100%;
             display: grid;
+            font-size: 13px;
             align-items: center;
           }
 
@@ -260,6 +262,10 @@ const getHeroList = (heroTypeObJ) => {
           img {
             height: 100%;
             border-radius: 3px;
+          }
+
+          span {
+            font-size: 13px;
           }
 
           .van-swipe-cell__right {
