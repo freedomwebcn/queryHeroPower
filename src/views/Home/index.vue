@@ -85,8 +85,8 @@ const searchHistory = ref(JSON.parse(window.localStorage.getItem("serchHistory")
 
 // 查询英雄战力
 const queryHeroPower = (heroInfo) => {
-  // 如果该条搜索记录已存在，则不添加
-  const even = (item) => item.cname === heroInfo.cname
+  // 如果该条搜索记录已存在，则不添加 直接跳转路由去查询当前英雄战力
+  const even = (searchHistoryObj) => searchHistoryObj.cname === heroInfo.cname
   if (searchHistory.value.some(even)) {
     router.push({ path: '/search', query: { heroName: heroInfo.cname } })
     return
