@@ -82,8 +82,9 @@ getHeroData()
 // 格式化搜索框输入的值 去除空白
 const formatter = (value) => value.replace(/\s*/g, "")
 const searchHistory = ref(JSON.parse(window.localStorage.getItem("serchHistory")) || [])
+
+// 查询英雄战力
 const queryHeroPower = (heroInfo) => {
-  console.log(heroInfo);
   // 如果该条搜索记录已存在，则不添加
   const even = (item) => item.cname === heroInfo.cname
   if (searchHistory.value.some(even)) {
@@ -114,24 +115,26 @@ const overlayClose = () => {
 const deleteSearchHistoryItem = (index) => {
   searchHistory.value.splice(index, 1)
   if (!searchHistory.value.length) {
-    isShowSearchHistory.value = false
-    isShowOverlay.value = false
+    resetSearchHistoryStatus()
+    return
   }
   window.localStorage.setItem("serchHistory", JSON.stringify(searchHistory.value))
 }
 // 清空所有的搜索记录
 const clearAllSearchHistory = () => {
-  window.localStorage.removeItem("serchHistory");
   searchHistory.value = []
+  resetSearchHistoryStatus()
+}
+const resetSearchHistoryStatus =()=>{
+  window.localStorage.removeItem("serchHistory");
   isShowSearchHistory.value = false
   isShowOverlay.value = false
-  Toast.success('清空成功');
-}
-
+  Toast.success('清空成功！');
+} 
 
 const getGreetingMsg = () => {
-  const timeData = new Date()
-  const hours = timeData.getHours()
+  const timeDate = new Date()
+  const hours = timeDate.getHours()
   let greetingMsg = ''
 
   if (hours >= 0 && hours <= 5) {
@@ -149,7 +152,6 @@ const getGreetingMsg = () => {
   }
   return greetingMsg
 }
-
 
 // 跳转到英雄职业所属的英雄列表页面
 const getHeroList = (heroTypeObJ) => {
@@ -261,8 +263,7 @@ const getHeroList = (heroTypeObJ) => {
       .search-result-wrapper();
 
       .search-history-list {
-        max-height: 314px;
-        overflow: hidden;
+        max-height: 336px;
         overflow-y: scroll;
         .delete-scroll-bar();
         display: grid;
@@ -301,8 +302,6 @@ const getHeroList = (heroTypeObJ) => {
         color: rgb(83, 83, 83);
         margin: 0;
         padding: 10px 0;
-
-
       }
 
       .search-History-line {
@@ -328,6 +327,10 @@ const getHeroList = (heroTypeObJ) => {
 
     .not-found-data {
       .search-result-wrapper();
+      padding-top: 10px;
+      padding-bottom: 10px;
+      font-size: 13px;
+      color: #535353;
       text-align: center;
     }
   }
