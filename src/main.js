@@ -5,7 +5,7 @@ import App from './App.vue'
 import router from './router'
 
 import 'lib-flexible/flexible'
-// import 'balloon-css';
+import 'balloon-css';
 import 'animate.css';
 import {
     Lazyload,

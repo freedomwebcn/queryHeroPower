@@ -1,23 +1,26 @@
 <template>
   <div class="home-wrapper" id="test">
     <!-- 搜索框 -->
-
     <div class="search-wrapper">
       <h2 class="search-title">{{ getGreetingMsg() }}</h2>
       <van-search v-model="keyworld" placeholder="搜索功能暂不可用" :formatter="formatter" @focus="focus" />
       <div class="search-result-wrapper" v-if="filterSearchData && filterSearchData.length">
-        <ul class="search-result-list">
-          <li class="search-result-item " v-for="(item, index) in filterSearchData" :key="item.cname"
-            @click="queryHeroPower(item)">
-            <img :src="item.iconUrl" alt="" class="hero-img">
-            <div class="hero-name-wrapper">
-              <span class="hero-name ">{{ item.cname }}</span>
-              <div
-                :class="{ 'van-hairline--bottom': filterSearchData.length > 1 && index != filterSearchData.length - 1 }">
+        <h5 class="result-title">搜索结果</h5>
+        <div class="search-result-list">
+          <template v-for="(item, index) in filterSearchData" :key="item.cname">
+            <div class="search-result-item " @click="queryHeroPower(item)">
+              <img :src="item.iconUrl" alt="" class="hero-img">
+              <div class="hero-name-wrapper">
+                <span class="hero-name ">{{ item.cname }}</span>
               </div>
             </div>
-          </li>
-        </ul>
+            <div class="van-hairline--bottom search-result-line"
+              v-if="filterSearchData.length > 1 && index != filterSearchData.length - 1">
+            </div>
+          </template>
+
+        </div>
+
       </div>
       <div class="search-history-wrapper" v-if="isShowSearchHistory && !keyworld">
         <h5 class="title">最近的搜索记录</h5>
@@ -33,26 +36,19 @@
             v-if="searchHistory.length > 1 && index != searchHistory.length - 1">
           </div>
         </template>
-
         <div class="footer-wrapper">
           <span class="left-footer" @click="clearAllSearchHistory">清空最近的搜索记录</span>
-
-          <div class="right-footer">
-            <span aria-label="左滑删除单条搜索记录" data-balloon-pos="up-right">
-              <van-icon name="question-o" class="right-ico" @click="showPopover = true" />
-            </span>
-
-          </div>
+          <span aria-label="左滑可删除单条搜索记录" data-balloon-pos="up-right">
+            <van-icon name="question-o" class="right-ico" />
+          </span>
         </div>
       </div>
       <div class="not-found-data" v-if="!filterSearchData.length && keyworld">暂无搜索结果</div>
     </div>
     <van-overlay :show="isShowOverlay" @click="overlayClose" />
-
     <!-- 英雄职业列表 -->
     <div class="hero-type-content">
       <h3 class="title">英雄职业</h3>
-
       <div class="hero-type-list">
         <div :style="{ backgroundColor: heroTypeItem.bgcolor }" class="hero-type-item"
           v-for="(heroTypeItem, index) in heroTypeList" :key="heroTypeItem.type"
@@ -62,7 +58,6 @@
         </div>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -79,7 +74,6 @@ const isShowOverlay = ref(false)
 const keyworld = ref('') //搜索关键字
 const isShowSearchHistory = ref(false) //是否显示搜索历史记录
 const { filterSearchData, getHeroData } = useReqHeroListData('', keyworld)
-const showPopover = ref(false)
 getHeroData()
 // 格式化搜索框输入的值 去除空白
 const formatter = (value) => value.replace(/\s*/g, "")
@@ -150,7 +144,6 @@ const getGreetingMsg = () => {
 }
 
 
-
 // 跳转到英雄职业所属的英雄列表页面
 const getHeroList = (heroTypeObJ) => {
   router.push({ name: 'heroList', params: { ...heroTypeObJ } });
@@ -206,20 +199,25 @@ const getHeroList = (heroTypeObJ) => {
     }
 
     .search-result-wrapper {
+      display: grid;
+      row-gap: 8px;
       position: absolute;
       background-color: #f7f8fa;
       width: 100%;
       top: 72px;
-      padding: 0px 12px 6px 12px;
-      // z-index: 88;
+      padding: 0px 12px 8px 12px;
       border-bottom-left-radius: 3px;
       border-bottom-right-radius: 3px;
 
+      .result-title {
+        font-size: 13px;
+        color: #535353;
+        margin: 10px 0;
+      }
+
       .search-result-list {
         display: grid;
-        gap: 8px;
-        padding-top: 10px;
-        padding-bottom: 5px;
+        row-gap: 8px;
 
         .search-result-item {
           display: grid;
@@ -236,19 +234,20 @@ const getHeroList = (heroTypeObJ) => {
           .hero-name-wrapper {
             height: 100%;
             display: grid;
-            align-items: end;
+            align-items: center;
           }
 
         }
+
+        .search-result-line {
+          width: 274px;
+          justify-self: end;
+        }
       }
-
-
     }
 
     .search-history-wrapper {
       .search-result-wrapper();
-      display: grid;
-      row-gap: 8px;
 
       :deep(.van-swipe-cell) {
         .van-swipe-cell__wrapper {
@@ -293,7 +292,7 @@ const getHeroList = (heroTypeObJ) => {
         align-items: flex-end;
 
         .right-ico {
-          transform: translate(-3px,0);
+          transform: translate(-3px, 0);
         }
 
       }
