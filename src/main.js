@@ -17,7 +17,7 @@ import {
     SwipeCell,
     Overlay,
     Icon,
-    // Card
+    Divider
 } from 'vant';
 const app = createApp(App)
 
@@ -35,7 +35,7 @@ app.use(Empty)
 app.use(SwipeCell)
 app.use(Overlay)
 app.use(Icon)
-// app.use(Card)
+app.use(Divider)
 
 
 

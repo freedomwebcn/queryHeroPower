@@ -8,7 +8,7 @@
       </header>
       <!-- 请求英雄列表数据 显示 loading  -->
       <div class="hero-list-loading" v-if="!filterHeroData.length && heroListLoadingErrStatus == null">
-        <van-loading type="spinner" color="255, 255, 255" />
+        <van-loading type="spinner" color="#fff" />
       </div>
       <div class="scroll-content">
         <div class="hero-list-content">
