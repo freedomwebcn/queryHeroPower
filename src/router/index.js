@@ -40,6 +40,9 @@ const routes = [{
     path: '/search',
     name: 'search',
     component: search,
+    meta: {
+      transition: 'homeList'
+    },
 
 
   }
