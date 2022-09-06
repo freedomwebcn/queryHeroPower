@@ -112,7 +112,7 @@ const isShowOverlay = ref(false);
 const keyworld = ref(""); //搜索关键字
 const isShowSearchHistory = ref(false); //是否显示搜索历史记录
 const { filterSearchData, getHeroData } = useReqHeroListData("", keyworld);
-const swipeCellOpenStatus = ref(true); //根据单元格打开状态 决定是否要跳转路由
+const swipeCellOpenStatus = ref(true); //根据单元格打开状态 决定是否要跳转路由 --如果单元格打开时，再点击单元格是要关闭单元格，而不是跳转路由
 getHeroData();
 // 格式化搜索框输入的值 去除空白
 const formatter = (value) => value.replace(/\s*/g, "");
