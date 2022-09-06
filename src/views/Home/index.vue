@@ -3,18 +3,9 @@
     <!-- 搜索框 -->
     <div class="search-wrapper">
       <h2 class="search-title">{{ getGreetingMsg() }}</h2>
-      <van-search
-        v-model="keyworld"
-        placeholder="请输入英雄名称"
-        :formatter="formatter"
-        @focus="focus"
-      />
-      <div
-        class="search-result-wrapper"
-        v-if="filterSearchData && filterSearchData.length"
-      >
+      <van-search v-model="keyworld" placeholder="请输入英雄名称" :formatter="formatter" @focus="focus" />
+      <div class="search-result-wrapper" v-if="filterSearchData && filterSearchData.length">
         <h5 class="result-title">搜索结果</h5>
-
         <div class="search-result-list">
           <template v-for="(item, index) in filterSearchData" :key="item.cname">
             <div class="search-result-item" @click="queryHeroPower(item)">
@@ -23,20 +14,11 @@
                 <span class="hero-name">{{ item.cname }}</span>
               </div>
             </div>
-            <div
-              class="van-hairline--bottom search-result-line"
-              v-if="
-                filterSearchData.length > 1 &&
-                index != filterSearchData.length - 1
-              "
-            ></div>
+            <div class="van-hairline--bottom search-result-line" v-if="filterSearchData.length > 1 && index != filterSearchData.length - 1"></div>
           </template>
         </div>
       </div>
-      <div
-        class="search-history-wrapper"
-        v-if="isShowSearchHistory && !keyworld"
-      >
+      <div class="search-history-wrapper" v-if="isShowSearchHistory && !keyworld">
         <h5 class="title">最近的搜索记录</h5>
         <div class="search-history-list">
           <template v-for="(item, index) in searchHistory" :key="item.cname">
@@ -45,37 +27,21 @@
                 <img :src="item.iconUrl" alt="" />
                 <span>{{ item && item.cname }}</span>
               </div>
-
               <template #right>
-                <van-button
-                  square
-                  type="danger"
-                  text="删除"
-                  @click="deleteSearchHistoryItem(index)"
-                />
+                <van-button square type="danger" text="删除" @click="deleteSearchHistoryItem(index)" />
               </template>
             </van-swipe-cell>
-
-            <div
-              class="van-hairline--bottom search-History-line"
-              v-if="
-                searchHistory.length > 1 && index != searchHistory.length - 1
-              "
-            ></div>
+            <div class="van-hairline--bottom search-History-line" v-if="searchHistory.length > 1 && index != searchHistory.length - 1"></div>
           </template>
         </div>
         <div class="footer-wrapper">
-          <span class="left-footer" @click="clearAllSearchHistory"
-            >清空最近的搜索记录</span
-          >
+          <span class="left-footer" @click="clearAllSearchHistory">清空最近的搜索记录</span>
           <span aria-label="左滑可删除单条搜索记录" data-balloon-pos="up-right">
             <van-icon name="question-o" class="right-ico" />
           </span>
         </div>
       </div>
-      <div class="not-found-data" v-if="!filterSearchData.length && keyworld">
-        暂无搜索结果
-      </div>
+      <div class="not-found-data" v-if="!filterSearchData.length && keyworld">暂无搜索结果</div>
     </div>
     <van-overlay :show="isShowOverlay" @click="overlayClose" />
     <!-- 英雄职业列表 -->
@@ -87,9 +53,7 @@
           class="hero-type-item"
           v-for="(heroTypeItem, index) in heroTypeList"
           :key="heroTypeItem.type"
-          @click="
-            getHeroList({ typeId: index + 1, typeName: heroTypeItem.type })
-          "
+          @click="getHeroList({ typeId: index + 1, typeName: heroTypeItem.type })"
         >
           <img :src="heroTypeItem.ico" class="ico" alt="" />
           <span class="type-name">{{ heroTypeItem.type }}</span>
@@ -116,17 +80,14 @@ const swipeCellOpenStatus = ref(true); //根据单元格打开状态 决定是�
 getHeroData();
 // 格式化搜索框输入的值 去除空白
 const formatter = (value) => value.replace(/\s*/g, "");
-const searchHistory = ref(
-  JSON.parse(window.localStorage.getItem("serchHistory")) || []
-);
+const searchHistory = ref(JSON.parse(window.localStorage.getItem("serchHistory")) || []);
 
 // 查询英雄战力
 const queryHeroPower = (heroInfo) => {
   if (swipeCellOpenStatus.value) {
     console.log(heroInfo);
     // 如果该条搜索记录已存在，则不添加 直接跳转路由去查询当前英雄战力
-    const even = (searchHistoryObj) =>
-      searchHistoryObj.cname === heroInfo.cname;
+    const even = (searchHistoryObj) => searchHistoryObj.cname === heroInfo.cname;
     if (searchHistory.value.some(even)) {
       router.push({ path: "/search", query: { heroName: heroInfo.cname } });
       return;
@@ -134,10 +95,7 @@ const queryHeroPower = (heroInfo) => {
     // 保存搜索记录到数组中
     searchHistory.value.push(heroInfo);
     // 存储到本地
-    window.localStorage.setItem(
-      "serchHistory",
-      JSON.stringify(searchHistory.value)
-    );
+    window.localStorage.setItem("serchHistory", JSON.stringify(searchHistory.value));
     router.push({ path: "/search", query: { heroName: heroInfo.cname } });
   }
 };
@@ -145,9 +103,7 @@ const queryHeroPower = (heroInfo) => {
 // 搜索框获取焦点时触发
 const focus = () => {
   isShowOverlay.value = true;
-  searchHistory.value.length > 0
-    ? (isShowSearchHistory.value = true)
-    : (isShowSearchHistory.value = false);
+  searchHistory.value.length > 0 ? (isShowSearchHistory.value = true) : (isShowSearchHistory.value = false);
 };
 
 // 点击遮盖层时触发
@@ -157,11 +113,11 @@ const overlayClose = () => {
   keyworld.value = ""; //输入英雄名称后没有点击查询英雄战力，而是点击遮盖层，则清空搜索框。
 };
 
-// 滑动单元格  打开触发
+// 单元格打开触发
 const open = () => {
   swipeCellOpenStatus.value = false;
 };
-// 滑动单元格关闭触发
+// 单元格关闭触发
 const close = () => {
   swipeCellOpenStatus.value = true;
 };
@@ -174,10 +130,7 @@ const deleteSearchHistoryItem = (index) => {
     resetSearchHistoryStatus();
     return;
   }
-  window.localStorage.setItem(
-    "serchHistory",
-    JSON.stringify(searchHistory.value)
-  );
+  window.localStorage.setItem("serchHistory", JSON.stringify(searchHistory.value));
 };
 // 清空所有的搜索记录
 const clearAllSearchHistory = () => {
@@ -224,11 +177,7 @@ const getHeroList = (heroTypeObJ) => {
 .home-wrapper {
   height: 100%;
   padding: 16px 16px 0 16px;
-  background-image: linear-gradient(
-    150deg,
-    rgba(83, 83, 83, 0.8) 20px,
-    transparent 220px
-  );
+  background-image: linear-gradient(150deg, rgba(83, 83, 83, 0.8) 20px, transparent 220px);
 
   .search-wrapper {
     position: relative;

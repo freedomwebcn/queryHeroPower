@@ -1,5 +1,5 @@
 <template>
-  <van-config-provider :theme-vars="themeVars" style="height:100%">
+  <van-config-provider :theme-vars="themeVars" style="height: 100%">
     <!-- 英雄列表容器 -->
     <div class="hero-list-wrapper scroll-wrapper" ref="scrollRef">
       <header :class="{ 'header-bgc': showHeaderBgc }">
@@ -14,9 +14,8 @@
         <div class="hero-list-content">
           <h2 class="type-name">{{ typeName }}</h2>
           <ul class="hero-list">
-            <li class="hero-list-item" v-for="heroItem in filterHeroData" :key="heroItem.cname"
-              @click="openPopup(heroItem.cname, heroItem.iconUrl)">
-              <img v-lazy="heroItem.iconUrl" class="ico" alt="">
+            <li class="hero-list-item" v-for="heroItem in filterHeroData" :key="heroItem.cname" @click="openPopup(heroItem.cname, heroItem.iconUrl)">
+              <img v-lazy="heroItem.iconUrl" class="ico" alt="" />
               <span class="hero-name">{{ heroItem.cname }}</span>
             </li>
           </ul>
@@ -27,27 +26,27 @@
         <van-empty image="error" image-size="100" description="数据加载失败, 点击重新尝试 !" />
       </div>
       <!-- 查询英雄战力弹出层 -->
-      <van-popup v-model:show="isShowPopup" round @closed=popupClosed>
+      <van-popup v-model:show="isShowPopup" round @closed="popupClosed">
         <PopupContent v-bind="popupContentProps" @getPopupData="(value) => getHeroPowerData(value)" />
       </van-popup>
     </div>
   </van-config-provider>
 </template>
 <script setup>
-import { useRoute } from 'vue-router';
-import { ref, onMounted } from 'vue';
-import 'vant/es/notify/style';
-import PopupContent from './PopupContent'
-import { useReqHeroListData } from './getHeroList';
-import { useReqHeroPowerData } from './getHeroPower';
-import { themeVars } from '@/ui_option'
+import { useRoute } from "vue-router";
+import { ref, onMounted } from "vue";
+import "vant/es/notify/style";
+import PopupContent from "./PopupContent";
+import { useReqHeroListData } from "./getHeroList";
+import { useReqHeroPowerData } from "./getHeroPower";
+import { themeVars } from "@/ui_option";
 
 const route = useRoute();
 const typeId = ref(route.params.typeId); //英雄职业对应ID
 const typeName = ref(route.params.typeName); //英雄职业名字
 const showHeaderBgc = ref(false); // 滑动英雄列表显示头部背景色和内容
 const scrollRef = ref(null);
-let isShowPopup = ref(false)
+let isShowPopup = ref(false);
 // 从请求英雄列表数据模块中提取出来需要的数据
 let { getHeroData, filterHeroData, heroListLoadingErrStatus } = useReqHeroListData(typeId);
 // 如果英雄列表数据获取失败 点击尝试重新获取数据
@@ -57,40 +56,39 @@ const tryGetHeroData = () => {
 };
 
 // 请求英雄战力数据参数
-let queryInfo = ref({ heroName: '', type: 'aqq' })
-let heroImgUrl = ref('')
+let queryInfo = ref({ heroName: "", type: "aqq" });
+let heroImgUrl = ref("");
 const { getHeroPowerData, heroPowerData, isShowLoading, heroPowerStatus } = useReqHeroPowerData(queryInfo);
 // 打开弹出层触发
 const openPopup = (heroName, ico) => {
-  isShowPopup.value = true
-  queryInfo.value.heroName = heroName
-  heroImgUrl.value = ico
+  isShowPopup.value = true;
+  queryInfo.value.heroName = heroName;
+  heroImgUrl.value = ico;
   getHeroPowerData();
-}
+};
 // popupcontent 组件需要的props
 const popupContentProps = ref({
   heroPowerData,
   isShowLoading,
   heroPowerStatus,
   queryInfo,
-  heroImgUrl
-})
+  heroImgUrl,
+});
 // 弹出层关闭触发
 const popupClosed = () => {
   // 弹出层tab active类 关闭时设置默认值
-  queryInfo.value.type = 'aqq'
-  heroPowerData.value = null
+  queryInfo.value.type = "aqq";
+  heroPowerData.value = null;
 };
 // 监听滚动
 onMounted(() => {
-  scrollRef.value.addEventListener('scroll', function (e) {
-    e.target.scrollTop >= 58 ? showHeaderBgc.value = true : showHeaderBgc.value = false;
+  scrollRef.value.addEventListener("scroll", function (e) {
+    e.target.scrollTop >= 58 ? (showHeaderBgc.value = true) : (showHeaderBgc.value = false);
   });
 });
-
 </script>
 <style lang="less" scoped>
-@import '@/Mixins/dScrollBar';
+@import "@/Mixins/dScrollBar";
 
 .hero-list-wrapper {
   height: 100%;
@@ -125,8 +123,7 @@ onMounted(() => {
 
   .scroll-content {
     position: relative;
-    background-image: linear-gradient(rgba(83, 83, 83, 0.8) 0%,
-        transparent 165px);
+    background-image: linear-gradient(rgba(83, 83, 83, 0.8) 0%, transparent 165px);
 
     .hero-list-content {
       position: relative;
@@ -192,8 +189,6 @@ onMounted(() => {
     align-items: center;
     justify-content: center;
   }
-
-
 }
-</style>>
-
+</style>
+>
