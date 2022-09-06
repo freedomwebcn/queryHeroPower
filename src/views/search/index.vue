@@ -2,7 +2,7 @@
   <div class="search-wrapper">
     <header>
       <van-icon name="arrow-left" class="ico" @click="$router.back()" />
-      <span>当前查询英雄: {{ heroName }}</span>
+      <span>{{ heroName }}</span>
     </header>
     <div class="search-content" v-if="searchData && searchData.length">
       <div class="search-title van-hairline--bottom">
@@ -80,8 +80,10 @@ getSearchData();
 
     span {
       padding-left: 10px;
-      font-size: 15px;
+      font-size: 16px;
     }
+
+
   }
 
   .search-content {
@@ -97,9 +99,8 @@ getSearchData();
     .search-title {
       display: grid;
       grid-column: 1 / 4;
-    //   align-items: center;
       grid-template-columns: 1fr 1fr 1fr;
-      font-size: 16px;
+      font-size: 15px;
     }
 
     .hero-power1 {
@@ -108,7 +109,7 @@ getSearchData();
       grid-template-rows: repeat(3, 1fr);
       grid-column: 1 / 4;
       grid-row: 2 / span 6;
-      font-size: 15px;
+      font-size: 14px;
 
       .dctype {
         align-self: center;
