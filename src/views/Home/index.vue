@@ -3,7 +3,7 @@
     <!-- 搜索框 -->
     <div class="search-wrapper">
       <h2 class="search-title">{{ getGreetingMsg() }}</h2>
-      <van-search v-model="keyworld" placeholder="搜索功能暂不可用" :formatter="formatter" @focus="focus" />
+      <van-search v-model="keyworld" placeholder="请输入英雄名称" :formatter="formatter" @focus="focus" />
       <div class="search-result-wrapper" v-if="filterSearchData && filterSearchData.length">
         <h5 class="result-title">搜索结果</h5>
 

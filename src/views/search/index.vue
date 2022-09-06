@@ -2,89 +2,98 @@
     <div class="search-wrapper">
         <header>
             <van-icon name="arrow-left" class="ico" @click="$router.back()" />
+            <span>当前查询英雄: {{heroName}}</span>
         </header>
-        <div class="search-content " v-if="searchData && searchData.length">
+        <div class="search-content" v-if="searchData && searchData.length">
             <div class="search-title van-hairline--bottom">
                 <span>区服</span>
                 <span>地区</span>
                 <span>分数</span>
             </div>
-            <template v-for="(item,index) in searchData " :key="item.name">
-                <div :class="`service${index+1} animate__animated animate__fadeInLeft ${index === searchData.length-1? '':'van-hairline--bottom' }`">
-                    <template v-for="(type,tyIndex) in dctype" :key="type">
+            <template v-for="(item, index) in searchData" :key="item.name">
+                <div :class="`service${index + 1} animate__animated animate__fadeInLeft ${
+                  index === searchData.length - 1 ? '' : 'van-hairline--bottom'
+                }`">
+                    <template v-for="(type, tyIndex) in dctype" :key="type">
                         <span class="service1-span" v-if="index == tyIndex">{{type}}</span>
                     </template>
-                    <div class="service1-div ">
-                        <span>{{item.province}}</span>
-                        <span>{{item.provincePower}}</span>
+                    <div class="service1-div">
+                        <span>{{ item.province }}</span>
+                        <span>{{ item.provincePower }}</span>
                     </div>
                     <div class="service1-div">
-                        <span>{{item.city}}</span>
-                        <span>{{item.cityPower}}</span>
+                        <span>{{ item.city }}</span>
+                        <span>{{ item.cityPower }}</span>
                     </div>
                     <div class="service1-div">
-                        <span>{{item.area}}</span>
-                        <span>{{item.areaPower}}</span>
+                        <span>{{ item.area }}</span>
+                        <span>{{ item.areaPower }}</span>
                     </div>
                 </div>
             </template>
-
         </div>
-
-        <div class="loading" v-if="!searchData.length && status==null ">
+        <div class="loading" v-if="!searchData.length && errStatus == null">
             <van-loading type="spinner" color="#fff" />
         </div>
-
+        <div class="err-wrapper" v-if="errStatus" @click="getSearchData">
+            <van-empty image="error" image-size="100" description="数据加载失败, 点击重新尝试 !" />
+        </div>
     </div>
-</template> 
+</template>
 <script setup>
-import { useRoute } from 'vue-router';
-import { ref } from 'vue';
+import { useRoute } from "vue-router";
+import { ref } from "vue";
 import {
-    reqHeroPowerAqq,
-    reqHeroPowerAwx,
-    reqHeroPowerIqq,
-    reqHeroPowerIwx
-} from '@/api';
-// import {
-//     Notify
-// } from 'vant';
-const route = useRoute()
-const heroName = route.query.heroName
-const searchData = ref ([])
-const dctype = ["安卓QQ","安卓WX","苹果QQ","苹果WX"]
-const status = ref(null)
+  reqHeroPowerAqq,
+  reqHeroPowerAwx,
+  reqHeroPowerIqq,
+  reqHeroPowerIwx,
+} from "@/api";
 
-async function getSearchData(){
-    console.log(66);
-    try {
-          const data = await Promise.all([reqHeroPowerAqq({heroName}), reqHeroPowerAwx({heroName}),reqHeroPowerIqq({heroName}),reqHeroPowerIwx({heroName})])
-          searchData.value = data
-        } catch (error) {
-            status.value = error
-        console.log(error);
-        
-    }
+const route = useRoute();
+const heroName = route.query.heroName;
+const searchData = ref([]);
+const dctype = ["安卓QQ", "安卓WX", "苹果QQ", "苹果WX"];
+const errStatus = ref(null);
+
+async function getSearchData() {
+  try {
+    const data = await Promise.all([
+      reqHeroPowerAqq({ heroName }),
+      reqHeroPowerAwx({ heroName }),
+      reqHeroPowerIqq({ heroName }),
+      reqHeroPowerIwx({ heroName }),
+    ]);
+    searchData.value = data;
+  } catch (error) {
+    errStatus.value = error;
+    console.log("search-err-msg ------", error);
+  }
 }
-getSearchData()
+getSearchData();
 </script>
 
 <style lang="less" scoped>
-
 .search-wrapper {
     width: 100%;
     height: 100%;
+    overflow-y: scroll;
 
     header {
         width: 100%;
         position: fixed;
         z-index: 66;
         padding: 16px 10px;
-
-        .ico {
-            color: white;
-            font-size: 25px;
+        color: white;
+        font-size: 25px;
+        display: flex;
+        align-items: center;
+        span {
+            padding-left: 10px;
+            font-size: 15px;
         }
+
+
     }
 
     .search-content {
@@ -124,14 +133,12 @@ getSearchData()
                 grid-template-rows: 1fr;
                 grid-column: 2 / 4;
                 align-items: center;
-
             }
         }
 
         .service2 {
             .service1();
             grid-row: 8 / span 6;
-
         }
 
         .service3 {
@@ -143,7 +150,6 @@ getSearchData()
             .service1();
             grid-row: 20 / span 6;
         }
-
     }
 
     .loading {
@@ -151,6 +157,17 @@ getSearchData()
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
+    }
+
+    .err-wrapper {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 }
 </style>
