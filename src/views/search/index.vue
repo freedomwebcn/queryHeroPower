@@ -1,47 +1,50 @@
 <template>
-  <div class="search-wrapper">
-    <header>
-      <van-icon name="arrow-left" class="ico" @click="$router.back()" />
-      <span>{{ heroName }}</span>
-    </header>
-    <div class="search-content" v-if="searchData && searchData.length">
-      <div class="search-title van-hairline--bottom">
-        <span>区服</span>
-        <span>地区</span>
-        <span>分数</span>
-      </div>
-      <template v-for="(item, index) in searchData" :key="item.name">
-        <div :class="`hero-power${index + 1} animate__animated animate__fadeInLeft ${index === searchData.length - 1 ? '' : 'van-hairline--bottom'}`">
-          <template v-for="(type, tyIndex) in dctype" :key="type">
-            <span class="dctype" v-if="index == tyIndex">{{ type }}</span>
-          </template>
-          <div class="district-score">
-            <span>{{ item.province }}</span>
-            <span>{{ item.provincePower }}</span>
-          </div>
-          <div class="district-score">
-            <span>{{ item.city }}</span>
-            <span>{{ item.cityPower }}</span>
-          </div>
-          <div class="district-score">
-            <span>{{ item.area }}</span>
-            <span>{{ item.areaPower }}</span>
-          </div>
+  <van-config-provider :theme-vars="searchthemeVars" style="height:100%">
+    <div class="search-wrapper">
+      <header>
+        <van-icon name="arrow-left" class="ico" @click="$router.back()" />
+        <!-- <span>{{ heroName }}</span> -->
+      </header>
+      <div class="search-content" v-if="searchData && searchData.length">
+        <div class="search-title van-hairline--bottom">
+          <span>区服</span>
+          <span>地区</span>
+          <span>分数</span>
         </div>
-      </template>
+        <template v-for="(item, index) in searchData" :key="item.name">
+          <div :class="`hero-power${index + 1} animate__animated animate__fadeInLeft ${index === searchData.length - 1 ? '' : 'van-hairline--bottom'}`">
+            <template v-for="(type, tyIndex) in dctype" :key="type">
+              <span class="dctype" v-if="index == tyIndex">{{ type }}</span>
+            </template>
+            <div class="district-score">
+              <span>{{ item.province }}</span>
+              <span>{{ item.provincePower }}</span>
+            </div>
+            <div class="district-score">
+              <span>{{ item.city }}</span>
+              <span>{{ item.cityPower }}</span>
+            </div>
+            <div class="district-score">
+              <span>{{ item.area }}</span>
+              <span>{{ item.areaPower }}</span>
+            </div>
+          </div>
+        </template>
+      </div>
+      <div class="loading" v-if="!searchData.length && errStatus == null">
+        <van-loading type="spinner" color="#fff" />
+      </div>
+      <div class="err-wrapper" v-if="errStatus" @click="getSearchData">
+        <van-empty image="error" image-size="100" description="数据加载失败, 点击重新尝试 !" style="color: white" />
+      </div>
     </div>
-    <div class="loading" v-if="!searchData.length && errStatus == null">
-      <van-loading type="spinner" color="#fff" />
-    </div>
-    <div class="err-wrapper" v-if="errStatus" @click="getSearchData">
-      <van-empty image="error" image-size="100" description="数据加载失败, 点击重新尝试 !" />
-    </div>
-  </div>
+  </van-config-provider>
 </template>
 <script setup>
 import { useRoute } from "vue-router";
 import { ref } from "vue";
 import { reqHeroPowerAqq, reqHeroPowerAwx, reqHeroPowerIqq, reqHeroPowerIwx } from "@/api";
+import { searchthemeVars } from "@/ui_option";
 
 const route = useRoute();
 const heroName = route.query.heroName;
@@ -68,6 +71,18 @@ getSearchData();
   height: 100%;
   overflow-y: scroll;
 
+  &::after {
+    content: "";
+    position: absolute;
+    background: url(../img/56.png) center center no-repeat;
+    background-size: contain;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    opacity: 0.5;
+  }
+
   header {
     width: 100%;
     position: fixed;
@@ -82,8 +97,6 @@ getSearchData();
       padding-left: 10px;
       font-size: 16px;
     }
-
-
   }
 
   .search-content {
@@ -95,6 +108,8 @@ getSearchData();
     grid-template-rows: auto;
     color: white;
     text-align: center;
+    position: relative;
+    z-index: 2;
 
     .search-title {
       display: grid;
@@ -145,6 +160,7 @@ getSearchData();
     position: absolute;
     top: 50%;
     left: 50%;
+    z-index: 2;
     transform: translate(-50%, -50%);
   }
 
@@ -157,6 +173,7 @@ getSearchData();
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 2;
   }
 }
 </style>

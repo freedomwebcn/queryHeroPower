@@ -4,3 +4,7 @@ export const themeVars = {
   emptyPadding: '0px',
   emptyDescriptionPadding: '0px',
 };
+
+export const searchthemeVars = {
+  emptyDescriptionColor: "var(--van-white)"
+};
