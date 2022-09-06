@@ -88,6 +88,7 @@ getSearchData();
         font-size: 25px;
         display: flex;
         align-items: center;
+
         span {
             padding-left: 10px;
             font-size: 15px;

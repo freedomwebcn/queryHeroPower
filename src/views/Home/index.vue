@@ -3,60 +3,95 @@
     <!-- 搜索框 -->
     <div class="search-wrapper">
       <h2 class="search-title">{{ getGreetingMsg() }}</h2>
-      <van-search v-model="keyworld" placeholder="请输入英雄名称" :formatter="formatter" @focus="focus" />
-      <div class="search-result-wrapper" v-if="filterSearchData && filterSearchData.length">
+      <van-search
+        v-model="keyworld"
+        placeholder="请输入英雄名称"
+        :formatter="formatter"
+        @focus="focus"
+      />
+      <div
+        class="search-result-wrapper"
+        v-if="filterSearchData && filterSearchData.length"
+      >
         <h5 class="result-title">搜索结果</h5>
 
         <div class="search-result-list">
           <template v-for="(item, index) in filterSearchData" :key="item.cname">
-            <div class="search-result-item " @click="queryHeroPower(item)">
-              <img :src="item.iconUrl" alt="" class="hero-img">
+            <div class="search-result-item" @click="queryHeroPower(item)">
+              <img :src="item.iconUrl" alt="" class="hero-img" />
               <div class="hero-name-wrapper">
-                <span class="hero-name ">{{ item.cname }}</span>
+                <span class="hero-name">{{ item.cname }}</span>
               </div>
             </div>
-            <div class="van-hairline--bottom search-result-line"
-              v-if="filterSearchData.length > 1 && index != filterSearchData.length - 1">
-            </div>
+            <div
+              class="van-hairline--bottom search-result-line"
+              v-if="
+                filterSearchData.length > 1 &&
+                index != filterSearchData.length - 1
+              "
+            ></div>
           </template>
         </div>
       </div>
-      <div class="search-history-wrapper" v-if="isShowSearchHistory && !keyworld">
+      <div
+        class="search-history-wrapper"
+        v-if="isShowSearchHistory && !keyworld"
+      >
         <h5 class="title">最近的搜索记录</h5>
         <div class="search-history-list">
           <template v-for="(item, index) in searchHistory" :key="item.cname">
-            <div @click="queryHeroPower(item)">
-              <van-swipe-cell>
-                <img :src="item.iconUrl" alt="">
+            <van-swipe-cell @open="open" @close="close">
+              <div class="swipe-cell-left" @click="queryHeroPower(item)">
+                <img :src="item.iconUrl" alt="" />
                 <span>{{ item && item.cname }}</span>
-                <template #right>
-                  <van-button square type="danger" text="删除" @click="deleteSearchHistoryItem(index)" />
-                </template>
-              </van-swipe-cell>
-            </div>
-            <div class="van-hairline--bottom search-History-line"
-              v-if="searchHistory.length > 1 && index != searchHistory.length - 1">
-            </div>
+              </div>
+
+              <template #right>
+                <van-button
+                  square
+                  type="danger"
+                  text="删除"
+                  @click="deleteSearchHistoryItem(index)"
+                />
+              </template>
+            </van-swipe-cell>
+
+            <div
+              class="van-hairline--bottom search-History-line"
+              v-if="
+                searchHistory.length > 1 && index != searchHistory.length - 1
+              "
+            ></div>
           </template>
         </div>
         <div class="footer-wrapper">
-          <span class="left-footer" @click="clearAllSearchHistory">清空最近的搜索记录</span>
+          <span class="left-footer" @click="clearAllSearchHistory"
+            >清空最近的搜索记录</span
+          >
           <span aria-label="左滑可删除单条搜索记录" data-balloon-pos="up-right">
             <van-icon name="question-o" class="right-ico" />
           </span>
         </div>
       </div>
-      <div class="not-found-data" v-if="!filterSearchData.length && keyworld">暂无搜索结果</div>
+      <div class="not-found-data" v-if="!filterSearchData.length && keyworld">
+        暂无搜索结果
+      </div>
     </div>
     <van-overlay :show="isShowOverlay" @click="overlayClose" />
     <!-- 英雄职业列表 -->
     <div class="hero-type-content">
       <h3 class="title">英雄职业</h3>
       <div class="hero-type-list">
-        <div :style="{ backgroundColor: heroTypeItem.bgcolor }" class="hero-type-item"
-          v-for="(heroTypeItem, index) in heroTypeList" :key="heroTypeItem.type"
-          @click='getHeroList({ typeId: index + 1, typeName: heroTypeItem.type })'>
-          <img :src="heroTypeItem.ico" class="ico" alt="">
+        <div
+          :style="{ backgroundColor: heroTypeItem.bgcolor }"
+          class="hero-type-item"
+          v-for="(heroTypeItem, index) in heroTypeList"
+          :key="heroTypeItem.type"
+          @click="
+            getHeroList({ typeId: index + 1, typeName: heroTypeItem.type })
+          "
+        >
+          <img :src="heroTypeItem.ico" class="ico" alt="" />
           <span class="type-name">{{ heroTypeItem.type }}</span>
         </div>
       </div>
@@ -65,110 +100,135 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-import { heroTypeList } from './heroTypeList'
-import { useReqHeroListData } from '@/views/HeroList/getHeroList';
-import { Toast } from 'vant';
-import 'vant/es/toast/style';
-
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { heroTypeList } from "./heroTypeList";
+import { useReqHeroListData } from "@/views/HeroList/getHeroList";
+import { Toast } from "vant";
+import "vant/es/toast/style";
 
 const router = useRouter();
-const isShowOverlay = ref(false)
-const keyworld = ref('') //搜索关键字
-const isShowSearchHistory = ref(false) //是否显示搜索历史记录
-const { filterSearchData, getHeroData } = useReqHeroListData('', keyworld)
-getHeroData()
+const isShowOverlay = ref(false);
+const keyworld = ref(""); //搜索关键字
+const isShowSearchHistory = ref(false); //是否显示搜索历史记录
+const { filterSearchData, getHeroData } = useReqHeroListData("", keyworld);
+const swipeCellOpenStatus = ref(true); //根据单元格打开状态 决定是否要跳转路由
+getHeroData();
 // 格式化搜索框输入的值 去除空白
-const formatter = (value) => value.replace(/\s*/g, "")
-const searchHistory = ref(JSON.parse(window.localStorage.getItem("serchHistory")) || [])
+const formatter = (value) => value.replace(/\s*/g, "");
+const searchHistory = ref(
+  JSON.parse(window.localStorage.getItem("serchHistory")) || []
+);
 
 // 查询英雄战力
 const queryHeroPower = (heroInfo) => {
-  // 如果该条搜索记录已存在，则不添加 直接跳转路由去查询当前英雄战力
-  const even = (searchHistoryObj) => searchHistoryObj.cname === heroInfo.cname
-  if (searchHistory.value.some(even)) {
-    router.push({ path: '/search', query: { heroName: heroInfo.cname } })
-    return
+  if (swipeCellOpenStatus.value) {
+    console.log(heroInfo);
+    // 如果该条搜索记录已存在，则不添加 直接跳转路由去查询当前英雄战力
+    const even = (searchHistoryObj) =>
+      searchHistoryObj.cname === heroInfo.cname;
+    if (searchHistory.value.some(even)) {
+      router.push({ path: "/search", query: { heroName: heroInfo.cname } });
+      return;
+    }
+    // 保存搜索记录到数组中
+    searchHistory.value.push(heroInfo);
+    // 存储到本地
+    window.localStorage.setItem(
+      "serchHistory",
+      JSON.stringify(searchHistory.value)
+    );
+    router.push({ path: "/search", query: { heroName: heroInfo.cname } });
   }
-  // 保存搜索记录到数组中
-  searchHistory.value.push(heroInfo)
-  // 存储到本地
-  window.localStorage.setItem("serchHistory", JSON.stringify(searchHistory.value))
-  router.push({ path: '/search', query: { heroName: heroInfo.cname } })
-}
+};
 
 // 搜索框获取焦点时触发
 const focus = () => {
-  isShowOverlay.value = true
-  searchHistory.value.length > 0 ? isShowSearchHistory.value = true : isShowSearchHistory.value = false
-}
+  isShowOverlay.value = true;
+  searchHistory.value.length > 0
+    ? (isShowSearchHistory.value = true)
+    : (isShowSearchHistory.value = false);
+};
 
 // 点击遮盖层时触发
 const overlayClose = () => {
-  isShowOverlay.value = false
-  isShowSearchHistory.value = false
-  keyworld.value = '' //输入英雄名称后没有点击查询英雄战力，而是点击遮盖层，则清空搜索框。
-}
+  isShowOverlay.value = false;
+  isShowSearchHistory.value = false;
+  keyworld.value = ""; //输入英雄名称后没有点击查询英雄战力，而是点击遮盖层，则清空搜索框。
+};
+
+// 滑动单元格  打开触发
+const open = () => {
+  swipeCellOpenStatus.value = false;
+};
+// 滑动单元格关闭触发
+const close = () => {
+  swipeCellOpenStatus.value = true;
+};
 
 // 删除搜索历史记录的某一项
 const deleteSearchHistoryItem = (index) => {
-  searchHistory.value.splice(index, 1)
+  searchHistory.value.splice(index, 1);
+  swipeCellOpenStatus.value = true;
   if (!searchHistory.value.length) {
-    resetSearchHistoryStatus()
-    return
+    resetSearchHistoryStatus();
+    return;
   }
-  window.localStorage.setItem("serchHistory", JSON.stringify(searchHistory.value))
-}
+  window.localStorage.setItem(
+    "serchHistory",
+    JSON.stringify(searchHistory.value)
+  );
+};
 // 清空所有的搜索记录
 const clearAllSearchHistory = () => {
-  searchHistory.value = []
-  resetSearchHistoryStatus()
-}
-const resetSearchHistoryStatus =()=>{
+  searchHistory.value = [];
+  resetSearchHistoryStatus();
+};
+const resetSearchHistoryStatus = () => {
   window.localStorage.removeItem("serchHistory");
-  isShowSearchHistory.value = false
-  isShowOverlay.value = false
-  Toast.success('清空成功！');
-} 
+  isShowSearchHistory.value = false;
+  isShowOverlay.value = false;
+  Toast.success("清空成功！");
+};
 
 const getGreetingMsg = () => {
-  const timeDate = new Date()
-  const hours = timeDate.getHours()
-  let greetingMsg = ''
+  const timeDate = new Date();
+  const hours = timeDate.getHours();
+  let greetingMsg = "";
 
   if (hours >= 0 && hours <= 5) {
-    greetingMsg = "夜深了"
+    greetingMsg = "夜深了";
   } else if (hours > 5 && hours <= 10) {
-    greetingMsg = "早上好"
+    greetingMsg = "早上好";
   } else if (hours > 10 && hours <= 11) {
-    greetingMsg = "上午好"
+    greetingMsg = "上午好";
   } else if (hours > 11 && hours <= 13) {
-    greetingMsg = "中午好"
+    greetingMsg = "中午好";
   } else if (hours > 13 && hours <= 18) {
-    greetingMsg = "下午好"
+    greetingMsg = "下午好";
   } else if (hours > 18 && hours <= 24) {
-    greetingMsg = "晚上好"
+    greetingMsg = "晚上好";
   }
-  return greetingMsg
-}
+  return greetingMsg;
+};
 
 // 跳转到英雄职业所属的英雄列表页面
 const getHeroList = (heroTypeObJ) => {
-  router.push({ name: 'heroList', params: { ...heroTypeObJ } });
-}
-
+  router.push({ name: "heroList", params: { ...heroTypeObJ } });
+};
 </script>
 
 <style lang="less" scoped>
-@import '@/Mixins/dScrollBar';
+@import "@/Mixins/dScrollBar";
 
 .home-wrapper {
   height: 100%;
   padding: 16px 16px 0 16px;
-  background-image: linear-gradient(150deg,
-      rgba(83, 83, 83, 0.8) 20px,
-      transparent 220px);
+  background-image: linear-gradient(
+    150deg,
+    rgba(83, 83, 83, 0.8) 20px,
+    transparent 220px
+  );
 
   .search-wrapper {
     position: relative;
@@ -249,7 +309,6 @@ const getHeroList = (heroTypeObJ) => {
             font-size: 13px;
             align-items: center;
           }
-
         }
 
         .search-result-line {
@@ -272,29 +331,29 @@ const getHeroList = (heroTypeObJ) => {
 
       :deep(.van-swipe-cell) {
         .van-swipe-cell__wrapper {
-          display: grid;
-          grid-template-columns: 38px 1fr;
-          grid-auto-rows: 38px;
-          align-items: center;
-          column-gap: 8px;
+          .swipe-cell-left {
+            display: grid;
+            grid-template-columns: 38px 1fr;
+            grid-auto-rows: 38px;
+            align-items: center;
+            column-gap: 8px;
 
-          img {
-            height: 100%;
-            border-radius: 3px;
-          }
+            img {
+              height: 100%;
+              border-radius: 3px;
+            }
 
-          span {
-            font-size: 13px;
+            span {
+              font-size: 13px;
+            }
           }
 
           .van-swipe-cell__right {
             button {
               height: 100%;
-
             }
           }
         }
-
       }
 
       .title {
@@ -320,9 +379,7 @@ const getHeroList = (heroTypeObJ) => {
         .right-ico {
           transform: translate(-3px, 0);
         }
-
       }
-
     }
 
     .not-found-data {
@@ -371,5 +428,5 @@ const getHeroList = (heroTypeObJ) => {
     }
   }
 }
-</style>>
-
+</style>
+>
