@@ -76,7 +76,7 @@ const isShowOverlay = ref(false);
 const keyworld = ref(""); //搜索关键字
 const isShowSearchHistory = ref(false); //是否显示搜索历史记录
 const { filterSearchData, getHeroData } = useReqHeroListData("", keyworld);
-const swipeCellOpenStatus = ref(true); //根据单元格打开状态 决定是否要跳转路由 --如果单元格打开时，再点击单元格是要关闭单元格，而不是跳转路由
+const swipeCellOpenStatus = ref(false); //根据单元格打开状态 决定是否要跳转路由 --如果单元格打开时，点击单元格是要关闭单元格，而不是跳转路由
 getHeroData();
 // 格式化搜索框输入的值 去除空白
 const formatter = (value) => value.replace(/\s*/g, "");
@@ -84,7 +84,7 @@ const searchHistory = ref(JSON.parse(window.localStorage.getItem("serchHistory")
 
 // 查询英雄战力
 const queryHeroPower = (heroInfo) => {
-  if (swipeCellOpenStatus.value) {
+  if (!swipeCellOpenStatus.value) {
     console.log(heroInfo);
     // 如果该条搜索记录已存在，则不添加 直接跳转路由去查询当前英雄战力
     const even = (searchHistoryObj) => searchHistoryObj.cname === heroInfo.cname;
@@ -115,11 +115,11 @@ const overlayClose = () => {
 
 // 单元格打开触发
 const open = () => {
-  swipeCellOpenStatus.value = false;
+  swipeCellOpenStatus.value = true;
 };
 // 单元格关闭触发
 const close = () => {
-  swipeCellOpenStatus.value = true;
+  swipeCellOpenStatus.value = false;
 };
 
 // 删除搜索历史记录的某一项

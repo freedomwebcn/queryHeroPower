@@ -3,7 +3,6 @@
     <div class="search-wrapper">
       <header>
         <van-icon name="arrow-left" class="ico" @click="$router.back()" />
-        <!-- <span>{{ heroName }}</span> -->
       </header>
       <div class="search-content" v-if="searchData && searchData.length">
         <div class="search-title van-hairline--bottom">
