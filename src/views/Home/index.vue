@@ -210,7 +210,7 @@ const getHeroList = (heroTypeObJ) => {
 
           .van-cell__value {
             .van-field__body {
-              font-size: 15px;
+              font-size: 14.5px;
               input::placeholder {
                 font-weight: 700;
                 color: rgb(83, 83, 83);
