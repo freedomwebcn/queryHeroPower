@@ -1,5 +1,5 @@
 <template>
-  <div class="home-wrapper" id="test">
+  <div class="home-wrapper">
     <!-- 搜索框 -->
     <div class="search-wrapper">
       <h2 class="search-title">{{ getGreetingMsg() }}</h2>
@@ -60,6 +60,8 @@
         </div>
       </div>
     </div>
+
+    <div class="dsc-text-wrapper"></div>
   </div>
 </template>
 
@@ -76,7 +78,7 @@ const isShowOverlay = ref(false);
 const keyworld = ref(""); //搜索关键字
 const isShowSearchHistory = ref(false); //是否显示搜索历史记录
 const { filterSearchData, getHeroData } = useReqHeroListData("", keyworld);
-const swipeCellOpenStatus = ref(false); //根据单元格打开状态 决定是否要跳转路由 --如果单元格打开时，点击单元格是要关闭单元格，而不是跳转路由
+const swipeCellOpenStatus = ref(false); //根据单元格打开状态 决定是否要跳转路由 --如果单元格打开时，再次点击单元格是要关闭单元格，而不是跳转路由
 getHeroData();
 // 格式化搜索框输入的值 去除空白
 const formatter = (value) => value.replace(/\s*/g, "");
@@ -150,7 +152,7 @@ const getGreetingMsg = () => {
   let greetingMsg = "";
 
   if (hours >= 0 && hours <= 5) {
-    greetingMsg = "夜深了";
+    greetingMsg = "夜深了，注意休息";
   } else if (hours > 5 && hours <= 10) {
     greetingMsg = "早上好";
   } else if (hours > 10 && hours <= 11) {
@@ -208,6 +210,7 @@ const getHeroList = (heroTypeObJ) => {
 
           .van-cell__value {
             .van-field__body {
+              font-size: 15px;
               input::placeholder {
                 font-weight: 700;
                 color: rgb(83, 83, 83);
