@@ -70,6 +70,7 @@ import { heroTypeList } from "./heroTypeList";
 import { useReqHeroListData } from "@/views/HeroList/getHeroList";
 import { Toast } from "vant";
 import "vant/es/toast/style";
+
 // import TrenedingTopic from "./TrenedingTopic";
 
 const router = useRouter();
@@ -143,6 +144,7 @@ const resetSearchHistoryStatus = () => {
   isShowSearchHistory.value = false;
   isShowOverlay.value = false;
   Toast.success("清空成功！");
+
 };
 
 const getGreetingMsg = () => {
