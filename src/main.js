@@ -17,6 +17,7 @@ import {
     SwipeCell,
     Overlay,
     Icon,
+ 
 } from 'vant';
 const app = createApp(App)
 
@@ -34,6 +35,8 @@ app.use(Empty)
 app.use(SwipeCell)
 app.use(Overlay)
 app.use(Icon)
+
+
 
 
 

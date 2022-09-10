@@ -11,6 +11,7 @@ const heroList = () => import('../views/HeroList')
 const search = () => import('../views/search')
 
 
+
 const routes = [{
     path: '/',
     redirect: {
@@ -43,8 +44,6 @@ const routes = [{
     meta: {
       transition: 'homeList'
     },
-
-
   }
 
 ]

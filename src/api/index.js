@@ -20,3 +20,5 @@ export const reqHeroPowerIqq = ({
 export const reqHeroPowerIwx = ({
     heroName,
 }) => ajax(`/hero/select.php?hero=${heroName}&type=iwx`)
+
+

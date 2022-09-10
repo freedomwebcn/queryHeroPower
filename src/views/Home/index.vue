@@ -60,8 +60,6 @@
         </div>
       </div>
     </div>
-
-    <div class="dsc-text-wrapper"></div>
   </div>
 </template>
 
@@ -72,6 +70,7 @@ import { heroTypeList } from "./heroTypeList";
 import { useReqHeroListData } from "@/views/HeroList/getHeroList";
 import { Toast } from "vant";
 import "vant/es/toast/style";
+// import TrenedingTopic from "./TrenedingTopic";
 
 const router = useRouter();
 const isShowOverlay = ref(false);
@@ -178,9 +177,10 @@ const getHeroList = (heroTypeObJ) => {
 
 .home-wrapper {
   height: 100%;
-  padding: 16px 16px 0 16px;
+  overflow-y: scroll;
+  padding: 16px 16px 16px 16px;
   background-image: linear-gradient(150deg, rgba(83, 83, 83, 0.8) 20px, transparent 220px);
-
+  .delete-scroll-bar();
   .search-wrapper {
     position: relative;
     z-index: 2008;
@@ -198,8 +198,6 @@ const getHeroList = (heroTypeObJ) => {
       .van-search__content {
         .van-search__field {
           height: 38px;
-          align-items: center;
-
           .van-field__left-icon {
             .van-icon-search {
               color: #000;
@@ -379,6 +377,20 @@ const getHeroList = (heroTypeObJ) => {
       }
     }
   }
+  .treneding-topic-wrapper {
+    .hero-type-content();
+    .treneding-topic-list {
+      .hero-type-list();
+      .treneding-topic-item {
+        .hero-type-item();
+        .pic {
+          .ico();
+        }
+        .name {
+          .type-name;
+        }
+      }
+    }
+  }
 }
 </style>
->

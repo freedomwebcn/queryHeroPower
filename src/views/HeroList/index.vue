@@ -49,6 +49,7 @@ const scrollRef = ref(null);
 let isShowPopup = ref(false);
 // 从请求英雄列表数据模块中提取出来需要的数据
 let { getHeroData, filterHeroData, heroListLoadingErrStatus } = useReqHeroListData(typeId);
+// getHeroData();
 // 如果英雄列表数据获取失败 点击尝试重新获取数据
 const tryGetHeroData = () => {
   heroListLoadingErrStatus.value = null;
@@ -93,7 +94,6 @@ onMounted(() => {
 .hero-list-wrapper {
   height: 100%;
   width: 100%;
-  overflow: hidden;
   overflow-y: scroll;
   .delete-scroll-bar();
 
