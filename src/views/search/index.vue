@@ -7,7 +7,7 @@
       <div class="search-content" v-if="searchData && searchData.length">
         <div class="search-title van-hairline--bottom">
           <span>区服</span>
-          <span>地区</span>
+          <span>地区(省/市/区标)</span>
           <span>分数</span>
         </div>
         <template v-for="(item, index) in searchData" :key="item.name">
