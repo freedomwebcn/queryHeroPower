@@ -179,24 +179,19 @@ const getHeroList = (heroTypeObJ) => {
 
 .home-wrapper {
   height: 100%;
-  overflow-y: scroll;
   padding: 16px 16px 16px 16px;
   background-image: linear-gradient(150deg, rgba(83, 83, 83, 0.8) 20px, transparent 220px);
-  .delete-scroll-bar();
   .search-wrapper {
     position: relative;
     z-index: 2008;
-
     .search-title {
       font-size: 18px;
       color: white;
       margin-top: 0;
     }
-
     :deep(.van-search) {
       border-radius: 3px;
       padding: 0;
-
       .van-search__content {
         .van-search__field {
           height: 38px;
@@ -207,7 +202,6 @@ const getHeroList = (heroTypeObJ) => {
               font-weight: 700;
             }
           }
-
           .van-cell__value {
             .van-field__body {
               font-size: 14.5px;
@@ -272,16 +266,17 @@ const getHeroList = (heroTypeObJ) => {
 
     .search-history-wrapper {
       .search-result-wrapper();
-
       .search-history-list {
-        max-height: 336px;
-        overflow-y: scroll;
         .delete-scroll-bar();
         display: grid;
         row-gap: 8px;
+        grid-auto-rows: max-content;
+        max-height: 336px;
+        overflow-y: scroll;
       }
 
       :deep(.van-swipe-cell) {
+      //  height: 38px;
         .van-swipe-cell__wrapper {
           .swipe-cell-left {
             display: grid;
