@@ -1,7 +1,6 @@
 <template>
   <div class="home-wrapper">
     <!-- 搜索框 -->
-    <div>hello</div>
     <div class="search-wrapper">
       <h2 class="search-title">{{ getGreetingMsg() }}</h2>
       <van-search v-model="keyworld" placeholder="请输入英雄名称" :formatter="formatter" @focus="focus" />
@@ -122,14 +121,14 @@ const open = () => {
 };
 // 单元格关闭触发
 const close = () => {
-  
   swipeCellOpenStatus.value = false;
 };
 
 // 删除搜索历史记录的某一项
 const deleteSearchHistoryItem = (index) => {
   searchHistory.value.splice(index, 1);
-  // swipeCellOpenStatus.value = true;
+  // 在pc端 点击删除按钮会调用close回调，在移动端不会调用，这里手动修改下状态，防止因为状态没有及时改变而不能跳转查询战力路由
+  swipeCellOpenStatus.value = false;
   if (!searchHistory.value.length) {
     resetSearchHistoryStatus();
     return;
@@ -146,7 +145,6 @@ const resetSearchHistoryStatus = () => {
   isShowSearchHistory.value = false;
   isShowOverlay.value = false;
   Toast.success("清空成功！");
-
 };
 
 const getGreetingMsg = () => {
