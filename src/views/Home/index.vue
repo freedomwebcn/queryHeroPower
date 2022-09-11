@@ -1,6 +1,7 @@
 <template>
   <div class="home-wrapper">
     <!-- 搜索框 -->
+    <div>hello</div>
     <div class="search-wrapper">
       <h2 class="search-title">{{ getGreetingMsg() }}</h2>
       <van-search v-model="keyworld" placeholder="请输入英雄名称" :formatter="formatter" @focus="focus" />
@@ -121,13 +122,14 @@ const open = () => {
 };
 // 单元格关闭触发
 const close = () => {
+  
   swipeCellOpenStatus.value = false;
 };
 
 // 删除搜索历史记录的某一项
 const deleteSearchHistoryItem = (index) => {
   searchHistory.value.splice(index, 1);
-  swipeCellOpenStatus.value = true;
+  // swipeCellOpenStatus.value = true;
   if (!searchHistory.value.length) {
     resetSearchHistoryStatus();
     return;
