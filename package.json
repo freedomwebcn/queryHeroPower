@@ -13,7 +13,6 @@
     "balloon-css": "^1.2.0",
     "core-js": "^3.24.1",
     "lib-flexible": "^0.3.2",
-    "postcss-px2rem": "^0.3.0",
     "save": "^2.5.0",
     "vue": "^3.2.37",
     "vue-loader-v16": "^16.0.0-beta.5.4",

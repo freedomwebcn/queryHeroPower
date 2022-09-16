@@ -1,4 +1,5 @@
 <template>
+  <!-- van-config-provider ---- ui框架组件 用来配置框架样式 -->
   <van-config-provider :theme-vars="searchthemeVars" style="height: 100%">
     <div class="search-wrapper">
       <header>
