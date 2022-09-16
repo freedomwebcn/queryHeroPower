@@ -37,6 +37,6 @@ module.exports = {
 
     },
     devServer: {
-        disableHostCheck: true //解决内网穿透后无法访问项目的问题
+        // disableHostCheck: true //解决内网穿透后无法访问项目的问题
     }
 }

@@ -1,11 +1,11 @@
 <template>
-  <van-config-provider :theme-vars="searchthemeVars" style="height:100%">
+  <van-config-provider :theme-vars="searchthemeVars" style="height: 100%">
     <div class="search-wrapper">
       <header>
         <van-icon name="arrow-left" class="ico" @click="$router.back()" />
       </header>
       <div class="search-content" v-if="searchData && searchData.length">
-        <div class="search-title van-hairline--bottom">
+        <div class="search-title van-hairline--bottom animate__animated animate__fadeIn">
           <span>区服</span>
           <span>地区(省/市/区标)</span>
           <span>分数</span>
@@ -15,15 +15,15 @@
             <template v-for="(type, tyIndex) in dctype" :key="type">
               <span class="dctype" v-if="index == tyIndex">{{ type }}</span>
             </template>
-            <div class="district-score">
+            <div class="district">
               <span>{{ item.province }}</span>
               <span>{{ item.provincePower }}</span>
             </div>
-            <div class="district-score">
+            <div class="district">
               <span>{{ item.city }}</span>
               <span>{{ item.cityPower }}</span>
             </div>
-            <div class="district-score">
+            <div class="district">
               <span>{{ item.area }}</span>
               <span>{{ item.areaPower }}</span>
             </div>
@@ -130,7 +130,7 @@ getSearchData();
         grid-row: 1 / span 3;
       }
 
-      .district-score {
+      .district {
         display: grid;
         grid-template-columns: 1fr 1fr;
         grid-template-rows: 1fr;

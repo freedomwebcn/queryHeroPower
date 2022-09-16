@@ -3,7 +3,7 @@
     <!-- 搜索框 -->
     <div class="search-wrapper">
       <h2 class="search-title">{{ getGreetingMsg() }}</h2>
-      <van-search v-model="keyworld" placeholder="请输入英雄名称" :formatter="formatter" @focus="focus" />
+      <van-search v-model="keyworld" placeholder="请输入英雄名称" :formatter="formatter" @focus="focus" @search="onSearch" />
       <div class="search-result-wrapper" v-if="filterSearchData && filterSearchData.length">
         <h5 class="result-title">搜索结果</h5>
         <div class="search-result-list">
@@ -70,8 +70,6 @@ import { heroTypeList } from "./heroTypeList";
 import { useReqHeroListData } from "@/views/HeroList/getHeroList";
 import { Toast } from "vant";
 import "vant/es/toast/style";
-
-// import TrenedingTopic from "./TrenedingTopic";
 
 const router = useRouter();
 const isShowOverlay = ref(false);
@@ -147,6 +145,9 @@ const resetSearchHistoryStatus = () => {
   Toast.success("清空成功！");
 };
 
+const onSearch = (val) => {
+  console.log(val);
+};
 const getGreetingMsg = () => {
   const timeDate = new Date();
   const hours = timeDate.getHours();
@@ -276,7 +277,7 @@ const getHeroList = (heroTypeObJ) => {
       }
 
       :deep(.van-swipe-cell) {
-      //  height: 38px;
+        //  height: 38px;
         .van-swipe-cell__wrapper {
           .swipe-cell-left {
             display: grid;
@@ -331,9 +332,9 @@ const getHeroList = (heroTypeObJ) => {
 
     .not-found-data {
       .search-result-wrapper();
-      padding-top: 10px;
-      padding-bottom: 10px;
-      font-size: 13px;
+      padding-top: 16px;
+      padding-bottom: 16px;
+      font-size: 15px;
       color: #535353;
       text-align: center;
     }
