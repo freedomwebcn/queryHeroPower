@@ -128,7 +128,7 @@ onMounted(() => {
     .hero-list-content {
       position: relative;
       z-index: 2;
-      padding: 72px 10px 0 10px;
+      padding: 72px 10px 10px 10px;
 
       .png {
         width: 100px;
