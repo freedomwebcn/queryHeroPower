@@ -26,7 +26,7 @@ https://queryheropower.vercel.app/
 #### 搜索记录
 ![搜索记录](https://i.postimg.cc/Bnn0vZNB/search-history.png)
 
-#### 战力页面
+#### 战力页面 （通过搜索方式）
 ![战力页面](https://i.postimg.cc/Hn9qpFyN/query-by-search.png)
 
 #### 左滑删除单条搜索记录
