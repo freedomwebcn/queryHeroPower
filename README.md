@@ -17,7 +17,7 @@ https://queryheropower.vercel.app/
 ```
 ### 页面截图
 
-[主页](https://i.postimg.cc/fRqhS4rn/home.png)
+![主页](https://i.postimg.cc/fRqhS4rn/home.png)
 [英雄列表页面]()
 [查询战力模态框]()
 [搜索框]()
