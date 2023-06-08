@@ -24,7 +24,8 @@ export function useReqHeroListData(typeId, heroName) {
         // 如果sessionStorage 已经保存过英雄列表数据，就return
         if (heroData.value.length) return;
         try {
-            heroData.value = await reqHeroData()
+          heroData.value = await reqHeroData()
+        console.log(heroData.value);
             window.sessionStorage.setItem('allHeroData', JSON.stringify(heroData.value));
         } catch (err) {
             // 数据请求失败 显示错误提示
