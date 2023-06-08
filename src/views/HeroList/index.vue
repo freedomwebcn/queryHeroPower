@@ -7,7 +7,7 @@
         <span class="header-text animate__animated animate__fadeIn" v-if="showHeaderBgc">{{ typeName }}</span>
       </header>
       <!-- 请求英雄列表数据 显示 loading  -->
-      <div class="hero-list-loading" v-if="!filterHeroData.length ">
+      <div class="hero-list-loading" v-if="!filterHeroData.length">
         <van-loading type="spinner" color="#fff" />
       </div>
       <div class="scroll-content">
@@ -21,10 +21,7 @@
           </ul>
         </div>
       </div>
-      <!-- 请求英雄列表数据失败 显示错误提示
-      <div class="hero-list-err-wrapper" v-if="heroListLoadingErrStatus" @click="tryGetHeroData">
-        <van-empty image="error" image-size="100" description="数据加载失败, 点击重新尝试 !" />
-      </div> -->
+
       <!-- 查询英雄战力弹出层 -->
       <van-popup v-model:show="isShowPopup" round @closed="popupClosed">
         <PopupContent v-bind="popupContentProps" @getPopupData="(value) => getHeroPowerData(value)" />
@@ -42,7 +39,6 @@ import { useReqHeroPowerData } from "./getHeroPower";
 import { themeVars } from "@/ui_option";
 import { store } from "@/store/store.js";
 
-
 const route = useRoute();
 const typeId = ref(route.params.typeId); //英雄职业对应ID
 const typeName = ref(route.params.typeName); //英雄职业名字
@@ -50,17 +46,12 @@ const showHeaderBgc = ref(false); // 滑动英雄列表显示头部背景色和�
 const scrollRef = ref(null);
 let isShowPopup = ref(false);
 
+//过滤出英雄职业对应的英雄列表数据
 const filterHeroData = computed(() => {
   return store.heroData.filter((heroObj) => {
     return heroObj.hero_type === typeId.value * 1;
   });
 });
-// 如果英雄列表数据获取失败 点击尝试重新获取数据
-// const tryGetHeroData = () => {
-//   heroListLoadingErrStatus.value = null;
-//   getHeroData();
-// };
-// console.log(heroData);
 
 // 请求英雄战力数据参数
 let queryInfo = ref({ heroName: "", type: "aqq" });
@@ -184,17 +175,6 @@ onMounted(() => {
     transform: translate(-50%, -50%);
   }
 
-  .hero-list-err-wrapper {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    z-index: 3;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
 }
 </style>
->
+
