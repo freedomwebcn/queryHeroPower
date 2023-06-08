@@ -64,20 +64,28 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import { heroTypeList } from "./heroTypeList";
-import { useReqHeroListData } from "@/views/HeroList/getHeroList";
+import { reqHeroListData } from "./getHeroList.js";
 import { Toast } from "vant";
 import "vant/es/toast/style";
+import { store } from "@/store/store.js";
 
 const router = useRouter();
 const isShowOverlay = ref(false);
 const keyworld = ref(""); //搜索关键字
 const isShowSearchHistory = ref(false); //是否显示搜索历史记录
-const { filterSearchData, getHeroData } = useReqHeroListData("", keyworld);
 const swipeCellOpenStatus = ref(false); //根据单元格打开状态 决定是否要跳转路由 --如果单元格打开时，再次点击单元格是要关闭单元格，而不是跳转路由
-getHeroData();
+
+!store.heroData.length && reqHeroListData(); //游戏新英雄不频繁更新 减少请求次数
+
+const filterSearchData = computed(() => {
+  return store.heroData.filter((heroObj) => {
+    return keyworld.value && heroObj.cname.indexOf(keyworld.value) != -1;
+  });
+});
+
 // 格式化搜索框输入的值 去除空白
 const formatter = (value) => value.replace(/\s*/g, "");
 const searchHistory = ref(JSON.parse(window.localStorage.getItem("serchHistory")) || []);
