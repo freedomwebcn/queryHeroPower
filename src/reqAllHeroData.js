@@ -2,7 +2,7 @@ import { reqHeroData } from "@/api";
 import { Notify } from "vant";
 import { store } from "@/store/store.js";
 
-export function reqHeroListData() {
+export function reqAllHeroData() {
   function toNotify() {
     Notify({
       type: "danger",

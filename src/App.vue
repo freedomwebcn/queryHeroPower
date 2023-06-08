@@ -10,8 +10,8 @@
 </template>
 
 <script setup>
-import { reqHeroListData } from "./reqHeroListData.js";
-reqHeroListData();
+import { reqAllHeroData } from "./reqAllHeroData.js";
+reqAllHeroData();
 </script>
 
 <style lang="less">
@@ -46,4 +46,3 @@ reqHeroListData();
   overflow: hidden;
 }
 </style>
->
