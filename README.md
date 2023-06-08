@@ -15,6 +15,16 @@ npm run serve
 ```
 https://queryheropower.vercel.app/
 ```
+### 页面截图
+
+[主页](https://i.postimg.cc/fRqhS4rn/home.png)
+[英雄列表页面]()
+[查询战力模态框]()
+[搜索框]()
+[搜索记录]()
+[左滑删除单条搜索记录]()
+[战力页面]()
+
 
 
 

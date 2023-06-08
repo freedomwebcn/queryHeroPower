@@ -56,6 +56,7 @@ const filterHeroData = computed(() => {
 // 请求英雄战力数据参数
 let queryInfo = ref({ heroName: "", type: "aqq" });
 let heroImgUrl = ref("");
+
 const { getHeroPowerData, heroPowerData, isShowLoading, heroPowerStatus } = useReqHeroPowerData(queryInfo);
 // 打开弹出层触发
 const openPopup = (heroName, ico) => {
