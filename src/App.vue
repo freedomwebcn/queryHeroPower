@@ -1,17 +1,18 @@
 <template>
   <div class="app-container">
-
     <!-- <router-view /> -->
     <router-view v-slot="{ Component, route }">
       <transition :name="route.meta.transition">
         <component :is="Component" />
       </transition>
     </router-view>
-   
-
   </div>
-
 </template>
+
+<script setup>
+import { reqHeroListData } from "./reqHeroListData.js";
+reqHeroListData();
+</script>
 
 <style lang="less">
 .home-enter-from {
@@ -38,13 +39,11 @@
   transition: 0.5s ease;
 }
 
-
-
-
 .app-container {
   width: 100%;
   height: 100%;
   background-color: rgb(18, 18, 18);
   overflow: hidden;
 }
-</style>>
+</style>
+>
