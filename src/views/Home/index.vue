@@ -3,7 +3,7 @@
     <!-- 搜索框 -->
     <div class="search-wrapper">
       <h2 class="search-title">{{ getGreetingMsg() }}</h2>
-      <van-search v-model="keyworld" placeholder="请输入英雄名称" :formatter="formatter" @focus="focus" @search="onSearch" />
+      <van-search v-model="keyworld" placeholder="请输入英雄名称" :formatter="formatter" @focus="focus" />
       <div class="search-result-wrapper" v-if="filterSearchData && filterSearchData.length">
         <h5 class="result-title">搜索结果</h5>
         <div class="search-result-list">
@@ -153,28 +153,22 @@ const resetSearchHistoryStatus = () => {
   Toast.success("清空成功！");
 };
 
-const onSearch = (val) => {
-  console.log(val);
-};
+// const onSearch = (val) => {
+//   console.log(val);
+// };
 const getGreetingMsg = () => {
-  const timeDate = new Date();
-  const hours = timeDate.getHours();
-  let greetingMsg = "";
-
-  if (hours >= 0 && hours <= 5) {
-    greetingMsg = "夜深了，注意休息";
-  } else if (hours > 5 && hours <= 10) {
-    greetingMsg = "早上好";
-  } else if (hours > 10 && hours <= 11) {
-    greetingMsg = "上午好";
-  } else if (hours > 11 && hours <= 13) {
-    greetingMsg = "中午好";
-  } else if (hours > 13 && hours <= 18) {
-    greetingMsg = "下午好";
-  } else if (hours > 18 && hours <= 24) {
-    greetingMsg = "晚上好";
-  }
-  return greetingMsg;
+  const hours = new Date().getHours();
+  return hours >= 0 && hours <= 5
+    ? "夜深了，注意休息"
+    : hours > 5 && hours <= 10
+    ? "早上好"
+    : hours > 10 && hours <= 11
+    ? "上午好"
+    : hours > 11 && hours <= 13
+    ? "中午好"
+    : hours > 13 && hours <= 18
+    ? "下午好"
+    : "晚上好";
 };
 
 // 跳转到英雄职业所属的英雄列表页面
