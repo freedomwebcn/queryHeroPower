@@ -87,13 +87,27 @@ onMounted(() => {
 });
 </script>
 <style lang="less" scoped>
-@import "@/Mixins/dScrollBar";
+
 
 .hero-list-wrapper {
   height: 100%;
   width: 100%;
   overflow-y: scroll;
-  .delete-scroll-bar();
+  //   chrome去除滚动条样式
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  //   兼容火狐
+  &.scw {
+    scrollbar-width: none;
+    overflow: -moz-scrollbars-none;
+  }
+
+  //   兼容IE10+
+  &.msscw {
+    -ms-overflow-style: none;
+  }
 
   header {
     width: 375px;
@@ -175,7 +189,5 @@ onMounted(() => {
     left: 50%;
     transform: translate(-50%, -50%);
   }
-
 }
 </style>
-

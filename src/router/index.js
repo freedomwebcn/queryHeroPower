@@ -7,46 +7,45 @@ import {
 // import heroList from '../views/HeroList.vue'
 
 const Home = () => import('../views/Home')
-const heroList = () => import('../views/HeroList')
-const search = () => import('../views/search')
+const HeroList = () => import("../views/HeroList");
+const HeroPower = () => import("../views/HeroPower");
 
 
 
-const routes = [{
-    path: '/',
+const routes = [
+  {
+    path: "/",
     redirect: {
-      name: 'Home'
-    }
+      name: "Home",
+    },
   },
 
   {
-    path: '/home',
-    name: 'Home',
+    path: "/home",
+    name: "Home",
     component: Home,
     meta: {
-      transition: 'home'
+      transition: "home",
     },
   },
   {
-    path: '/hero-list/:typeId/:typeName',
-    name: 'heroList',
-    component: heroList,
+    path: "/hero-list/:typeId/:typeName",
+    name: "HeroList",
+    component: HeroList,
     meta: {
-      transition: 'homeList'
+      transition: "homeList",
     },
-
   },
 
   {
-    path: '/search',
-    name: 'search',
-    component: search,
+    path: "/heropower",
+    name: "HeroPower",
+    component: HeroPower,
     meta: {
-      transition: 'homeList'
+      transition: "homeList",
     },
-  }
-
-]
+  },
+];
 
 const router = createRouter({
   // history: createWebHistory(process.env.BASE_URL),
