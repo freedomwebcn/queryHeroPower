@@ -5,14 +5,14 @@
       <header>
         <van-icon name="arrow-left" class="ico" @click="$router.back()" />
       </header>
-      <div class="search-content" v-if="searchData && searchData.length">
+      <div class="search-content" v-if="heroPowerData && heroPowerData.length">
         <div class="search-title van-hairline--bottom animate__animated animate__fadeIn">
           <span>区服</span>
           <span>地区(省/市/区标)</span>
           <span>分数</span>
         </div>
-        <template v-for="(item, index) in searchData" :key="item.name">
-          <div :class="`hero-power${index + 1} animate__animated animate__fadeInLeft ${index === searchData.length - 1 ? '' : 'van-hairline--bottom'}`">
+        <template v-for="(item, index) in heroPowerData" :key="item.name">
+          <div :class="`hero-power${index + 1} animate__animated animate__fadeInLeft ${index === heroPowerData.length - 1 ? '' : 'van-hairline--bottom'}`">
             <template v-for="(type, tyIndex) in dctype" :key="type">
               <span class="dctype" v-if="index == tyIndex">{{ type }}</span>
             </template>
@@ -31,7 +31,7 @@
           </div>
         </template>
       </div>
-      <div class="loading" v-if="!searchData.length && errStatus == null">
+      <div class="loading" v-if="!heroPowerData.length && errStatus == null">
         <van-loading type="spinner" color="#fff" />
       </div>
       <div class="err-wrapper" v-if="errStatus" @click="getHeroPowerData">
@@ -48,7 +48,7 @@ import { searchthemeVars } from "@/ui_option";
 
 const route = useRoute();
 const heroName = route.query.heroName;
-const searchData = ref([]);
+const heroPowerData = ref([]);
 const dctype = ["安卓QQ", "安卓WX", "苹果QQ", "苹果WX"];
 const errStatus = ref(null);
 
@@ -56,7 +56,7 @@ async function getHeroPowerData() {
   try {
     errStatus.value = null;
     const data = await Promise.all([reqHeroPowerAqq({ heroName }), reqHeroPowerAwx({ heroName }), reqHeroPowerIqq({ heroName }), reqHeroPowerIwx({ heroName })]);
-    searchData.value = data;
+    heroPowerData.value = data;
   } catch (error) {
     errStatus.value = error;
     console.log("search-err-msg ------", error);
