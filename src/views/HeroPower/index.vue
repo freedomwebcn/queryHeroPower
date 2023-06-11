@@ -34,7 +34,7 @@
       <div class="loading" v-if="!searchData.length && errStatus == null">
         <van-loading type="spinner" color="#fff" />
       </div>
-      <div class="err-wrapper" v-if="errStatus" @click="getSearchData">
+      <div class="err-wrapper" v-if="errStatus" @click="getHeroPowerData">
         <van-empty image="error" image-size="100" description="数据加载失败, 点击重新尝试 !" style="color: white" />
       </div>
     </div>
@@ -52,7 +52,7 @@ const searchData = ref([]);
 const dctype = ["安卓QQ", "安卓WX", "苹果QQ", "苹果WX"];
 const errStatus = ref(null);
 
-async function getSearchData() {
+async function getHeroPowerData() {
   try {
     errStatus.value = null;
     const data = await Promise.all([reqHeroPowerAqq({ heroName }), reqHeroPowerAwx({ heroName }), reqHeroPowerIqq({ heroName }), reqHeroPowerIwx({ heroName })]);
@@ -62,7 +62,7 @@ async function getSearchData() {
     console.log("search-err-msg ------", error);
   }
 }
-getSearchData();
+getHeroPowerData();
 </script>
 
 <style lang="less" scoped>
