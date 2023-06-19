@@ -155,17 +155,29 @@ const resetSearchHistoryStatus = () => {
 // };
 const getGreetingMsg = () => {
   const hours = new Date().getHours();
-  return hours >= 0 && hours <= 5
-    ? "夜深了，注意休息"
-    : hours > 5 && hours <= 10
-    ? "早上好"
-    : hours > 10 && hours <= 11
-    ? "上午好"
-    : hours > 11 && hours <= 13
-    ? "中午好"
-    : hours > 13 && hours <= 18
-    ? "下午好"
-    : "晚上好";
+  let greeting;
+
+  switch (true) {
+    case hours >= 0 && hours <= 4:
+      greeting = "夜深了，注意休息";
+      break;
+    case hours > 4 && hours <= 7:
+      greeting = "早上好";
+      break;
+    case hours > 7 && hours <= 10:
+      greeting = "上午好";
+      break;
+    case hours > 10 && hours <= 13:
+      greeting = "中午好";
+      break;
+    case hours > 13 && hours <= 17:
+      greeting = "下午好";
+      break;
+    default:
+      greeting = "晚上好";
+  }
+
+  return greeting;
 };
 
 // 跳转到英雄职业所属的英雄列表页面
