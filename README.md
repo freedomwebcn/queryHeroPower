@@ -12,7 +12,7 @@ npm run serve
 ### 在线预览网址
 
 ```
-https://queryheropower.4everland.app/#/home
+https://queryheropower.4everland.app
 ```
 
 <details>
