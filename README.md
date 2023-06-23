@@ -9,10 +9,10 @@ npm install
 ```
 npm run serve
 ```
-### 在线预览网址（需要科学上网）
+### 在线预览网址
 
 ```
-https://queryheropower.vercel.app/
+https://queryheropower.4everland.app/#/home
 ```
 
 <details>
