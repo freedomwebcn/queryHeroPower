@@ -1,8 +1,9 @@
 <template>
   <div class="home-wrapper">
+    <h2 class="greeting-msg" >{{ getGreetingMsg() }}</h2>
+
     <!-- 搜索框 -->
     <div class="search-wrapper">
-      <h2 class="search-title">{{ getGreetingMsg() }}</h2>
       <van-search v-model="keyworld" placeholder="请输入英雄名称" :formatter="formatter" @focus="focus" />
       <div class="search-result-wrapper" v-if="filterSearchData && filterSearchData.length">
         <h5 class="result-title">搜索结果</h5>
@@ -191,14 +192,17 @@ const goHeroListPage = (heroTypeObJ) => {
   height: 100%;
   padding: 16px 16px 16px 16px;
   background-image: linear-gradient(150deg, rgba(83, 83, 83, 0.8) 20px, transparent 220px);
+  .greeting-msg {
+    position: relative;
+    z-index: 2008;
+    font-size: 18px;
+    color: white;
+    margin-top: 0;
+  }
   .search-wrapper {
     position: relative;
     z-index: 2008;
-    .search-title {
-      font-size: 18px;
-      color: white;
-      margin-top: 0;
-    }
+
     :deep(.van-search) {
       border-radius: 3px;
       padding: 0;
@@ -231,7 +235,7 @@ const goHeroListPage = (heroTypeObJ) => {
       position: absolute;
       background-color: #f7f8fa;
       width: 100%;
-      top: 72px;
+      top: calc(100% - 1px);
       padding: 0px 12px 8px 12px;
       border-bottom-left-radius: 3px;
       border-bottom-right-radius: 3px;

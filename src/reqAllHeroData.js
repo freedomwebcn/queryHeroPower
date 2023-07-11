@@ -6,7 +6,7 @@ export function reqAllHeroData() {
   function toNotify() {
     Notify({
       type: "danger",
-      message: "数据请求失败,请重新尝试 !",
+      message: "数据请求失败,请刷新重试 !",
     });
   }
   const getHeroData = async () => {
