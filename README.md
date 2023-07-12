@@ -34,7 +34,7 @@ https://queryheropower.4everland.app
   ![左滑删除单条搜索记录](https://i.postimg.cc/xjLYx4cM/del-history.png)
 
 #### 战力页面 （通过搜索方式）
-  ![战力页面](https://i.postimg.cc/Hn9qpFyN/query-by-search.png)
+  ![战力页面](https://i.postimg.cc/m21dcQ0G/power.png)
 
 #### 英雄列表
   ![英雄列表页面](https://i.postimg.cc/Kc7Sr3H5/herolist.png)
