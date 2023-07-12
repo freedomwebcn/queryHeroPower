@@ -40,7 +40,7 @@ https://queryheropower.4everland.app
   ![英雄列表页面](https://i.postimg.cc/Kc7Sr3H5/herolist.png)
 
 #### 查询战力模态框
-  ![查询战力模态框](https://i.postimg.cc/ZRpkQWK4/querypower.png)
+  ![查询战力模态框](https://i.postimg.cc/25mSZSJz/popup.png)
 
 </p>
 
