@@ -194,14 +194,14 @@ const goHeroListPage = (heroTypeObJ) => {
   background-image: linear-gradient(150deg, rgba(83, 83, 83, 0.8) 20px, transparent 220px);
   .greeting-msg {
     position: relative;
-    z-index: 2008;
+    z-index: 2001;
     font-size: 18px;
     color: white;
     margin-top: 0;
   }
   .search-wrapper {
     position: relative;
-    z-index: 2008;
+    z-index: 2001;
 
     :deep(.van-search) {
       border-radius: 3px;

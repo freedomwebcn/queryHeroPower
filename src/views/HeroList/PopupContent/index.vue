@@ -8,24 +8,24 @@
         {{ tabItem.systemName }}
       </span>
     </div>
-    <div class="van-hairline--top hairline"></div>
+    <div class="van-hairline--top hairline" style="color: #d6dbe1"></div>
     <div class="hero-power-wrapper">
       <div class="hero-power-content">
         <template v-if="heroPowerData">
-          <div class="district-wrapper animate__animated animate__fadeIn">
-            <div class="district-content">
-              <span class="reward">省级</span>
-              <span class="district">{{ heroPowerData.province }}</span>
+          <div class="hero-power-type animate__animated animate__fadeIn">
+            <div class="province">
+              <span>省级</span>
+              <span>{{ heroPowerData.province }}</span>
               <span class="score">{{ heroPowerData.provincePower + "分" }}</span>
             </div>
-            <div class="district-content">
-              <span class="reward">市级</span>
-              <span class="district">{{ heroPowerData.city }}</span>
+            <div class="city">
+              <span>市级</span>
+              <span>{{ heroPowerData.city }}</span>
               <span class="score">{{ heroPowerData.cityPower + "分" }}</span>
             </div>
-            <div class="district-content">
-              <span class="reward">区级</span>
-              <span class="district">{{ heroPowerData.area }}</span>
+            <div class="district">
+              <span>区级</span>
+              <span>{{ heroPowerData.area }}</span>
               <span class="score">{{ heroPowerData.areaPower + "分" }}</span>
             </div>
           </div>
@@ -59,6 +59,18 @@ defineProps({
   width: 280px;
   height: 280px;
   padding: 12px;
+  position: relative;
+  &::before {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+
+    background: url(./bg.png) top/cover no-repeat;
+    z-index: -1;
+  }
 
   .popup-hero-ico {
     display: flex;
@@ -82,11 +94,16 @@ defineProps({
 
     span {
       font-weight: 600;
+      color: #000000;
 
       &.active {
         color: #db9e3f;
       }
     }
+  }
+  .hairline::after {
+    border: 0 solid rgb(201, 204, 207);
+    border-top-width: 1px;
   }
 
   .hero-power-wrapper {
@@ -105,13 +122,13 @@ defineProps({
         }
       }
 
-      .district-wrapper {
+      .hero-power-type {
         padding: 15px 3px 12px 3px;
         display: grid;
         grid-row-gap: 20px;
         font-size: 13px;
 
-        .district-content {
+        .province,.city,.district{
           display: grid;
           grid-template-columns: 1fr 2fr 1fr;
 
@@ -124,8 +141,9 @@ defineProps({
       .update-time-wrapper {
         display: grid;
         justify-items: end;
+        font-size: 12px;
         padding: 5px 3px 0px 3px;
-        color: rgb(200, 201, 204);
+        color: rgb(131, 130, 130);
       }
     }
   }

@@ -1,12 +1,12 @@
 <template>
   <!-- van-config-provider ---- ui框架组件 用来配置框架样式 -->
   <van-config-provider :theme-vars="searchthemeVars" style="height: 100%">
-    <div class="search-wrapper">
+    <div class="hero-power-container">
       <header>
         <van-icon name="arrow-left" class="ico" @click="$router.back()" />
       </header>
-      <div class="search-content" v-if="heroPowerData && heroPowerData.length">
-        <div class="search-title van-hairline--bottom animate__animated animate__fadeIn">
+      <div class="hero-power-content" v-if="heroPowerData && heroPowerData.length">
+        <div class="title van-hairline--bottom animate__animated animate__fadeIn">
           <span>区服</span>
           <span>地区(省/市/区标)</span>
           <span>分数</span>
@@ -66,7 +66,7 @@ getHeroPowerData();
 </script>
 
 <style lang="less" scoped>
-.search-wrapper {
+.hero-power-container{
   width: 100%;
   height: 100%;
   overflow-y: scroll;
@@ -74,7 +74,7 @@ getHeroPowerData();
   &::after {
     content: "";
     position: absolute;
-    background: url(../img/56.png) center center no-repeat;
+    background: url(./bg.png) center center no-repeat;
     background-size: contain;
     left: 0;
     right: 0;
@@ -99,7 +99,7 @@ getHeroPowerData();
     }
   }
 
-  .search-content {
+  .hero-power-content {
     width: 100%;
     height: 100%;
     padding: 56px 16px 10px 16px;
@@ -111,7 +111,7 @@ getHeroPowerData();
     position: relative;
     z-index: 2;
 
-    .search-title {
+    .title {
       display: grid;
       grid-column: 1 / 4;
       grid-template-columns: 1fr 1fr 1fr;

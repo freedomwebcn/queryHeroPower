@@ -1,15 +1,12 @@
 <template>
   <van-config-provider :theme-vars="themeVars" style="height: 100%">
     <!-- 英雄列表容器 -->
-    <div class="hero-list-wrapper scroll-wrapper" ref="scrollRef">
+    <div class="hero-list-wrapper" ref="scrollRef">
       <header :class="{ 'header-bgc': showHeaderBgc }">
         <van-icon name="arrow-left" class="ico" @click="$router.back()" />
         <span class="header-text animate__animated animate__fadeIn" v-if="showHeaderBgc">{{ typeName }}</span>
       </header>
-      <!-- 请求英雄列表数据 显示 loading  -->
-      <div class="hero-list-loading" v-if="!filterHeroData.length">
-        <van-loading type="spinner" color="#fff" />
-      </div>
+
       <div class="scroll-content">
         <div class="hero-list-content">
           <h2 class="type-name">{{ typeName }}</h2>
@@ -32,7 +29,6 @@
 <script setup>
 import { useRoute } from "vue-router";
 import { ref, onMounted, computed } from "vue";
-import "vant/es/notify/style";
 import PopupContent from "./PopupContent";
 
 import { useReqHeroPowerData } from "./getHeroPower";
@@ -87,8 +83,6 @@ onMounted(() => {
 });
 </script>
 <style lang="less" scoped>
-
-
 .hero-list-wrapper {
   height: 100%;
   width: 100%;

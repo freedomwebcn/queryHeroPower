@@ -19,6 +19,8 @@ import {
     Icon,
 
 } from 'vant';
+import "vant/es/notify/style";
+
 const app = createApp(App)
 
 // const loadimage = require('@/views/loading.png')
