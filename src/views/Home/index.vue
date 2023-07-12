@@ -79,7 +79,7 @@ const isShowSearchHistory = ref(false); //是否显示搜索历史记录
 const swipeCellOpenStatus = ref(false); //根据单元格打开状态 决定是否要跳转路由 --如果单元格打开时，再次点击单元格是要关闭单元格，而不是跳转路由
 
 const filterSearchData = computed(() => {
-  return store.heroData.filter((heroObj) => {
+  return store.heroData.data.filter((heroObj) => {
     return keyworld.value && heroObj.cname.indexOf(keyworld.value) != -1;
   });
 });

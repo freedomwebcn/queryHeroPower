@@ -6,16 +6,21 @@ export function reqAllHeroData() {
   function toNotify() {
     Notify({
       type: "danger",
-      message: "英雄数据请求失败,请刷新页面重试 !"
+      message: "英雄数据请求失败,请刷新页面重试 !",
     });
   }
   const getHeroData = async () => {
     try {
       const data = await reqHeroData();
-      store.setHeroData(data);
+      store.setHeroData({
+        code: 200,
+        data,
+      });
     } catch (err) {
       // 数据请求失败 显示错误提示
       console.log(err);
+      store.setHeroData({ code: 404, data: [] });
+
       toNotify();
     }
   };

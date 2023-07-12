@@ -8,7 +8,6 @@ import 'lib-flexible/flexible'
 import 'balloon-css';
 import 'animate.css';
 import {
-    Lazyload,
     Loading,
     Search,
     Popup,
@@ -23,11 +22,7 @@ import "vant/es/notify/style";
 
 const app = createApp(App)
 
-// const loadimage = require('@/views/loading.png')
 app.use(router)
-app.use(Lazyload, {
-    // loading: loadimage,
-})
 
 app.use(Loading)
 app.use(Search)

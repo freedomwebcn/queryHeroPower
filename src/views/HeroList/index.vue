@@ -6,13 +6,16 @@
         <van-icon name="arrow-left" class="ico" @click="$router.back()" />
         <span class="header-text animate__animated animate__fadeIn" v-if="showHeaderBgc">{{ typeName }}</span>
       </header>
-
+      <!-- 加载英雄列表数据 显示 loading  请求出错时 不需要显示 -->
+      <div class="hero-list-loading" v-if="!store.heroData.code">
+        <van-loading type="spinner" color="#fff" />
+      </div>
       <div class="scroll-content">
         <div class="hero-list-content">
           <h2 class="type-name">{{ typeName }}</h2>
           <ul class="hero-list">
             <li class="hero-list-item" v-for="heroItem in filterHeroData" :key="heroItem.cname" @click="openPopup(heroItem.cname, heroItem.iconUrl)">
-              <img v-lazy="heroItem.iconUrl" class="ico" alt="" />
+              <img :src="heroItem.iconUrl" class="ico" alt="" />
               <span class="hero-name">{{ heroItem.cname }}</span>
             </li>
           </ul>
@@ -44,7 +47,7 @@ let isShowPopup = ref(false);
 
 //过滤出英雄职业对应的英雄列表数据
 const filterHeroData = computed(() => {
-  return store.heroData.filter((heroObj) => {
+  return store.heroData.data.filter((heroObj) => {
     return heroObj.hero_type === typeId.value * 1;
   });
 });

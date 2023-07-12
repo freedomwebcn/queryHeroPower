@@ -23,7 +23,7 @@
               <span>{{ heroPowerData.city }}</span>
               <span class="score">{{ heroPowerData.cityPower + "分" }}</span>
             </div>
-            <div class="district">
+            <div class="area">
               <span>区级</span>
               <span>{{ heroPowerData.area }}</span>
               <span class="score">{{ heroPowerData.areaPower + "分" }}</span>
@@ -102,7 +102,7 @@ defineProps({
     }
   }
   .hairline::after {
-    border: 0 solid rgb(201, 204, 207);
+    border: 0 solid #c9cccf;
     border-top-width: 1px;
   }
 
@@ -128,7 +128,7 @@ defineProps({
         grid-row-gap: 20px;
         font-size: 13px;
 
-        .province,.city,.district{
+        .province,.city,.area{
           display: grid;
           grid-template-columns: 1fr 2fr 1fr;
 
