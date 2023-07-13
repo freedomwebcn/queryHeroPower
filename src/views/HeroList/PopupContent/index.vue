@@ -36,7 +36,9 @@
         <div class="hero-power-content-loading" v-else-if="isShowLoading && heroPowerStatus === null">
           <van-loading size="24px" vertical>加载中...</van-loading>
         </div>
-        <van-empty image="error" image-size="100" description="数据加载失败, 点击重新尝试 !" v-if="heroPowerStatus" @click="$emit('getPopupData', null)" />
+        <div style="position: relative">
+          <van-empty image="error" image-size="100" description="数据加载失败, 点击重新尝试 !" v-if="heroPowerStatus" @click="$emit('getPopupData', null)" />
+        </div>
       </div>
     </div>
   </div>
