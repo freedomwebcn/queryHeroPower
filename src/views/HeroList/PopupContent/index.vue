@@ -60,6 +60,7 @@ defineProps({
   height: 280px;
   padding: 12px;
   position: relative;
+  background-image: linear-gradient(#f09add 5%, transparent 50%);
   &::before {
     position: absolute;
     content: "";
@@ -67,9 +68,7 @@ defineProps({
     height: 100%;
     left: 0;
     top: 0;
-
     background: url(./bg.png) top/cover no-repeat;
-    z-index: -1;
   }
 
   .popup-hero-ico {
@@ -91,6 +90,8 @@ defineProps({
     grid-template-columns: 1fr 1fr 1fr 1fr;
     padding: 15px 0;
     font-size: 13px;
+    position: relative;
+
 
     span {
       font-weight: 600;
@@ -128,7 +129,9 @@ defineProps({
         grid-row-gap: 20px;
         font-size: 13px;
 
-        .province,.city,.area{
+        .province,
+        .city,
+        .area {
           display: grid;
           grid-template-columns: 1fr 2fr 1fr;
 
@@ -143,6 +146,8 @@ defineProps({
         justify-items: end;
         font-size: 12px;
         padding: 5px 3px 0px 3px;
+        position: relative;
+     
         color: rgb(131, 130, 130);
       }
     }
