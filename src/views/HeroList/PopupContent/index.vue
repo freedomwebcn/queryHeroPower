@@ -4,7 +4,7 @@
       <img :src="heroImgUrl" alt="" class="animate__animated animate__headShake" />
     </h5>
     <div class="tab-wrapper">
-      <span style="display: inline-block" @click="$emit('getPopupData', tabItem.systemType)" v-for="tabItem in tabList" :key="tabItem" :class="{ active: tabItem.systemType === queryInfo.type }">
+      <span @click="$emit('getPopupData', tabItem.systemType)" v-for="tabItem in tabList" :key="tabItem" :class="{ active: tabItem.systemType === queryInfo.type }">
         {{ tabItem.systemName }}
       </span>
     </div>
@@ -92,7 +92,6 @@ defineProps({
     font-size: 13px;
     position: relative;
 
-
     span {
       font-weight: 600;
       color: #000000;
@@ -147,7 +146,6 @@ defineProps({
         font-size: 12px;
         padding: 5px 3px 0px 3px;
         position: relative;
-     
         color: rgb(131, 130, 130);
       }
     }
