@@ -1,7 +1,7 @@
 import axios from 'axios'
 const instance = axios.create({
-    baseURL: 'https://www.sapi.run/',
-    timeout: 8000,
+  baseURL: "https://api.xxoo.team/hero/",
+  timeout: 8000,
 });
 
 instance.interceptors.request.use(function (config) {

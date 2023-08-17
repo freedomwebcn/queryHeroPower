@@ -12,6 +12,8 @@
 <script setup>
 import { reqAllHeroData } from "./reqAllHeroData.js";
 reqAllHeroData();
+
+
 </script>
 
 <style lang="less">
