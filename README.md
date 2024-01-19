@@ -1,6 +1,8 @@
 # 新仓库地址
 
-```https://github.com/freedomwebcn/wz```
+```
+https://github.com/freedomwebcn/wz
+```
 
 
 # 查询王者荣耀英雄战力
