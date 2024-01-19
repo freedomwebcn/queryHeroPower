@@ -1,4 +1,4 @@
-# 新仓库地址
+# 新仓库地址（使用响应式适配了PC）
 
 ```
 https://github.com/freedomwebcn/wz
