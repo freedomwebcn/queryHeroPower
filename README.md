@@ -1,3 +1,8 @@
+# 新仓库地址
+
+```https://github.com/freedomwebcn/wz```
+
+
 # 查询王者荣耀英雄战力
 
 ### 进入项目根目录 下载项目依赖环境  
