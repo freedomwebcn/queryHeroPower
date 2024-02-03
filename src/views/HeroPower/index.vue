@@ -78,7 +78,7 @@ function getHeroPowerData() {
       })
     );
   });
-  console.log(res);
+ 
   Promise.all(res)
     .then((vals) => (heroPowerData.value = vals))
     .catch((error) => (errStatus.value = error));

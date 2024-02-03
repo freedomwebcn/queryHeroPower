@@ -22,17 +22,26 @@ const routes = [
     path: "/home",
     name: "Home",
     component: Home,
+    meta: {
+      transition: "home",
+    },
   },
   {
     path: "/hero-list/:typeId/:typeName",
     name: "HeroList",
     component: HeroList,
+    meta: {
+      transition: "homeList",
+    },
   },
 
   {
     path: "/heropower",
     name: "HeroPower",
     component: HeroPower,
+    meta: {
+      transition: "homeList",
+    },
   },
 ];
 
