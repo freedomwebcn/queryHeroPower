@@ -1,4 +1,12 @@
-# 查询王者荣耀英雄战力
+# 新仓库地址（使用响应式适配了PC）
+
+```
+https://github.com/freedomwebcn/wz
+```
+
+# 以下为当前仓库介绍
+
+## 查询王者荣耀英雄战力
 
 ### 进入项目根目录 下载项目依赖环境  
 ```
@@ -12,7 +20,7 @@ npm run serve
 ### 在线预览网址
 
 ```
-https://queryheropower.4everland.app
+https://queryheropower-skzfsakl-coderwx1.4everland.website/
 ```
 
 <details>
