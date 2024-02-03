@@ -10,6 +10,7 @@
       <div class="hero-list-loading" v-if="!store.heroData.code">
         <van-loading type="spinner" color="#fff" />
       </div>
+      
       <div class="scroll-content">
         <div class="hero-list-content">
           <h2 class="type-name">{{ typeName }}</h2>

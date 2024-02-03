@@ -4,9 +4,7 @@ const instance = axios.create({
   timeout: 8000,
 });
 
-instance.interceptors.request.use(function (config) {
-    return config;
-});
+
 
 // 添加响应拦截器
 instance.interceptors.response.use(function (response) {

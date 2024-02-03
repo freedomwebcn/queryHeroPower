@@ -13,9 +13,8 @@
         </div>
         <template v-for="(item, index) in heroPowerData" :key="item.name">
           <div :class="`hero-power${index + 1} animate__animated animate__fadeInLeft ${index === heroPowerData.length - 1 ? '' : 'van-hairline--bottom'}`">
-            <template v-for="(type, tyIndex) in dctype" :key="type">
-              <span class="dctype" v-if="index == tyIndex">{{ type }}</span>
-            </template>
+            <span class="dctype">{{ types[index].type }}</span>
+
             <div class="district">
               <span>{{ item.province }}</span>
               <span>{{ item.provincePower }}</span>
@@ -43,30 +42,52 @@
 <script setup>
 import { useRoute } from "vue-router";
 import { ref } from "vue";
-import { reqHeroPowerAqq, reqHeroPowerAwx, reqHeroPowerIqq, reqHeroPowerIwx } from "@/api";
+import { reqHeroPower } from "@/api";
 import { searchthemeVars } from "@/ui_option";
 
 const route = useRoute();
 const heroName = route.query.heroName;
 const heroPowerData = ref([]);
-const dctype = ["安卓QQ", "安卓WX", "苹果QQ", "苹果WX"];
 const errStatus = ref(null);
+const types = [
+  {
+    type: "安卓QQ",
+    param: "aqq",
+  },
+  {
+    type: "安卓WX",
+    param: "awx",
+  },
+  {
+    type: "苹果QQ",
+    param: "iqq",
+  },
+  {
+    type: "苹果WX",
+    param: "iwx",
+  },
+];
 
-async function getHeroPowerData() {
-  try {
-    errStatus.value = null;
-    const data = await Promise.all([reqHeroPowerAqq({ heroName }), reqHeroPowerAwx({ heroName }), reqHeroPowerIqq({ heroName }), reqHeroPowerIwx({ heroName })]);
-    heroPowerData.value = data;
-  } catch (error) {
-    errStatus.value = error;
-    console.log("search-err-msg ------", error);
-  }
+function getHeroPowerData() {
+  let res = [];
+  errStatus.value = null;
+  types.forEach(({ param }) => {
+    res.push(
+      new Promise((resolve,reject) => {
+        reqHeroPower({ heroName, type: param }).then(resolve).catch(reject);
+      })
+    );
+  });
+  console.log(res);
+  Promise.all(res)
+    .then((vals) => (heroPowerData.value = vals))
+    .catch((error) => (errStatus.value = error));
 }
 getHeroPowerData();
 </script>
 
 <style lang="less" scoped>
-.hero-power-container{
+.hero-power-container {
   width: 100%;
   height: 100%;
   overflow-y: scroll;

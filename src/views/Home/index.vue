@@ -4,7 +4,7 @@
 
     <!-- 搜索框 -->
     <div class="search-wrapper">
-      <van-search v-model="keyworld" placeholder="请输入英雄名称" :formatter="formatter" @focus="focus" />
+      <van-search v-model="keyword" placeholder="请输入英雄名称" :formatter="formatter" @focus="focus" />
       <div class="search-result-wrapper" v-if="filterSearchData && filterSearchData.length">
         <h5 class="result-title">搜索结果</h5>
         <div class="search-result-list">
@@ -19,7 +19,7 @@
           </template>
         </div>
       </div>
-      <div class="search-history-wrapper" v-if="isShowSearchHistory && !keyworld">
+      <div class="search-history-wrapper" v-if="isShowSearchHistory && !keyword">
         <h5 class="title">最近的搜索记录</h5>
         <div class="search-history-list">
           <template v-for="(item, index) in searchHistory" :key="item.cname">
@@ -42,7 +42,7 @@
           </span>
         </div>
       </div>
-      <div class="not-found-data" v-if="!filterSearchData.length && keyworld">暂无搜索结果</div>
+      <div class="not-found-data" v-if="!filterSearchData.length && keyword">暂无搜索结果</div>
     </div>
     <van-overlay :show="isShowOverlay" @click="overlayClose" />
     <!-- 英雄职业列表 -->
@@ -74,13 +74,13 @@ import { store } from "@/store/store.js";
 
 const router = useRouter();
 const isShowOverlay = ref(false);
-const keyworld = ref(""); //搜索关键字
+const keyword = ref(""); //搜索关键字
 const isShowSearchHistory = ref(false); //是否显示搜索历史记录
 const swipeCellOpenStatus = ref(false); //根据单元格打开状态 决定是否要跳转路由 --如果单元格打开时，再次点击单元格是要关闭单元格，而不是跳转路由
 
 const filterSearchData = computed(() => {
   return store.heroData.data.filter((heroObj) => {
-    return keyworld.value && heroObj.cname.indexOf(keyworld.value) != -1;
+    return keyword.value && heroObj.cname.indexOf(keyword.value) != -1;
   });
 });
 
@@ -116,7 +116,7 @@ const focus = () => {
 const overlayClose = () => {
   isShowOverlay.value = false;
   isShowSearchHistory.value = false;
-  keyworld.value = ""; //输入英雄名称后没有点击查询英雄战力，而是点击遮盖层，则清空搜索框。
+  keyword.value = ""; //输入英雄名称后没有点击查询英雄战力，而是点击遮盖层，则清空搜索框。
 };
 
 // 单元格打开触发
