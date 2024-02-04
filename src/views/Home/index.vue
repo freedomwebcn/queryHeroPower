@@ -1,6 +1,6 @@
 <template>
   <div class="home-wrapper">
-    <h2 class="greeting-msg" >{{ getGreetingMsg() }}</h2>
+    <h2 class="greeting-msg">{{ getGreetingMsg() }}</h2>
 
     <!-- 搜索框 -->
     <div class="search-wrapper">
@@ -91,17 +91,14 @@ const searchHistory = ref(JSON.parse(window.localStorage.getItem("serchHistory")
 // 查询英雄战力
 const queryHeroPower = (heroInfo) => {
   if (!swipeCellOpenStatus.value) {
-    console.log(heroInfo);
-    // 如果该条搜索记录已存在，则不添加 直接跳转路由去查询当前英雄战力
     const even = (searchHistoryObj) => searchHistoryObj.cname === heroInfo.cname;
-    if (searchHistory.value.some(even)) {
-      router.push({ path: "/heropower", query: { heroName: heroInfo.cname } });
-      return;
+    // 如果当前搜索记录不存在 在跳转路由之前先存储该条搜索记录。
+    if (!searchHistory.value.some(even)) {
+      // 保存搜索记录到数组中
+      searchHistory.value.push(heroInfo);
+      // 存储到本地
+      window.localStorage.setItem("serchHistory", JSON.stringify(searchHistory.value));
     }
-    // 保存搜索记录到数组中
-    searchHistory.value.push(heroInfo);
-    // 存储到本地
-    window.localStorage.setItem("serchHistory", JSON.stringify(searchHistory.value));
     router.push({ path: "/heropower", query: { heroName: heroInfo.cname } });
   }
 };

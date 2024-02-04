@@ -13,7 +13,7 @@
         </div>
         <template v-for="(item, index) in heroPowerData" :key="item.name">
           <div :class="`hero-power${index + 1} animate__animated animate__fadeInLeft ${index === heroPowerData.length - 1 ? '' : 'van-hairline--bottom'}`">
-            <span class="dctype">{{ types[index].type }}</span>
+            <span class="dctype">{{ GAMETYPES[index].type }}</span>
 
             <div class="district">
               <span>{{ item.province }}</span>
@@ -47,9 +47,9 @@ import { searchthemeVars } from "@/ui_option";
 
 const route = useRoute();
 const heroName = route.query.heroName;
-const heroPowerData = ref([]);
-const errStatus = ref(null);
-const types = [
+let heroPowerData = ref([]);
+let errStatus = ref(null);
+const GAMETYPES = [
   {
     type: "安卓QQ",
     param: "aqq",
@@ -69,17 +69,9 @@ const types = [
 ];
 
 function getHeroPowerData() {
-  let res = [];
   errStatus.value = null;
-  types.forEach(({ param }) => {
-    res.push(
-      new Promise((resolve,reject) => {
-        reqHeroPower({ heroName, type: param }).then(resolve).catch(reject);
-      })
-    );
-  });
- 
-  Promise.all(res)
+  const requests = GAMETYPES.map(({ param }) => reqHeroPower({ heroName, type: param }));
+  Promise.all(requests)
     .then((vals) => (heroPowerData.value = vals))
     .catch((error) => (errStatus.value = error));
 }
